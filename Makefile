@@ -1,6 +1,5 @@
-CC = clang
+CC = gcc
 CFLAGS = -std=c11 -g -Iheader -Iheader/adt -lm
 
-compile:
-	mkdir -p build
-	$(CC) $(CFLAGS) src/*.c src/adt/*.c -o build/main
+build:
+	$(CC) $(CFLAGS) src/*.c src/adt/*.c -o bin/main
