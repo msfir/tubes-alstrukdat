@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -std=c11 -g -Iheader -Iheader/adt -lm
+CFLAGS = -std=c11 -g -Iheader -Iheader/adt
+CLIBS = -lm
 
 build:
-	$(CC) $(CFLAGS) src/*.c src/adt/*.c -o bin/main
+	$(CC) $(CFLAGS) src/*.c src/adt/*.c $(CLIBS) -o bin/main
