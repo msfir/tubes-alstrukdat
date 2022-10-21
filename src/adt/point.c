@@ -1,5 +1,5 @@
 #include "boolean.h"
-#include "adt/point.h"
+#include "point.h"
 #include <stdio.h>
 #include <math.h>
 

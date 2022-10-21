@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -std=c11 -g -Iheader -lm
+CFLAGS = -std=c11 -g -Iheader -Iheader/adt -lm
 
 compile:
 	mkdir -p build

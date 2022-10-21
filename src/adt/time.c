@@ -1,5 +1,5 @@
 #include "boolean.h"
-#include "adt/time.h"
+#include "time.h"
 #include <stdio.h>
 
 /* ***************************************************************** */
