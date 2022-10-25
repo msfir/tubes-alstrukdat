@@ -14,14 +14,14 @@ void IgnoreBlanks() {
     }
 }
 
-void STARTWORD(char* path) {
+void STARTWORD(FILE *stream, char mark) {
     /* Membaca file di path kata per kata
        I.S. : currentChar sembarang
        F.S. : endWord = true, dan currentChar = MARK;
               atau endWord = false, currentWord adalah kata yang sudah
        diakuisisi, currentChar karakter pertama sesudah karakter terakhir kata
      */
-    START(path);
+    START(stream, mark);
     IgnoreBlanks();
     if (EOP) {
         endWord = true;
