@@ -12,7 +12,7 @@ TEST_BIN = $(TEST_SOURCES:src/tests/%.c=bin/tests/%)
 .SILENT: clean run-test
 
 build:
-	@mkdir -p bin
+	@if not exist (TARGET) mkdir (TARGET)
 	$(CC) $(CFLAGS) $(CINCLUDES) src/main.c $(ADTS) $(CLIBS) -o $(TARGET)/main
 
 test: build-test run-test
@@ -20,7 +20,7 @@ test: build-test run-test
 build-test: $(TEST_BIN)
 
 $(TEST_BIN): $(TARGET)/tests/%: src/tests/%.c
-	@mkdir -p bin/tests
+	@if not exist (TARGET)/tests mkdir (TARGET)/tests
 	$(CC) $(CFLAGS) $(CINCLUDES) $< $(ADTS) $(CLIBS) -o $@
 
 run-test:
