@@ -1,5 +1,11 @@
+/* File: tree.h */
+/* Definisi ADT Tree */
+
 #ifndef TREE_H
 #define TREE_H
+
+// #include <stdio.h>
+#include "node.h"
 
 /// RANT!
 // tree is kinda confusing on its own
@@ -11,14 +17,13 @@
 // 1 -> 2
 // 2 -> 1 
 
-#include <stdio.h>
 
 // #include "listlinier.h" // maybe later i'll just make node.h, linkedlist kinda not needed here
-#include "node.h"
+
 
 typedef Node Tree;
 
-void CreateTree(Tree *a);
+void CreateTree(Tree *a, Node *b);
 
 // void PairNode(Node a, Node b); // pair by definition
 void MakeChildren(Node *a, Node *b);

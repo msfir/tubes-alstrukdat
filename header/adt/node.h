@@ -1,5 +1,5 @@
-#ifndef node_h
-#define node_h
+#ifndef NODE_H
+#define NODE_H
 
 #define MAX_CHILDREN 5 //assuming so
 
@@ -21,4 +21,4 @@ Address newNode(Food *a);
 int getChildCount(Node a);
 
 
-#endif // !node_h
+#endif
