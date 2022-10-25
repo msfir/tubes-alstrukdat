@@ -1,9 +1,9 @@
 #include "boolean.h"
 #include "wordmachine.h"
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int main() {
     char* path_separtor;
@@ -21,7 +21,8 @@ int main() {
         strcat(cwd, path_separtor);
         strcat(cwd, "test.txt");
         printf("%s\n", cwd);
-        STARTWORD(cwd);
+        FILE *stream = fopen(cwd, "r");
+        STARTWORD(stdin, '\n');
     } else {
         perror("getcwd() error");
         return 1;

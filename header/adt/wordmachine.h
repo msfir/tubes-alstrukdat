@@ -25,7 +25,7 @@ void IgnoreBlanks();
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void STARTWORD(char* path);
+void STARTWORD(FILE *stream, char mark);
 /* I.S. : CC sembarang
    F.S. : EndWord = true, dan CC = MARK;
           atau EndWord = false, CWord adalah kata yang sudah diakuisisi,

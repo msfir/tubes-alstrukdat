@@ -26,4 +26,8 @@ typedef struct {
 #define DeliveryTime(F)   (F).delivery_time
 // clang-format on
 
+void CreateFood(Food* F, char name[0xff], Time expiration_time, enum Action action_loc, Time delivery_time);
+
+void DisplayFood(Food F);
+
 #endif

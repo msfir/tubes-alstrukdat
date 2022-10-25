@@ -6,11 +6,12 @@
 
 char currentChar;
 boolean EOP;
+FILE *pita;
+char MARK;
 
-static FILE* pita;
 static int retval;
 
-void START(char* path) {
+void START(FILE *stream, char mark) {
     /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
        Karakter pertama yang ada pada pita posisinya adalah pada jendela.
        I.S. : sembarang
@@ -19,7 +20,8 @@ void START(char* path) {
        menyala (true) */
 
     /* Algoritma */
-    pita = fopen(path, "r");
+    pita = stream;
+    MARK = mark;
     ADV();
 }
 
@@ -33,7 +35,7 @@ void ADV() {
 
     /* Algoritma */
     retval = fscanf(pita, "%c", &currentChar);
-    EOP = feof(pita);
+    EOP = feof(pita) || currentChar == MARK;
     if (EOP) {
         fclose(pita);
     }
