@@ -10,11 +10,11 @@
             "args": [
                 "-g",
                 "-std=c11",
-                "-lm",
                 "-Iheader",
                 "-Iheader/adt",
                 "${workspaceFolder}/src/*.c",
                 "${workspaceFolder}/src/adt/*.c",
+                "-lm",
                 "-o",
                 "${workspaceFolder}/bin/main",
             ],
