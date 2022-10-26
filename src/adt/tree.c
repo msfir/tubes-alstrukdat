@@ -5,13 +5,8 @@
 
 void CreateTree(Tree *a, Node *b){
     // a = newNode(1); // idk whether shud i number it accordingly or no, or maybe just change it to Food altogether
-    a = b;
+    *a = b;
 }
-
-// void PairNode(Node *a, Node *b){
-//     NEXT(a) = b;
-//     NEXT(b) = a;
-// }
 
 void MakeChildren(Node *a, Node *b){
     if(getChildCount(*a) < MAX_CHILDREN){
@@ -19,12 +14,10 @@ void MakeChildren(Node *a, Node *b){
     }
 }
 
-
-
-void listParent(Node a){
+void listParent(Tree a){
     int i;
-    for(i = 0; i<getChildCount(a); i++){
-        printf("%s -> %s", STR_VALUE(INFO(&a)->name), STR_VALUE(INFO(NEXT(&a, i))->name));
-        listParent(*NEXT(&a, i));
+    for(i = 0; i<getChildCount(*a); i++){        
+        printf("%s -> %s\n", STR_VALUE(INFO(a)->name), STR_VALUE(INFO(NEXT(a, i))->name));
+        if(NEXT(a, i) != NULL) {listParent(NEXT(a, i));}
     }
 }

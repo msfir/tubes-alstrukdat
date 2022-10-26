@@ -21,12 +21,12 @@
 // #include "listlinier.h" // maybe later i'll just make node.h, linkedlist kinda not needed here
 
 
-typedef Node Tree;
+typedef Node* Tree;
 
 void CreateTree(Tree *a, Node *b);
 
 // void PairNode(Node a, Node b); // pair by definition
-void MakeChildren(Node *a, Node *b);
+void MakeChildren(Node *a, Node *b); // b is a child;
 
 void listParent(Tree a);
 

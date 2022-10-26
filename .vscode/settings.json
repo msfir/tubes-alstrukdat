@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "listlinier.h": "c"
+        "listlinier.h": "c",
+        "cstring.h": "c",
+        "time.h": "c"
     }
 }
