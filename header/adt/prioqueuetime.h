@@ -7,7 +7,7 @@
 #ifndef prioqueuetime_H
 #define prioqueuetime_H
 
-#include "../boolean.h"
+#include "boolean.h"
 #include "food.h"
 
 /* Konstanta untuk mendefinisikan address tak terdefinisi */

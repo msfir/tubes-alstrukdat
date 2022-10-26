@@ -1,17 +1,18 @@
-/* File: makanan.h */
+/* File: simulator.h */
 /* Definisi ADT Simulator */
 
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include "../boolean.h"
+#include "boolean.h"
 #include "point.h"
 #include "prioqueuetime.h"
 #include "time.h"
+#include "cstring.h"
 
 /* *** Definisi TYPE Simulator *** */
 typedef struct {
-    char username[0xff];
+    String username;
     Point location;
     PrioQueueTime inventory;
 } Simulator;
