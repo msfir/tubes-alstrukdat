@@ -24,7 +24,7 @@ void MakeChildren(Node *a, Node *b){
 void listParent(Node a){
     int i;
     for(i = 0; i<getChildCount(a); i++){
-        printf("%s -> %s", INFO(&a)->name, INFO(NEXT(&a, i))->name);
+        printf("%s -> %s", STR_VALUE(INFO(&a)->name), STR_VALUE(INFO(NEXT(&a, i))->name));
         listParent(*NEXT(&a, i));
     }
 }

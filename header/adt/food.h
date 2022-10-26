@@ -4,15 +4,16 @@
 #ifndef FOOD_H
 #define FOOD_H
 
-#include "../boolean.h"
+#include "boolean.h"
 #include "point.h"
 #include "time.h"
+#include "cstring.h"
 
 enum Action { BUY, MIX, CHOP, FRY, BOIL };
 
 /* *** Definisi TYPE Food *** */
 typedef struct {
-    char name[0xff];
+    String name;
     Time expiration_time;
     enum Action action_loc;
     Time delivery_time;
@@ -26,7 +27,7 @@ typedef struct {
 #define DeliveryTime(F)   (F).delivery_time
 // clang-format on
 
-void CreateFood(Food* F, char name[0xff], Time expiration_time, enum Action action_loc, Time delivery_time);
+void CreateFood(Food* F, String name, Time expiration_time, enum Action action_loc, Time delivery_time);
 
 void DisplayFood(Food F);
 

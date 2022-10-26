@@ -13,7 +13,7 @@ TEST_BIN = $(TEST_SOURCES:src/tests/%.c=bin/tests/%)
 
 build:
 	@mkdir -p bin
-	$(CC) $(CFLAGS) $(CINCLUDES) src/main.c $(ADTS) $(CLIBS) -o $(TARGET)/main
+	$(CC) $(CFLAGS) $(CINCLUDES) src/*.c $(ADTS) $(CLIBS) -o $(TARGET)/main
 
 test: build-test run-test
 
