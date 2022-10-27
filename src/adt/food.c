@@ -10,7 +10,9 @@ void CreateFood(Food* F, String name, Time expiration_time, enum Action action_l
     DeliveryTime(*F) = delivery_time;
 }
 
-void DisplayFood(Food F){
-    printf("nama\t\t:%s\n", STR_VALUE(Name(F)));
-    
+void DisplayFood(Food F){ // i may change it to DescribeFood
+    printf("Nama Makanan\t: %s\n", STR_VALUE(Name(F)));
+    printf("Waktu Ekspirasi\t: "); TulisTIME(ExpirationTime(F)); printf("\n");
+    printf("Lama Pengiriman\t: "); TulisTIME(DeliveryTime(F));printf("\n");
+    printf("Aksi \t\t: %s\n", ActionLocation(F))
 }

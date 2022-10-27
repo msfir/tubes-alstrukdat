@@ -39,6 +39,8 @@ int main(){
 
     listParent(trie);
 
+    listChildren(trie);
+
 
     return 0;
 }
