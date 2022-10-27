@@ -14,7 +14,7 @@ void IgnoreBlanks() {
     }
 }
 
-void STARTWORD(FILE *stream, char mark) {
+void InitMachine(FILE *stream, char mark) {
     /* Membaca file di path kata per kata
        I.S. : currentChar sembarang
        F.S. : endWord = true, dan currentChar = MARK;
@@ -22,13 +22,6 @@ void STARTWORD(FILE *stream, char mark) {
        diakuisisi, currentChar karakter pertama sesudah karakter terakhir kata
      */
     START(stream, mark);
-    IgnoreBlanks();
-    if (EOP) {
-        endWord = true;
-    } else {
-        endWord = false;
-        CopyWord();
-    }
 }
 
 void ADVWORD() {
@@ -42,6 +35,20 @@ void ADVWORD() {
         endWord = true;
     } else {
         CopyWord();
+        IgnoreBlanks();
+    }
+}
+
+void ADVLINE() {
+/* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
+   F.S. : currentWord adalah kata/baris terakhir yang sudah diakuisisi,
+          currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika currentChar = MARK, EndWord = true. */
+    IgnoreBlanks();
+    if (EOP) {
+        endWord = true;
+    } else {
+        CopyLine();
         IgnoreBlanks();
     }
 }
@@ -62,4 +69,23 @@ void CopyWord() {
         } else
             break;
     }
+}
+
+void CopyLine() {
+    /* Mengakuisisi baris, menyimpan dalam currentWord
+       I.S. : currentChar adalah karakter pertama dari baris
+       F.S. : currentWord berisi kata yang sudah diakuisisi;
+              currentChar = EOL atau currentChar = MARK;
+              currentChar adalah karakter sesudah karakter terakhir yang
+       diakuisisi. Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong
+     */
+    currentWord.Length = 0;
+    while (currentChar != EOL && !EOP) {
+        if (currentWord.Length < NMax) { // jika lebih akan terpotong
+            currentWord.TabWord[currentWord.Length++] = currentChar;
+            ADV();
+        } else
+            break;
+    }
+    ADV();
 }
