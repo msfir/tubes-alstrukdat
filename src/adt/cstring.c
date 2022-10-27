@@ -1,7 +1,10 @@
 #include "cstring.h"
+
 #include <stdlib.h>
 
-String StringFrom(char *str) {
+#include "boolean.h"
+
+String StringFrom(char* str) {
     String res;
     int i = 0;
     while (str[i] != 0) {
@@ -13,10 +16,22 @@ String StringFrom(char *str) {
     return res;
 }
 
+String StringFromArr(char str[], int size) {
+    String res;
+    int i = 0;
+    while (i < size) {
+        STR_VALUE(res)[i] = str[i];
+        i++;
+    }
+    // memastikan bahwa string hasilnya null-terminated
+    STR_VALUE(res)[i] = 0;
+    return res;
+}
+
 void copy_string(String* dest, String src) {
     int idx;
     for (idx = 0; idx <= length(src); idx++) {
-        STR_VALUE(*dest)[idx] = STR_VALUE(src)[idx]; // menyalin semua isinya termasuk null di akhir
+        STR_VALUE(*dest)[idx] = STR_VALUE(src)[idx];  // menyalin semua isinya termasuk null di akhir
     }
 }
 
@@ -42,4 +57,35 @@ String concat_string(String str1, String str2) {
         }
     }
     return result;
+}
+
+String trim_end(String str) {
+    int len = length(str);
+    boolean ok = false;
+    for (int i = len - 1; i >= 0 && !ok; i--) {
+        if (STR_VALUE(str)[i] != ' ' && STR_VALUE(str)[i] != '\t' && STR_VALUE(str)[i] != '\n') {
+            STR_VALUE(str)[i + 1] = 0;
+            ok = true;
+        }
+    }
+    return str;
+}
+
+String substring(String str, int start, int end) {
+    int idx;
+    for (idx = 0; idx < end - start; idx++) {
+        STR_VALUE(str)[idx] = STR_VALUE(str)[start + idx];
+    }
+    STR_VALUE(str)[end - start] = 0;
+    return str;
+}
+
+boolean is_string_equal(String a, String b) {
+    int len_a = length(a);
+    int len_b = length(b);
+    boolean equal = len_a == len_b;
+    for (int i = 0; i < len_a && equal; i++) {
+        equal = STR_VALUE(a)[i] == STR_VALUE(b)[i];
+    }
+    return equal;
 }
