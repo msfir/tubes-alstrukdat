@@ -14,5 +14,5 @@ void DisplayFood(Food F){ // i may change it to DescribeFood
     printf("Nama Makanan\t: %s\n", STR_VALUE(Name(F)));
     printf("Waktu Ekspirasi\t: "); TulisTIME(ExpirationTime(F)); printf("\n");
     printf("Lama Pengiriman\t: "); TulisTIME(DeliveryTime(F));printf("\n");
-    printf("Aksi \t\t: %s\n", ActionLocation(F))
+    printf("Aksi \t\t: %s\n", ActionLocation(F));
 }
