@@ -70,6 +70,7 @@ void CopyWord() {
             break;
     }
     if (EOL) {
+        currentWord.TabWord[currentWord.Length++] = currentChar;
         ADV();
     }
 }
@@ -90,5 +91,6 @@ void CopyLine() {
         } else
             break;
     }
+    currentWord.TabWord[currentWord.Length++] = currentChar;
     ADV();
 }
