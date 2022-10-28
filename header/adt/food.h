@@ -20,12 +20,14 @@ typedef struct {
 } Food;
 
 /* *** Notasi Akses: selektor Makanan *** */
-// clang-format off
+//return String
 #define Name(F)           (F).name
+//return Time
 #define ExpirationTime(F) (F).expiration_time
+//return enum Action
 #define ActionLocation(F) (F).action_loc
+//return Time
 #define DeliveryTime(F)   (F).delivery_time
-// clang-format on
 
 void CreateFood(Food* F, String name, Time expiration_time, enum Action action_loc, Time delivery_time);
 

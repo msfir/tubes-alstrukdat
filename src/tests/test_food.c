@@ -6,7 +6,7 @@
 int main(){ 
     Time dummy; CreateTime(&dummy, 1, 2, 3);
     enum Action aclov = BUY;
-    Food ayam; CreateFood(&ayam, StringFrom("ayam rasa bebek"), dummy, aclov, dummy);
+    Food ayam; CreateFood(&ayam, StringFrom("ayam rasa bebek"), dummy, aclov, PrevNDetik(dummy, 3600));
     DisplayFood(ayam);
 
     return 0;
