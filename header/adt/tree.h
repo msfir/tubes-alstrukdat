@@ -23,6 +23,10 @@
 
 typedef Node* Tree;
 
+
+//return pointed datatype
+#define ELMT(p, idx) *(p+idx)
+
 void CreateTree(Tree *a, Node *b);
 
 // void PairNode(Node a, Node b); // pair by definition
