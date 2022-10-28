@@ -13,6 +13,8 @@ typedef struct node
 {
     Food *info;
     // struct ListDin *next;
+    Address* next; // using a new dyn list
+    int childCount; // where i store the childd!!!!!!!!!!!!!!!!!!!!!!!!!!1
 } Node;
 
 //return Food*
@@ -23,6 +25,15 @@ typedef struct node
 
 //return Address
 // #define NEXT_ELMT(p, idx) ELMT(*NEXT_LISTDIN(p), (idx))
+
+//return Address*
+#define BUFFER(p) (p)->next
+
+// return Address
+#define NEXT(p, idx) *((p)->next+idx)
+
+//return int
+#define CHILD_COUNT(p) (p)->childCount
 
 // void CreateNode(Node *a, Food *b);
 Address newNode(Food *a);

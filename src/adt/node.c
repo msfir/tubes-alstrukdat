@@ -15,16 +15,21 @@ Address newNode(Food *a){
         // }
 
         // CreateListDin(&NEXT_LISTDIN(res), MAX_CHILDREN); // create a new dynarr with 0 element
+
+        CHILD_COUNT(res) = 0;
+        BUFFER(res) = NULL; // set head of list to NULL
     }
 
     return res;
 }
 
 int getChildCount(Node a){
-    int i, res = 0;
-    for(i = 0; i < MAX_CHILDREN; i++){
-        // if(NEXT_ELMT(&a, i) != NULL) res++;
-    }
+    // int i, res = 0;
+    // for(i = 0; i < MAX_CHILDREN; i++){
+    //     // if(NEXT_ELMT(&a, i) != NULL) res++;
+    // }
 
-    return res;
+    // return res;
+
+    return CHILD_COUNT(&a);
 }
