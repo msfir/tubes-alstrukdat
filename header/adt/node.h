@@ -3,20 +3,24 @@
 
 #define MAX_CHILDREN 5 //assuming so
 
+#include "listdin.h"
 #include "food.h"
 
 typedef struct node* Address;
 typedef struct node
 {
-    Food *info; //address
-    Address next[MAX_CHILDREN];
+    Food *info;
+    ListDin *next;
 } Node;
 
 //return Food*
 #define INFO(p) (p)->info
 
+//return ListDin
+#define NEXT_LISTDIN(p) (p)->next
+
 //return Address
-#define NEXT(p, idx) (p)->next[(idx)]
+#define NEXT_ELMT(p, idx) ELMT(*NEXT_LISTDIN(p), (idx))
 
 // void CreateNode(Node *a, Food *b);
 Address newNode(Food *a);

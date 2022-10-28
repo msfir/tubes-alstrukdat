@@ -10,10 +10,8 @@
 #include "boolean.h"
 #include "cstring.h"
 
-
 #include "node.h"
 
-// typedef Address* ListDin;
 typedef struct listdin
 {
     Address* buffer;
@@ -50,4 +48,6 @@ void displayListDinAsFood(ListDin ld);
 void insertLast(ListDin *l, Address val);
 
 void deleteLast(ListDin *l, Address *val);
+
+
 #endif
