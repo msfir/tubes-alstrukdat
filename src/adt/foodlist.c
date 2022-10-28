@@ -6,7 +6,7 @@
 void CreateFoodList (FoodList *L){
     int i ;
     for (i = 0; i < CAPACITY;i++){
-        ELMT(*L, i) = MARK;
+        Id(ELMT(*L, i)) = MARK;
     }
 };
 /* I.S L sembarang */

@@ -13,6 +13,7 @@ enum Action { BUY, MIX, CHOP, FRY, BOIL };
 
 /* *** Definisi TYPE Food *** */
 typedef struct {
+    int id;
     String name;
     Time expiration_time;
     enum Action action_loc;
@@ -20,6 +21,8 @@ typedef struct {
 } Food;
 
 /* *** Notasi Akses: selektor Makanan *** */
+//return int
+#define Id(F)             (F).id
 //return String
 #define Name(F)           (F).name
 //return Time
