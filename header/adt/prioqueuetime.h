@@ -7,82 +7,65 @@
 #ifndef prioqueuetime_H
 #define prioqueuetime_H
 
+#include <stdlib.h>
 #include "boolean.h"
 #include "food.h"
 
-/* Konstanta untuk mendefinisikan address tak terdefinisi */
-#define Nil -1
+#define IDX_UNDEF -1
 
-typedef int address; /* indeks tabel */
-typedef Food infotype;
-/* Contoh deklarasi variabel bertype PrioQueueTime : */
-/* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
-typedef struct {
-    infotype* T;  /* tabel penyimpan elemen */
-    address HEAD; /* alamat penghapusan */
-    address TAIL; /* alamat penambahan */
-    int MaxEl;    /* Max elemen queue */
+/* Konstanta */
+#define PQ_CAPACITY TASK_CAP // Kl dinamis ini masih dipake?
+
+/* Deklarasi ElTypeQueue */
+typedef Food* ElTypeQueue; //bingung buat apa
+
+/* Definisi PrioQueue */
+typedef struct PrioQueue {
+	ElTypeQueue buffer[PQ_CAPACITY];
+	int idxHead;
+	int idxTail;
 } PrioQueueTime;
-/* Definisi PrioQueueTime kosong: HEAD=Nil; TAIL=Nil. */
-/* Catatan implementasi: T[0] tidak pernah dipakai */
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika e adalah infotype dan Q adalah PrioQueueTime, maka akses elemen : */
-// clang-format off
-#define Time(e)     (e).expiration_time
-#define Head(Q)     (Q).HEAD
-#define Tail(Q)     (Q).TAIL
-#define InfoHead(Q) (Q).T[(Q).HEAD]
-#define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxEl(Q)    (Q).MaxEl
-#define Elmt(Q,     i) (Q).T[(i)]
-// clang-format on
-
-/* ********* Prototype ********* */
-boolean IsEmpty(PrioQueueTime Q);
-/* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFull(PrioQueueTime Q);
-/* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmt(PrioQueueTime Q);
-/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
+/* Jika pq adalah PrioQueue, maka akses elemen : */
+#define PQ_IDX_HEAD(pq) (pq).idxHead
+#define PQ_IDX_TAIL(pq) (pq).idxTail
+#define     PQ_HEAD(pq) (pq).buffer[(pq).idxHead]
+#define     PQ_TAIL(pq) (pq).buffer[(pq).idxTail]
 
 /* *** Kreator *** */
-void MakeEmpty(PrioQueueTime* Q, int Max);
+void CreatePrioQueue(PrioQueue *pq);
 /* I.S. sembarang */
-/* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
-/* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
-/* Proses : Melakukan alokasi, membuat sebuah Q kosong */
+/* F.S. Sebuah pq kosong terbentuk dengan kondisi sbb: */
+/* - Index head bernilai IDX_UNDEF */
+/* - Index tail bernilai IDX_UNDEF */
+/* Proses : Melakukan alokasi, membuat sebuah pq kosong */
 
-/* *** Destruktor *** */
-void DeAlokasi(PrioQueueTime* Q);
-/* Proses: Mengembalikan memori Q */
-/* I.S. Q pernah dialokasi */
-/* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
+boolean isEmptyQueue(PrioQueue pq);
+/* Mengirim true jika pq kosong: lihat definisi di atas */
 
-/* *** Primitif Add/Delete *** */
-void Enqueue(PrioQueueTime* Q, infotype X);
-/* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut membesar
- * berdasarkan time */
-/* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
-/* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
-        TAIL "maju" dengan mekanisme circular buffer; */
-void Dequeue(PrioQueueTime* Q, infotype* X);
-/* Proses: Menghapus X pada Q dengan aturan FIFO */
-/* I.S. Q tidak mungkin kosong */
-/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular
-   buffer; Q mungkin kosong */
+boolean isFullQueue(PrioQueue pq);
+/* Mengirim true jika tabel penampung elemen pq sudah penuh */
+/* yaitu jika index head bernilai 0 dan index tail bernilai QUEUE_CAPACITY-1 */
 
-/* Operasi Tambahan */
-void PrintPrioQueueTime(PrioQueueTime Q);
-/* Mencetak isi queue Q ke layar */
-/* I.S. Q terdefinisi, mungkin kosong */
-/* F.S. Q tercetak ke layar dengan format:
-<time-1> <elemen-1>
-...
-<time-n> <elemen-n>
-#
-*/
+int lengthQueue(PrioQueue pq);
+/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika pq kosong. */
+
+/*** Primitif Add/Delete ***/
+void enqueue(PrioQueue *pq, ElTypeQueue val);
+/* Proses: Menambahkan val pada pq dengan aturan FIFO */
+/* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
+/* F.S. val menjadi QUEUE_TAIL yang baru, QUEUE_IDX_TAIL "mundur".
+        Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
+        menjadi rata kiri untuk membuat ruang kosong bagi QUEUE_TAIL baru  */
+
+void dequeue(PrioQueue * pq, ElTypeQueue *val);
+/* Proses: Menghapus val pada q dengan aturan FIFO */
+/* I.S. pq tidak mungkin kosong */
+/* F.S. val = nilai elemen QUEUE_HEAD pd
+I.S., QUEUE_HEAD dan QUEUE_IDX_HEAD "mundur"; 
+        pq mungkin kosong */
+
+void displayQueue(PrioQueue q);
 
 #endif
