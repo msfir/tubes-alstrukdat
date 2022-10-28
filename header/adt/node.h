@@ -25,7 +25,7 @@ typedef struct node
 
 
 
-Address newNode(Food *a);
+Address newNode(int a);
 
 int getChildCount(Node a);
 
