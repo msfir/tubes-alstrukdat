@@ -1,53 +1,55 @@
-/* File: listdin.h */
-/* Definisi ADT Dinamik List */
+// /* File: listdin.h */
+// /* Definisi ADT Dinamik List */
 
-// hanya digunakan sementara untuk node dan tree
-// expect further changes
+// // hanya digunakan sementara untuk node dan tree
+// // expect further changes
 
-#ifndef LISTDIN_H
-#define LISTDIN_H
+// #ifndef LISTDIN_H
+// #define LISTDIN_H
 
-#include "boolean.h"
-#include "cstring.h"
+// #include "boolean.h"
+// #include "cstring.h"
 
-#include "node.h"
+// #include "node.h"
 
-typedef struct listdin
-{
-    Address* buffer;
-    int listLength;
-    int capacity;
-} ListDin;
+// // struct Address;
 
-//return Address*
-#define BUFFER(l) (l).buffer
-//return Address
-#define ELMT(l, idx) (l).buffer[idx]
-//return int
-#define LISTLEN(l) (l).listLength
-//return int
-#define CAPACITY(l) (l).capacity
+// typedef struct listdin
+// {
+//     struct Address* buffer;
+//     int listLength;
+//     int capacity;
+// } ListDin;
 
-//get
-int len(ListDin ld);
+// //return Address*
+// #define BUFFER(l) (l).buffer
+// //return Address
+// #define ELMT(l, idx) (l).buffer[idx]
+// //return int
+// #define LISTLEN(l) (l).listLength
+// //return int
+// #define CAPACITY(l) (l).capacity
 
-boolean isEmpty(ListDin ld);
+// //get
+// int len(ListDin ld);
 
-boolean isFull(ListDin ld);
+// boolean isEmpty(ListDin ld);
 
-
-//method
-void CreateListDin(ListDin* ld, int capacity);
-
-void dealocateList(ListDin *l);
-
-void displayListDin(ListDin ld);
-void displayListDinAsFood(ListDin ld);
-
-//
-void insertLast(ListDin *l, Address val);
-
-void deleteLast(ListDin *l, Address *val);
+// boolean isFull(ListDin ld);
 
 
-#endif
+// //method
+// void CreateListDin(ListDin* ld, int capacity);
+
+// void dealocateList(ListDin *l);
+
+// void displayListDin(ListDin ld);
+// void displayListDinAsFood(ListDin ld);
+
+// //
+// void insertLast(ListDin *l, Address val);
+
+// void deleteLast(ListDin *l, Address *val);
+
+
+// #endif
