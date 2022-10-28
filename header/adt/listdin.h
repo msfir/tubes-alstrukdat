@@ -23,13 +23,10 @@ typedef struct listdin
 
 //return Address*
 #define BUFFER(l) (l).buffer
-
 //return Address
 #define ELMT(l, idx) (l).buffer[idx]
-
 //return int
 #define LISTLEN(l) (l).listLength
-
 //return int
 #define CAPACITY(l) (l).capacity
 
@@ -46,7 +43,8 @@ void CreateListDin(ListDin* ld, int capacity);
 
 void dealocateList(ListDin *l);
 
-void printListDin(ListDin ld);
+void displayListDin(ListDin ld);
+void displayListDinAsFood(ListDin ld);
 
 //
 void insertLast(ListDin *l, Address val);

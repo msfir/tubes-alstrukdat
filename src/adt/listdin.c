@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "listdin.h"
 
-// #include "cstring.h"
+#include "cstring.h"
 #include "node.h"
 
 int len(ListDin ld){
@@ -32,12 +32,20 @@ void dealocateList(ListDin *l){
     free(BUFFER(*l));
 }
 
-void printListDin(ListDin ld){
+void displayListDin(ListDin ld){
     int i; printf("[");
     for(i = 0; i<LISTLEN(ld); i++){
         if(i != 0) printf(", ");
-        printf("p%p", *(BUFFER(ld)+i));
-    } printf("]");
+        printf("p : %p", *(BUFFER(ld)+i));
+    } printf("]\n");
+}
+
+void displayListDinAsFood(ListDin ld){
+    int i; printf("[");
+    for(i = 0; i<LISTLEN(ld); i++){
+        if(i != 0) printf(", ");
+        printf("%s", STR_VALUE(Name(*INFO(ELMT(ld, i)))));
+    } printf("]\n");
 }
 
 void insertLast(ListDin *l, Address val){
