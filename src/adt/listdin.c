@@ -1,33 +1,55 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "listdin.h"
 
 // #include "cstring.h"
 #include "node.h"
 
 int len(ListDin ld){
-    return LENGTH(ld);
+    return LISTLEN(ld);
 }
 
 boolean isEmpty(ListDin ld){
-    return (LENGTH(ld) == 0);
+    return (LISTLEN(ld) == 0);
 }
 
 boolean isFull(ListDin ld){
-    return (LENGTH(ld) == CAPACITY(ld));
+    return (LISTLEN(ld) == CAPACITY(ld));
 }
 
-void CreateListDin(ListDin* ld){
-    CAPACITY(*ld) = DEFAULT_CAPACITY;
-    LENGTH(*ld) = 0;
+void CreateListDin(ListDin* ld, int capacity){
+    CAPACITY(*ld) = capacity;
+    LISTLEN(*ld) = 0;
 
-    HEAD(*ld) = (Address*) malloc(CAPACITY(*ld)*sizeof(Address));
-    if(HEAD(*ld) == NULL) printf("WARNING DANGEROUS BEHAVIOR IN listdin.c : FAILED MALLOC");
+    BUFFER(*ld) = (Address*) malloc(CAPACITY(*ld)*sizeof(Address));
+    if(BUFFER(*ld) == NULL) printf("WARNING DANGEROUS BEHAVIOR IN listdin.c : FAILED MALLOC");
+}
+
+void dealocateList(ListDin *l){
+    CAPACITY(*l) = 0;
+    LISTLEN(*l);
+
+    free(BUFFER(*l));
 }
 
 void printListDin(ListDin ld){
     int i; printf("[");
-    for(i = 0; i<LENGTH(ld); i++){
+    for(i = 0; i<LISTLEN(ld); i++){
         if(i != 0) printf(", ");
-        printf("p%p", *(HEAD(ld)+i));
+        printf("p%p", *(BUFFER(ld)+i));
     } printf("]");
+}
+
+void insertLast(ListDin *l, Address val){
+    if(!isFull(*l)){
+        ELMT(*l, LISTLEN(*l)) = val;
+        LISTLEN(*l)++; 
+    }
+}
+
+void deleteLast(ListDin *l, Address *val){
+    if(!isEmpty(*l)){
+        *val = ELMT(*l, LISTLEN(*l)-1);
+        LISTLEN(*l)--;
+    }
 }

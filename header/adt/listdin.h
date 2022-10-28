@@ -10,24 +10,25 @@
 #include "boolean.h"
 #include "cstring.h"
 
-#define DEFAULT_CAPACITY 40
-//i dont want to bloat the memory with food struct
 
 #include "node.h"
 
 // typedef Address* ListDin;
 typedef struct listdin
 {
-    Address* head;
-    int length;
+    Address* buffer;
+    int listLength;
     int capacity;
 } ListDin;
 
 //return Address*
-#define HEAD(l) (l).head
+#define BUFFER(l) (l).buffer
+
+//return Address
+#define ELMT(l, idx) (l).buffer[idx]
 
 //return int
-#define LENGTH(l) (l).length
+#define LISTLEN(l) (l).listLength
 
 //return int
 #define CAPACITY(l) (l).capacity
@@ -41,8 +42,14 @@ boolean isFull(ListDin ld);
 
 
 //method
-void CreateListDin(ListDin* ld);
+void CreateListDin(ListDin* ld, int capacity);
+
+void dealocateList(ListDin *l);
 
 void printListDin(ListDin ld);
 
+//
+void insertLast(ListDin *l, Address val);
+
+void deleteLast(ListDin *l, Address *val);
 #endif
