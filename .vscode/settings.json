@@ -2,6 +2,7 @@
     "files.associations": {
         "listlinier.h": "c",
         "cstring.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "listdin.h": "c"
     }
 }
