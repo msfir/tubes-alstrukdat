@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "listlinier.h": "c",
+        "boolean.h": "c"
         "cstring.h": "c",
         "time.h": "c",
         "listdin.h": "c"

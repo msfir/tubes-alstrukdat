@@ -1,37 +1,24 @@
-/* File: simulator.h */
-/* Definisi ADT Simulator */
-
-#ifndef SIMULATOR_H
-#define SIMULATOR_H
-
-#include "boolean.h"
+#include "../boolean.h"
 #include "point.h"
 #include "string.h"
 #include "prioqueuetime.h"
 #include "time.h"
-
-// #include "notification.h
-#include "cstring.h"
-
-/* *** Definisi TYPE Simulator *** */
-typedef struct {
-    String username;
-    Point location;
-    PrioQueueTime inventory;
-} Simulator;
-
-/* *** Notasi Akses: selektor Simulator *** */
-// clang-format off
-#define Username(I)  (I).username
-#define Location(I)  (I).location
-#define Inventory(I) (I).inventory
-#define Time(I) (I).time
-// clang-format on
+#include "simulator.h"
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator (Simulator *x);
+void CreateSimulator (Simulator *x, Point *p, Time *t){
 /* I.S. x sembarang
    F.S. x terdefinisi*/
+   //Inventory i;
+   Time t;
+   Point p;
+   //CreatePoint();
+   //NewString();
+   //CreatePoint();
+   //CreateTime();
+   //CreateNotification();
+   //CreateInventory();
+}
 
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
@@ -49,5 +36,3 @@ void CreateSimulator (Simulator *x);
 // void SimulatorCommand (Simulator *x, string command);
 /* I.S. Simulator terdefinisi
    F.S. Simulator melakukan command dengan tipe data string*/
-
-#endif
