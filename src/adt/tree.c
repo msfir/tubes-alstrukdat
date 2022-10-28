@@ -10,10 +10,6 @@ void CreateTree(Tree *a, Node *b){
 }
 
 void MakeChildren(Node *a, Node *b){
-    // if(getChildCount(*a) < MAX_CHILDREN){
-    //     // NEXT_ELMT(a, getChildCount(*a)) = b;
-    // }
-    //add warning if passing the limit amount of children
     Address* childrenList = (Address*) malloc((getChildCount(*a)+1) * sizeof(Address));
     int i;
     if (childrenList != NULL){
@@ -33,9 +29,6 @@ void MakeChildren(Node *a, Node *b){
 void listParent(Tree a){
     int i;
     for(i = 0; i<getChildCount(*a); i++){        
-        // printf("%s -> %s\n", STR_VALUE(INFO(a)->name), STR_VALUE(INFO(NEXT_ELMT(a, i))->name));
-        // if(NEXT_ELMT(a, i) != NULL) {listParent(NEXT_ELMT(a, i));}
-
         printf("%s -> %s\n", STR_VALUE(Name(*INFO(a))), STR_VALUE(Name(*INFO(NEXT(a, i)))));
         if(NEXT(a, i) != NULL) listParent(NEXT(a, i));
     }
