@@ -117,19 +117,19 @@ Time MenitToTIME(long N){
 /* *** Kelompok Operator Relational *** */
 boolean TEQ (Time T1, Time T2) {
 /* Mengirimkan true jika T1=T2, false jika tidak */
-    return TIMEToDetik(T1) == TIMEToDetik(T2);
+    return TIMEToMenit(T1) == TIMEToMenit(T2);
 }
 boolean TNEQ (Time T1, Time T2) {
 /* Mengirimkan true jika T1 tidak sama dengan T2 */
-    return TIMEToDetik(T1) != TIMEToDetik(T2);
+    return TIMEToMenit(T1) != TIMEToMenit(T2);
 }
 boolean TLT (Time T1, Time T2) {
 /* Mengirimkan true jika T1<T2, false jika tidak */
-    return TIMEToDetik(T1) < TIMEToDetik(T2);
+    return TIMEToMenit(T1) < TIMEToMenit(T2);
 }
 boolean TGT (Time T1, Time T2) {
 /* Mengirimkan true jika T1>T2, false jika tidak */
-    return TIMEToDetik(T1) > TIMEToDetik(T2);
+    return TIMEToMenit(T1) > TIMEToMenit(T2);
 }
 /* *** Operator aritmatika TIME *** */
 Time NextMenit(Time T) {

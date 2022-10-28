@@ -11,6 +11,8 @@
 
 enum Action { BUY, MIX, CHOP, FRY, BOIL };
 
+static const char ActionName[][4] = { "Buy", "Mix", "Chop", "Fry", "Boil" };
+
 /* *** Definisi TYPE Food *** */
 typedef struct {
     int id;
@@ -32,7 +34,7 @@ typedef struct {
 //return Time
 #define DeliveryTime(F)   (F).delivery_time
 
-void CreateFood(Food* F, String name, Time expiration_time, enum Action action_loc, Time delivery_time);
+void CreateFood(Food* F, int id, String name, Time expiration_time, enum Action action_loc, Time delivery_time);
 
 void DisplayFood(Food F);
 
