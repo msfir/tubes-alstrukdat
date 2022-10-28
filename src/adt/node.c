@@ -5,7 +5,7 @@
 
 Address newNode(Food *a){
     Address res = (Address) malloc(sizeof(Node));
-    ListDin lmao; CreateListDin(&lmao, 2);
+    // ListDin lmao; CreateListDin(&lmao, 2);
     if(res != NULL){
         INFO(res) = a;
         
@@ -14,7 +14,7 @@ Address newNode(Food *a){
         //     NEXT(res, i) = NULL;
         // }
 
-        CreateListDin(&NEXT_LISTDIN(res), MAX_CHILDREN); // create a new dynarr with 0 element
+        // CreateListDin(&NEXT_LISTDIN(res), MAX_CHILDREN); // create a new dynarr with 0 element
     }
 
     return res;
@@ -23,7 +23,7 @@ Address newNode(Food *a){
 int getChildCount(Node a){
     int i, res = 0;
     for(i = 0; i < MAX_CHILDREN; i++){
-        if(NEXT_ELMT(&a, i) != NULL) res++;
+        // if(NEXT_ELMT(&a, i) != NULL) res++;
     }
 
     return res;
