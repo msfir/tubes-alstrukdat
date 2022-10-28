@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include "node.h"
 
-Address newNode(Food *a){
+Address newNode(int val){
     Address res = (Address) malloc(sizeof(Node));
     // ListDin lmao; CreateListDin(&lmao, 2);
     if(res != NULL){
-        INFO(res) = a;
+        INFO(res) = val;
         CHILD_COUNT(res) = 0;
         BUFFER(res) = NULL;
     }
