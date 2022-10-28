@@ -9,6 +9,7 @@
 
 #define NMax 50
 #define BLANK ' '
+#define EOL '\n'
 
 typedef struct {
     char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai
@@ -25,7 +26,7 @@ void IgnoreBlanks();
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void STARTWORD(FILE *stream, char mark);
+void InitMachine(FILE *stream, char mark);
 /* I.S. : CC sembarang
    F.S. : EndWord = true, dan CC = MARK;
           atau EndWord = false, CWord adalah kata yang sudah diakuisisi,
@@ -33,10 +34,15 @@ void STARTWORD(FILE *stream, char mark);
 
 void ADVWORD();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
-   F.S. : CWord adalah kata terakhir yang sudah diakuisisi,
+   F.S. : CWord adalah kata/baris terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndWord = true.
-   Proses : Akuisisi kata menggunakan procedure SalinWord */
+          Jika CC = MARK, EndWord = true. */
+
+void ADVLINE();
+/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
+   F.S. : CWord adalah baris/kata terakhir yang sudah diakuisisi,
+          CC adalah karakter pertama dari baris berikutnya, mungkin MARK
+          Jika CC = MARK, EndWord = true. */
 
 void CopyWord();
 /* Mengakuisisi kata, menyimpan dalam CWord
@@ -45,5 +51,13 @@ void CopyWord();
           CC = BLANK atau CC = MARK;
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void CopyLine();
+/* Mengakuisisi baris, menyimpan dalam CWord
+   I.S. : CC adalah karakter pertama dari baris
+   F.S. : CWord berisi kata yang sudah diakuisisi;
+          CC = EOL atau CC = MARK;
+          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang baris melebihi NMax, maka sisa baris "dipotong" */
 
 #endif

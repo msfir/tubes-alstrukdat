@@ -12,7 +12,10 @@ typedef struct node
     Address next[MAX_CHILDREN];
 } Node;
 
+//return Food*
 #define INFO(p) (p)->info
+
+//return Address
 #define NEXT(p, idx) (p)->next[(idx)]
 
 // void CreateNode(Node *a, Food *b);
