@@ -37,7 +37,7 @@ void start_parser(FILE *stream) {
  * Melakukan parsing untuk bilangan integer non-negatif, dan mereturn hasilnya.
  */
 int parse_int() {
-    ADVLINE();
+    ADVWORD();
     String word = StringFromArr(currentWord.TabWord, currentWord.Length);
     word = trim_end(word);
     int res = str_to_int(word);
@@ -53,15 +53,15 @@ Time parse_time() {
 
     ADVWORD();
     word = StringFromArr(currentWord.TabWord, currentWord.Length);
-    int DD = str_to_int(word);
+    int DD = str_to_int(trim_end(word));
     
     ADVWORD();
     word = StringFromArr(currentWord.TabWord, currentWord.Length);
-    int HH = str_to_int(word);
+    int HH = str_to_int(trim_end(word));
 
-    ADVLINE();
+    ADVWORD();
     word = StringFromArr(currentWord.TabWord, currentWord.Length);
-    int MM = str_to_int(word);
+    int MM = str_to_int(trim_end(word));
 
     CreateTime(&time, DD, HH, MM);
     return time;
@@ -72,7 +72,7 @@ Time parse_time() {
  */
 String parse_line() {
     ADVLINE();
-    return StringFromArr(currentWord.TabWord, currentWord.Length);
+    return trim_end(StringFromArr(currentWord.TabWord, currentWord.Length));
 }
 
 /*

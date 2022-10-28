@@ -62,12 +62,16 @@ void CopyWord() {
        diakuisisi. Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong
      */
     currentWord.Length = 0;
-    while (currentChar != BLANK && !EOP) {
+    while (currentChar != BLANK && !EOL && !EOP) {
         if (currentWord.Length < NMax) { // jika lebih akan terpotong
             currentWord.TabWord[currentWord.Length++] = currentChar;
             ADV();
         } else
             break;
+    }
+    if (EOL) {
+        currentWord.TabWord[currentWord.Length++] = currentChar;
+        ADV();
     }
 }
 
@@ -80,12 +84,13 @@ void CopyLine() {
        diakuisisi. Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong
      */
     currentWord.Length = 0;
-    while (currentChar != EOL && !EOP) {
+    while (!EOP && !EOL) {
         if (currentWord.Length < NMax) { // jika lebih akan terpotong
             currentWord.TabWord[currentWord.Length++] = currentChar;
             ADV();
         } else
             break;
     }
+    currentWord.TabWord[currentWord.Length++] = currentChar;
     ADV();
 }

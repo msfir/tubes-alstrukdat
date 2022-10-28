@@ -10,6 +10,7 @@
 /* State Mesin */
 extern char currentChar;
 extern boolean EOP;
+extern boolean EOL;
 extern FILE *pita;
 extern char MARK;
 
