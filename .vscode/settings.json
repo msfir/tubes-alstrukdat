@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "listlinier.h": "c"
+        "listlinier.h": "c",
+        "boolean.h": "c"
     }
 }
