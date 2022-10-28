@@ -22,7 +22,6 @@
 /* DEFINISI */
 typedef struct {
     Food buffer[CAPACITY]; // Makanan diurutkan berdasarkan ID secara ascending
-    int NEFF;                   // List kosong jika NEFF = 0
 } FoodList;
 
 /* SELEKTOR */
@@ -51,7 +50,7 @@ boolean isEmptyFood (FoodList L);
 boolean isFullFood (FoodList L);
 /* Menghasilkan True jika L penuh. False jika tidak */
 
-void addFood (FoodList *L, Makanan M);
+void addFood (FoodList *L, Food M);
 /* I.S L terdefinisi dan tidak penuh. M terdefinisi */
 /* F.S Menambahkan M sebagai elemen terakhir list L. NEFF L bertambah 1 */
 

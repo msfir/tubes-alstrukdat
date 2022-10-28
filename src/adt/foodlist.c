@@ -4,7 +4,6 @@
 #include "cstring.h"
 /* **************KONSTRUKTOR************** */
 void CreateFoodList (FoodList *L){
-    NEFF(*L) = 0;
     int i ;
     for (i = 0; i < CAPACITY;i++){
         ELMT(*L, i) = MARK;
@@ -49,12 +48,11 @@ boolean isFullFood (FoodList L){
 };
 /* Menghasilkan True jika L penuh. False jika tidak */
 
-void addFood (FoodList *L, Makanan M){
+void addFood (FoodList *L, Food M){
     if (isFullFood(*L)){
         printf("List makanan penuh");
     }else{
         ELMT(*L, listLength(*L)) = M;
-        NEFF(*L)++;
     }
 };
 /* I.S L terdefinisi dan tidak penuh. M terdefinisi */
@@ -193,4 +191,6 @@ void printCatalog (FoodList L){
 /* F.S Memunculkan ke layar nama makanan, waktu kadaluwarsa, aksi yang bisa dilakukan, dan waktu delivery */
 
 Food getFoodWithIdxAction (FoodList L, char action, int idx);
+{pake counter}
 /* Mengembalikan elemen Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi */
+
