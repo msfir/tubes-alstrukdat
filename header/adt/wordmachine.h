@@ -9,7 +9,6 @@
 
 #define NMax 50
 #define BLANK ' '
-#define EOL '\n'
 
 typedef struct {
     char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai

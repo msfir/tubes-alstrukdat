@@ -6,6 +6,7 @@
 
 char currentChar;
 boolean EOP;
+boolean EOL;
 FILE *pita;
 char MARK;
 
@@ -36,6 +37,7 @@ void ADV() {
     /* Algoritma */
     retval = fscanf(pita, "%c", &currentChar);
     EOP = feof(pita) || currentChar == MARK;
+    EOL = currentChar == '\n';
     if (EOP) {
         fclose(pita);
     }
