@@ -21,12 +21,12 @@
 
 /* DEFINISI */
 typedef struct {
-    Food buffer[CAPACITY]; // Makanan diurutkan berdasarkan ID secara ascending
+    Food buffer[CAPACITY];  // Makanan diurutkan berdasarkan ID secara ascending
 } FoodList;
 
 /* SELEKTOR */
 #define ELMT(L, i) (L).buffer[(i)]
-#define NEFF(L) (L).NEFF
+// #define NEFF(L) (L).NEFF
 
 /* **************KONSTRUKTOR************** */
 void CreateFoodList (FoodList *L);

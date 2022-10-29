@@ -196,7 +196,19 @@ void printCatalog (FoodList L){
 
 Food getFoodWithIdxAction (FoodList L, char action, int idx);
 {
-    // pake counter
+    int counter = 0, i;
+    for (i = 0; i < listLength(L);i++){
+        if (ActionLocation(ELMT(L,i)) == action){
+            counter++;
+            if (counter == idx){
+                return ELMT(L, i);
+            }
+        }
+    }
+    Food nul;
+    CreateFood(&nul, MARK, "", "","", "");
+
+    return nul;
 }
 /* Mengembalikan elemen Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi */
 
