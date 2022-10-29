@@ -8,9 +8,7 @@ void CreateFoodList (FoodList *L){
     for (i = 0; i < CAPACITY;i++){
         Id(ELMT(*L, i)) = MARK;
         Name(ELMT(*L, i))="";
-        ExpirationTime(ELMT(*L, i))="";
         ActionLocation(ELMT(*L, i))="";
-        DeliveryTime(ELMT(*L, i))="";
     }
 };
 /* I.S L sembarang */
