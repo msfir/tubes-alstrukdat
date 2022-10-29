@@ -8,6 +8,8 @@ void CreateFoodList(FoodList *L) {
     int i;
     for (i = 0; i < CAPACITY; i++) {
         Id(ELMT(*L, i)) = MARK;
+        Name(ELMT(*L, i))="";
+        ActionLocation(ELMT(*L, i))="";
     }
 };
 /* I.S L sembarang */
@@ -16,7 +18,8 @@ void CreateFoodList(FoodList *L) {
 
 /* **************SELEKTOR TAMBAHAN************** */
 /* *** Banyaknya elemen *** */
-int listLength(FoodList l) {
+
+int listLength(FoodList l){
     int i = IDX_MIN;
     while (Id(ELMT(l, i)) != MARK && i < CAPACITY) {
         i++;
@@ -196,6 +199,20 @@ void printCatalog(FoodList L) {
 /* I.S L terdefinisi */
 /* F.S Memunculkan ke layar nama makanan, waktu kadaluwarsa, aksi yang bisa dilakukan, dan waktu delivery */
 
-Food getFoodWithIdxAction(FoodList L, char action, int idx);
-// { pake counter }
+Food getFoodWithIdxAction (FoodList L, char action, int idx)
+{
+    int counter = 0, i;
+    for (i = 0; i < listLength(L);i++){
+        if (ActionLocation(ELMT(L,i)) == action){
+            counter++;
+            if (counter == idx){
+                return ELMT(L, i);
+            }
+        }
+    }
+    Food nul;
+    CreateFood(&nul, MARK, "", "","", "");
+
+    return nul;
+}
 /* Mengembalikan elemen Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi */

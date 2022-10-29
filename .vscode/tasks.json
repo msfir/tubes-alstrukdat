@@ -10,11 +10,11 @@
                 "-std=c11",
                 "-Iheader",
                 "-Iheader/adt",
-                "${workspaceFolder}/src/*.c",
-                "${workspaceFolder}/src/adt/*.c",
+                "./src/*.c",
+                "./src/adt/*.c",
                 "-lm",
                 "-o",
-                "${workspaceFolder}/bin/main"
+                ".bin/main"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -22,7 +22,10 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "detail": "compiler: gcc"
         }
     ]
