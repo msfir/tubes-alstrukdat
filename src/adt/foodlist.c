@@ -216,3 +216,5 @@ boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food)
 
 boolean getFoodById(FoodList L, int id, Food *food);
 /*Mengembalikan true jika menemukan id sesuai input, dan false jika tidak*/
+
+int getIdxById(FoodList L, int id);

@@ -3,22 +3,22 @@
 #include "string.h"
 #include "prioqueuetime.h"
 #include "time.h"
-#include "simulator.h"
+// #include "simulator.h"
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator (Simulator *x, Point *p, Time *t){
+// void CreateSimulator (Simulator *x, Point *p, Time *t){
 /* I.S. x sembarang
    F.S. x terdefinisi*/
    //Inventory i;
-   Time t;
-   Point p;
+   // Time t;
+   // Point p;
    //CreatePoint();
    //NewString();
    //CreatePoint();
    //CreateTime();
    //CreateNotification();
    //CreateInventory();
-}
+// }
 
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */

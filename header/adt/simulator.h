@@ -16,8 +16,8 @@
 /* *** Definisi TYPE Simulator *** */
 typedef struct {
     String username;
-    Point location;
-    PrioQueueTime inventory;
+    POINT location;
+    Inventory inventory;
 } Simulator;
 
 /* *** Notasi Akses: selektor Simulator *** */
