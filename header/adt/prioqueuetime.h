@@ -8,14 +8,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../boolean.h"
+#include "boolean.h"
 #include "foodlist.h"
 
 #define IDX_UNDEF -1
 #define VAL_UNDEF -999
 
 /* Deklarasi ElTypeQueue */
-typedef Food* ElTypeQueue; 
+typedef Food ElTypeQueue; 
 
 /* Definisi PrioQueueTime (Dinamis) */
 typedef struct PrioQueue {
