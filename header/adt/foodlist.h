@@ -79,7 +79,10 @@ void printCatalog (FoodList L);
 /* I.S L terdefinisi */
 /* F.S Memunculkan ke layar nama makanan, waktu kadaluwarsa, aksi yang bisa dilakukan, dan waktu delivery */
 
-Food getFoodWithIdxAction (FoodList L, char action, int idx);
-/* Mengembalikan elemen Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi */
+boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food);
+/* Mengembalikan true jika ada Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi dan false jika tidak*/
+
+boolean getFoodById(FoodList L, int id, Food *food);
+/*Mengembalikan true jika menemukan id sesuai input, dan false jika tidak*/
 
 #endif
