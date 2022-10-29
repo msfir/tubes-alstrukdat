@@ -6,12 +6,12 @@
 typedef struct node* Address;
 typedef struct node
 {
-    Food *info;
+    int info;
     Address* next; //list of children
     int childCount;
 } Node;
 
-//return Food*
+//return int
 #define INFO(p) (p)->info
 
 //return Address*
@@ -25,7 +25,7 @@ typedef struct node
 
 
 
-Address newNode(Food *a);
+Address newNode(int a);
 
 int getChildCount(Node a);
 

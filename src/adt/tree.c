@@ -29,7 +29,7 @@ void MakeChildren(Node *a, Node *b){
 void listParent(Tree a){
     int i;
     for(i = 0; i<getChildCount(*a); i++){        
-        printf("%s -> %s\n", STR_VALUE(Name(*INFO(a))), STR_VALUE(Name(*INFO(NEXT(a, i)))));
+        printf("%d -> %d\n", INFO(a), INFO(NEXT(a, i)));
         if(NEXT(a, i) != NULL) listParent(NEXT(a, i));
     }
 }
