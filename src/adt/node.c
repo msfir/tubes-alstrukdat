@@ -2,11 +2,10 @@
 #include <stdio.h>
 #include "node.h"
 
-Address newNode(int val){
+Address newNode(int id){
     Address res = (Address) malloc(sizeof(Node));
-    // ListDin lmao; CreateListDin(&lmao, 2);
     if(res != NULL){
-        INFO(res) = val;
+        INFO(res) = id;
         CHILD_COUNT(res) = 0;
         BUFFER(res) = NULL;
     }

@@ -9,33 +9,46 @@
 #include "time.h"
 #include "cstring.h"
 
+
+/* *** Definisi enum Action *** */
 enum Action { BUY, MIX, CHOP, FRY, BOIL };
+/* enum Action dengan anggota berupa aksi yang harus dilakukan pada food */
 
 static char *ActionName[] = { "Buy", "Mix", "Chop", "Fry", "Boil" };
+/* representasi nilai enum Action dalam bentuk String */
+
+/********************************/
+
 
 /* *** Definisi TYPE Food *** */
 typedef struct {
-    int id;
-    String name;
-    Time expiration_time;
-    enum Action action_loc;
-    Time delivery_time;
+    int id; /* id food */
+    String name; /* nama food */
+    Time expiration_time; /* lama ekspirasi food */
+    enum Action action_loc; /* aksi yang harus dilakukan pada food */
+    Time delivery_time; /* lama pengiriman food */
 } Food;
+
+/********************************/
 
 /* *** Notasi Akses: selektor Makanan *** */
 //return int
 #define Id(F)             (F).id
 //return String
 #define Name(F)           (F).name
+//return enum Action | int
+#define ActionLocation(F) (F).action_loc
 //return Time
 #define ExpirationTime(F) (F).expiration_time
-//return enum Action
-#define ActionLocation(F) (F).action_loc
 //return Time
 #define DeliveryTime(F)   (F).delivery_time
 
+/* *** Konstruktor: Membentuk food dengan berbagai komponen sebagai properties-nya *** */
 void CreateFood(Food* F, int id, String name, Time expiration_time, enum Action action_loc, Time delivery_time);
+/* I.S. semua parameter terdefinisi */
+/* F.S. Terbentuk food dengan properties terdefinisi */
 
+/* *** Debug: Menampilkan Food beserta properties-nya ****/
 void DisplayFood(Food F);
 
 #endif
