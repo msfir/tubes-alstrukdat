@@ -4,6 +4,7 @@
 #define MATRIX_H
 
 #include "boolean.h"
+#include <stdio.h>
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -63,7 +64,7 @@ void readMatrix(Matrix *m, int nRow, int nCol);
 8 9 10 
 */
 
-void CreateMap(Matrix *m);
+void CreateMap(Matrix *m, FILE *file);
 
 void displayMap(Matrix m);
 

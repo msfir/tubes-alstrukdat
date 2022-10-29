@@ -28,3 +28,9 @@ run-test:
 
 clean:
 	rm -rf bin
+
+test-foodlist:
+	$(CC) $(CFLAGS) $(CINCLUDES) src/tests/test_foodlist.c $(ADTS) $(CLIBS) -o test
+
+test-map:
+	$(CC) $(CFLAGS) $(CINCLUDES) src/parser.c src/tests/test_map.c $(ADTS) $(CLIBS) -o test

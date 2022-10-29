@@ -9,9 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "boolean.h"
+#include "cstring.h"
 #include "matrix.h"
-#include "charmachine.c"
-#include "wordmachine.c"
+#include "parser.h"
+#include "wordmachine.h"
 
 void createMatrix(int nRows, int nCols, Matrix *m)
 {
@@ -98,55 +99,22 @@ void readMatrix(Matrix *m, int nRow, int nCol)
 }
 
 
-void CreateMap(Matrix *m)
+void CreateMap(Matrix *m, FILE *file)
 {
-   int rows = 0;
-   int cols = 0;
-   int count = 0;
-   int i, j;
+   // STARTWORDFROMFILE("test.txt");
+   start_parser(file);
 
-   STARTWORDFROMFILE("test.txt");
-   IgnoreBlanks();
+   int rows = parse_int();
+   int cols = parse_int();
 
-   while (!EndWord)
-   {
-      if(count == 0)
-      {
-          for(i = 0; i < currentWord.Length; i++)
-         {
-            rows *= 10;
-            rows += (int)currentWord.TabWord[i] - '0';
-         }
+   createMatrix(rows, cols, m);
+
+   for (int row = 0; row < rows; row++) {
+      String line = parse_line();
+
+      for (int col = 0; col < cols; col++) {
+         ELMT(*m, row, col) = STR_VALUE(line)[col];
       }
-
-      if(count == 1)
-      {
-          for(int j = 0; j < currentWord.Length; j++)
-         {
-            cols *= 10;
-            cols += (int)currentWord.TabWord[j] - '0';
-         }
-         createMatrix(rows, cols, m);
-      }
-
-      if(count > 1)
-      {
-         for(i = 0; i < currentWord.Length; i++)
-         {
-            if(currentWord.TabWord[i] == '#')
-               {
-                  ELMT(*m, count-2, i) = ' ';
-
-               }
-            else
-               {
-                  ELMT(*m, count-2, i) = currentWord.TabWord[i];
-               }
-         }
-      }
-      ADVWORD();
-      count++;
-
    }
 }
 
@@ -170,7 +138,14 @@ void displayMap(Matrix m)
             printf("*");
             printf(" ");
          }
-         printf("%c", ELMT(m, i, j));
+         if (ELMT(m, i, j) == '#')
+         {
+            printf(" ");
+         }
+         else
+         {
+            printf("%c", ELMT(m, i, j));
+         }
          printf(" ");
          if(j == getLastIdxCol(m))
          {
