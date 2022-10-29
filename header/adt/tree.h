@@ -36,9 +36,9 @@ void listParent(Tree a);
 
 void listChildren(Tree a);
 
-int greatestDegree(Tree a);
+// int greatestDegree(Tree a);
 
-int getDegree(Tree a, Node b); // what degree is b in tree a
+// int getDegree(Tree a, Node b); // what degree is b in tree a
 
 
 #endif
