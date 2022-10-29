@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "boolean.h"
 #include "prioqueuetime.h"
+#include "cstring.h"
 
 /* *** Konstruktor *** */
 void CreateInventory(Inventory *pq, int CAPACITY_INVENTORY){
@@ -62,7 +63,7 @@ void enqueueINVENTORY(Inventory *pq, ElTypeQueue val){
       // Pindahkan seluruhnya ke paling kiri
       if (PQ_IDX_TAIL(*pq) == (CAP_INVENTORY(*pq) - 1)) {
          for (int i = PQ_IDX_HEAD(*pq); i <= PQ_IDX_TAIL(*pq); i++) {
-            pq->bufferInventory[i - PQ_IDX_HEAD(*pq)] = pq->bufferInventory[i];
+            BUFFER_INVENTORY(*pq)[i - PQ_IDX_HEAD(*pq)] = BUFFER_INVENTORY(*pq)[i];
          }
          PQ_IDX_TAIL(*pq) -= PQ_IDX_HEAD(*pq);
          PQ_IDX_HEAD(*pq) = 0;
@@ -72,11 +73,11 @@ void enqueueINVENTORY(Inventory *pq, ElTypeQueue val){
       found = false;
       for (int i = PQ_IDX_HEAD(*pq); i < PQ_IDX_TAIL(*pq); i++) {
          t = (*pq).bufferInventory[i];
-         if (val->ExpirationTime < t->ExpirationTime) {
+         if (TIMEToMenit(ExpirationTime(val)) < TIMEToMenit(ExpirationTime(t))) {
             for (int j = PQ_IDX_TAIL(*pq) - 1; j >= i; j--) {
-               (*pq).bufferInventory[j+1] = (*pq).bufferInventory[j];
+               BUFFER_INVENTORY(*pq)[j+1] = BUFFER_INVENTORY(*pq)[j];
             }
-            (*pq).bufferInventory[i] = val;
+            BUFFER_INVENTORY(*pq)[i] = val;
             found = true;
             break;
          }
@@ -109,7 +110,9 @@ void displayInventory(Inventory pq){
       int i,j = 0;
       for (i = 0; i < lengthINVENTORY(pq); i++) {
          j++;
-         printf("%d. %c - %c", j, NAME(ELMT(L, i)), ExpirationTime((ELMT(L, i))));
+         Food food = BUFFER_INVENTORY(pq)[i];
+         printf("%d. %s - ", j, STR_VALUE(Name(food)));
+         TulisTIME(ExpirationTime(food));
       }
    } 
 }
