@@ -11,7 +11,7 @@
 
 enum Action { BUY, MIX, CHOP, FRY, BOIL };
 
-static const char ActionName[][4] = { "Buy", "Mix", "Chop", "Fry", "Boil" };
+static char *ActionName[] = { "Buy", "Mix", "Chop", "Fry", "Boil" };
 
 /* *** Definisi TYPE Food *** */
 typedef struct {

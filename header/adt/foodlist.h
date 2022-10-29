@@ -35,7 +35,7 @@ void CreateFoodList (FoodList *L);
 
 /* **************SELEKTOR TAMBAHAN************** */
 /* *** Banyaknya elemen *** */
-int listLength(ListStatik l);
+int listLength(FoodList l);
 /* Mengirimkan banyaknya elemen efektif List */
 /* Mengirimkan nol jika List kosong */  
 int getFirstIdx (FoodList L);

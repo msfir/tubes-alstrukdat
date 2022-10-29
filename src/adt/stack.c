@@ -3,6 +3,7 @@
 #include "boolean.h"
 #include "simulator.h"
 #include "cstring.h"
+#include "stack.h"
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
 void CreateEmpty(Stack *S){
