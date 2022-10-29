@@ -14,7 +14,7 @@
                 "./src/adt/*.c",
                 "-lm",
                 "-o",
-                ".bin/main"
+                "./bin/main"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
