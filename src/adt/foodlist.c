@@ -1,6 +1,7 @@
 #include "foodlist.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "cstring.h"
 /* **************KONSTRUKTOR************** */
@@ -8,8 +9,6 @@ void CreateFoodList(FoodList *L) {
     int i;
     for (i = 0; i < CAPACITY; i++) {
         Id(ELMT(*L, i)) = MARK;
-        Name(ELMT(*L, i))="";
-        ActionLocation(ELMT(*L, i))="";
     }
 };
 /* I.S L sembarang */
@@ -18,6 +17,7 @@ void CreateFoodList(FoodList *L) {
 
 /* **************SELEKTOR TAMBAHAN************** */
 /* *** Banyaknya elemen *** */
+
 int listLength(FoodList l){
     int i = IDX_MIN;
     while (Id(ELMT(l, i)) != MARK && i < CAPACITY) {
@@ -198,20 +198,21 @@ void printCatalog(FoodList L) {
 /* I.S L terdefinisi */
 /* F.S Memunculkan ke layar nama makanan, waktu kadaluwarsa, aksi yang bisa dilakukan, dan waktu delivery */
 
-Food getFoodWithIdxAction (FoodList L, char action, int idx)
+boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food)
 {
     int counter = 0, i;
     for (i = 0; i < listLength(L);i++){
         if (ActionLocation(ELMT(L,i)) == action){
             counter++;
             if (counter == idx){
-                return ELMT(L, i);
+                *food = ELMT(L, i);
+                return true;
             }
         }
     }
-    Food nul;
-    CreateFood(&nul, MARK, "", "","", "");
-
-    return nul;
+    return false;
 }
 /* Mengembalikan elemen Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi */
+
+boolean getFoodById(FoodList L, int id, Food *food);
+/*Mengembalikan true jika menemukan id sesuai input, dan false jika tidak*/

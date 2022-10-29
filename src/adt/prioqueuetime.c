@@ -1,68 +1,116 @@
 #include <stdio.h>
-#include "../boolean.h"
+#include <stdlib.h>
+#include "boolean.h"
 #include "prioqueuetime.h"
 
+/* *** Konstruktor *** */
+void CreateInventory(Inventory *pq, int CAPACITY_INVENTORY){
+/* I.S. pq sembarang, CAPACITY_INVENTORY > 0 */
+/* F.S. Terbentuk pq kosong dengan kapasitas CAPACITY_INVENTORY */
+/* - Index head bernilai IDX_UNDEF */
+/* - Index tail bernilai IDX_UNDEF */
+/* Proses : Melakukan alokasi, membuat sebuah pq kosong */
+   BUFFER_INVENTORY(*pq) = (ElTypeQueue *) malloc (CAPACITY_INVENTORY * sizeof(ElTypeQueue));
+   PQ_IDX_HEAD(*pq) = IDX_UNDEF;
+   PQ_IDX_TAIL(*pq) = IDX_UNDEF;
+   CAP_INVENTORY(*pq) = CAPACITY_INVENTORY;
+}
+
+void dealocateINVENTORY(Inventory *pq){
+/* I.S. pq terdefinisi */
+/* F.S. pq dikembalikan ke system, idxHead = IDX_UNDEF, idxTail = IDX_UNDEF */
+   free(BUFFER_INVENTORY(*pq));
+   PQ_IDX_HEAD(*pq) = IDX_UNDEF;
+   PQ_IDX_TAIL(*pq) = IDX_UNDEF;
+}
+
 /* ********* Prototype ********* */
-boolean IsEmpty(PrioQueueTime Q){
-/* Mengirim true jika Q kosong: lihat definisi di atas */
-   return ((Head(Q) == Nil) && (Tail(Q) == Nil));
+boolean isEmptyINVENTORY(Inventory pq){
+/* Mengirim true jika pq kosong: lihat definisi di atas */
+   return ((PQ_IDX_HEAD(pq) == IDX_UNDEF) && (PQ_IDX_TAIL(pq) == IDX_UNDEF));
 }
 
-boolean IsFull(PrioQueueTime Q){
-/* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
-   if (HEAD(Q) != 0) {
-      return (TAIL(Q) == (HEAD(Q) - 1));
-   } else {
-      return (TAIL(Q) == (MaxEl(Q) - 1));
-   }
+boolean isFullINVENTORY(Inventory pq){
+/* Mengirim true jika tabel penampung elemen pq sudah penuh */
+/* yaitu jika index head bernilai 0 dan index tail bernilai PQ_CAPACITY-1 */
+   return (lengthINVENTORY(pq) == CAP_INVENTORY(pq));
 }
 
-int NBElmt(PrioQueueTime Q){
-/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
-   if (IsEmpty(Q)) {
+int lengthINVENTORY(Inventory pq){
+/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika pq kosong. */
+   if (isEmptyINVENTORY(pq)) {
       return 0;
    } else {
-      
+      return (PQ_IDX_TAIL(pq) - PQ_IDX_HEAD(pq) + 1);
    }
 }
 
-/* *** Kreator *** */
-void MakeEmpty(PrioQueueTime* Q, int Max);
-/* I.S. sembarang */
-/* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
-/* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
-/* Proses : Melakukan alokasi, membuat sebuah Q kosong */
+void enqueueINVENTORY(Inventory *pq, ElTypeQueue val){
+/* Proses: Menambahkan val pada pq dengan aturan FIFO */
+/* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
+/* F.S. val menjadi PQ_TAIL yang baru, PQ_IDX_TAIL "mundur".
+        Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
+        menjadi rata kiri untuk membuat ruang kosong bagi PQ_TAIL baru  */
+   ElTypeQueue t;
+   boolean found;
+   
+   if (isEmptyINVENTORY(*pq)) { // Kondisi kalau kosong
+      PQ_IDX_HEAD(*pq) = 0;
+      PQ_IDX_TAIL(*pq) = 0;
+      PQ_TAIL(*pq) = val;
+   } else {
+      // Pindahkan seluruhnya ke paling kiri
+      if (PQ_IDX_TAIL(*pq) == (CAP_INVENTORY(*pq) - 1)) {
+         for (int i = PQ_IDX_HEAD(*pq); i <= PQ_IDX_TAIL(*pq); i++) {
+            pq->bufferInventory[i - PQ_IDX_HEAD(*pq)] = pq->bufferInventory[i];
+         }
+         PQ_IDX_TAIL(*pq) -= PQ_IDX_HEAD(*pq);
+         PQ_IDX_HEAD(*pq) = 0;
+      }
+      PQ_IDX_TAIL(*pq)++; // Menambahkan index tail
+      // insertion sort
+      found = false;
+      for (int i = PQ_IDX_HEAD(*pq); i < PQ_IDX_TAIL(*pq); i++) {
+         t = (*pq).bufferInventory[i];
+         if (val->ExpirationTime < t->ExpirationTime) {
+            for (int j = PQ_IDX_TAIL(*pq) - 1; j >= i; j--) {
+               (*pq).bufferInventory[j+1] = (*pq).bufferInventory[j];
+            }
+            (*pq).bufferInventory[i] = val;
+            found = true;
+            break;
+         }
+      }
+      if (!found) {
+         PQ_TAIL(*pq) = val;
+      }
+   }
+}
 
-/* *** Destruktor *** */
-void DeAlokasi(PrioQueueTime* Q);
-/* Proses: Mengembalikan memori Q */
-/* I.S. Q pernah dialokasi */
-/* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
+void dequeueINVENTORY(Inventory *pq, ElTypeQueue *val){
+/* Proses: Menghapus val pada pq dengan aturan FIFO */
+/* I.S. pq tidak mungkin kosong */
+/* F.S. val = nilai elemen PQ_HEAD. PQ_HEAD dan PQ_IDX_HEAD "mundur"; 
+        pq mungkin kosong */
+   *val = PQ_HEAD(*pq);
+   if (PQ_IDX_HEAD(*pq) == PQ_IDX_TAIL(*pq)) {
+      PQ_IDX_HEAD(*pq) = IDX_UNDEF;
+      PQ_IDX_TAIL(*pq) = IDX_UNDEF;
+   } else {
+      PQ_IDX_HEAD(*pq)++;
+   }
+}
 
-/* *** Primitif Add/Delete *** */
-void Enqueue(PrioQueueTime* Q, infotype X);
-/* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut membesar
- * berdasarkan time */
-/* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
-/* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
-        TAIL "maju" dengan mekanisme circular buffer; */
-void Dequeue(PrioQueueTime* Q, infotype* X);
-/* Proses: Menghapus X pada Q dengan aturan FIFO */
-/* I.S. Q tidak mungkin kosong */
-/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular
-   buffer; Q mungkin kosong */
-
-/* Operasi Tambahan */
-void PrintPrioQueueTime(PrioQueueTime Q);
-/* Mencetak isi queue Q ke layar */
-/* I.S. Q terdefinisi, mungkin kosong */
-/* F.S. Q tercetak ke layar dengan format:
-<time-1> <elemen-1>
-...
-<time-n> <elemen-n>
-#
-*/
-
+void displayInventory(Inventory pq){
+/* Display inventory yang ada */
+   if (isEmptyINVENTORY(pq)) {
+      printf("Tidak ada makanan");
+   } else {
+      int i,j = 0;
+      for (i = 0; i < lengthINVENTORY(pq); i++) {
+         j++;
+         printf("%d. %c - %c", j, NAME(ELMT(L, i)), ExpirationTime((ELMT(L, i))));
+      }
+   } 
+}
 
