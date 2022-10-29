@@ -1,1 +1,0 @@
-readMatrixMachineWord(m);
