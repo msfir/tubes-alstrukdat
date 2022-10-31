@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "node.h"
 
 Address newNode(int id){
@@ -13,6 +14,6 @@ Address newNode(int id){
     return res;
 }
 
-int getChildCount(Node a){
+int getChildCount(Node a) {
     return CHILD_COUNT(&a);
 }
