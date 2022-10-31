@@ -109,7 +109,9 @@ void displayInventory(Inventory pq){
       int i,j = 0;
       for (i = 0; i < lengthINVENTORY(pq); i++) {
          j++;
-         printf("%d. %c - %c", j, NAME(ELMTQUEUE(pq, i)), ExpirationTime((ELMTQUEUE(pq, i))));
+         Food food = BUFFER_INVENTORY(pq)[i];
+         printf("%d. %s - ", j, STR_VALUE(Name(food)));
+         TulisTIME(ExpirationTime(food));
       }
    } 
 }
