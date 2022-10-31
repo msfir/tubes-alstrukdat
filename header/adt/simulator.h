@@ -6,18 +6,16 @@
 
 #include "boolean.h"
 #include "point.h"
-#include "string.h"
 #include "prioqueuetime.h"
 #include "time.h"
-
-// #include "notification.h
 #include "cstring.h"
 
 /* *** Definisi TYPE Simulator *** */
 typedef struct {
-    String username;
-    POINT location;
-    Inventory inventory;
+   String username;
+   POINT location;
+   Inventory inventory;
+   Time time;
 } Simulator;
 
 /* *** Notasi Akses: selektor Simulator *** */
@@ -29,25 +27,19 @@ typedef struct {
 // clang-format on
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator (Simulator *x);
+void CreateSimulator(Simulator *x, String username, POINT location, Inventory inventory, Time time);
 /* I.S. x sembarang
    F.S. x terdefinisi*/
 
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
 /* ***************************************************************** */
-// boolean IsTherePlace (Simulator *x);
-/* Mengirim true jika ada tempat (M, T, F, C, B) di sekitar Simulator */
 
-// boolean IsThereWall (Simulator *x);
+boolean IsThereWall (Simulator x, int NCol, int NRow);
 /* Mengirim true jika ada dinding di sekitar Simulator */
 
-// void SimulatorMove (Simulator *x, string direct);
+void SimulatorMove (Simulator *x, POINT P, float deltaX, float deltaY);
 /* I.S. Posisi Simulator terdefinisi
    F.S. Simulator berubah posisi*/
-
-// void SimulatorCommand (Simulator *x, string command);
-/* I.S. Simulator terdefinisi
-   F.S. Simulator melakukan command dengan tipe data string*/
 
 #endif
