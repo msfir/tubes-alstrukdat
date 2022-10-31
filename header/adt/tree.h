@@ -4,41 +4,29 @@
 #ifndef TREE_H
 #define TREE_H
 
-// #include <stdio.h>
 #include "node.h"
 
-/// RANT!
-// tree is kinda confusing on its own
-// it has so many variant, and every variant is mostly distinct to each other :))))))))))))000
-// we'r using n-ary tree
-// but how can i implement it from a linked nodes:(
-
-// using this definition
-// 1 -> 2
-// 2 -> 1 
-
-
-// #include "listlinier.h" // maybe later i'll just make node.h, linkedlist kinda not needed here
-
-
+/* Definisi Tree */
 typedef Node* Tree;
 
-
-//return pointed datatype
-#define ELMT(p, idx) *(p+idx)
-
+/* *** Konstruktor: Membentuk Tree dari Node *** */
+/* melakukan assign pada sebuah Node sebagai root sebuah tree */
 void CreateTree(Tree *a, Node *b);
+/* I.S. a, b terdefinisi */
+/* F.S. Tree dengan Node b sebagai [root]*/
 
-// void PairNode(Node a, Node b); // pair by definition
-void MakeChildren(Node *a, Node *b); // b is a child;
+void MakeChildren(Node *a, Node *b);
+/* I.S. a, b terdefinisi */
+/* F.S. Node b menjadi child Node a*/
 
+/* *** Debug: Mendaftar relasi antara node *** */
 void listParent(Tree a);
+/* I.S. sembarang */
+/* F.S. tercetak parent dari masing masing tree */
 
 void listChildren(Tree a);
-
-// int greatestDegree(Tree a);
-
-// int getDegree(Tree a, Node b); // what degree is b in tree a
+/* I.S. sembarang */
+/* F.S. tercetak children dari masing masing tree */
 
 
 #endif

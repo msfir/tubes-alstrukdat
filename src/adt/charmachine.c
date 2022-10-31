@@ -3,6 +3,8 @@
 
 #include "charmachine.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 
 char currentChar;
 boolean EOP;
@@ -21,6 +23,8 @@ void START(FILE *stream, char mark) {
        menyala (true) */
 
     /* Algoritma */
+    EOP = false;
+    EOL = false;
     pita = stream;
     MARK = mark;
     ADV();
@@ -36,9 +40,13 @@ void ADV() {
 
     /* Algoritma */
     retval = fscanf(pita, "%c", &currentChar);
+    if (retval != 1 && errno != 0) {
+        perror("Error");
+        exit(1);
+    }
     EOP = feof(pita) || currentChar == MARK;
     EOL = currentChar == '\n';
-    if (EOP) {
+    if (EOP && pita != stdin) {
         fclose(pita);
     }
 }

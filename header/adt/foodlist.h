@@ -85,4 +85,10 @@ boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food);
 boolean getFoodById(FoodList L, int id, Food *food);
 /*Mengembalikan true jika menemukan id sesuai input, dan false jika tidak*/
 
+int getIdxById(FoodList L, int id);
+/*mengembalikan index makanan*/
+
+Food getElmtById(FoodList L, int id);
+/*pre kondisi: id terdefinisi
+mengembalikan Element food makanan*/
 #endif

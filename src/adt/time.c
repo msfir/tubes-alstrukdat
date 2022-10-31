@@ -69,10 +69,26 @@ void TulisTIME(Time T){
 };
 /* I.S. : T sembarang */
 /* F.S. : Nilai T ditulis dg format HH.MM */
-/* Proses : menulis nilai setiap komponen T ke layar dalam format HH:MM:SS
+/* Proses : menulis nilai setiap komponen T ke layar dalam format HH:MM
    tanpa karakter apa pun di depan atau belakangnya, termasuk spasi, enter,
    dll.*/
-
+void TulisFoodTIME(Time T){
+    if (Day(T)!=0){
+        printf("%02d hari ", Day(T));
+    }
+    if(Hour(T)!=0){
+        printf("%02d jam ", Hour(T));
+    }
+    if (Minute(T)!=0){
+        printf("%02d menit", Minute(T));
+    }
+    if (Day(T)==0 && Minute(T)==0 && Hour(T)==0){
+        printf("0");
+    }
+};
+/* I.S. : T sembarang */
+/* F.S. : Nilai T ditulis dg format DD hari HH jam MM menit */
+/* Proses : menulis nilai setiap komponen T ke layar dalam format */
 /* ***************************************************************** */
 /* KELOMPOK KONVERSI TERHADAP TYPE                                   */
 /* ***************************************************************** */

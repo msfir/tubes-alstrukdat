@@ -50,7 +50,7 @@ boolean isIdxEff(Matrix m, IdxType i, IdxType j)
 ElType getElmtDiagonal(Matrix m, IdxType i)
 {
 /* Mengirimkan elemen m(i,i) */
-   return ELMT(m, i, i);
+   return MatElmt(m, i, i);
 }
 
 /* ********** Assignment  Matrix ********** */
@@ -65,7 +65,7 @@ void copyMatrix(Matrix mIn, Matrix *mOut)
    {
       for(j = 0; j < COL_EFF(mIn); j++)
       {
-         ELMT(*mOut, i, j) = ELMT(mIn, i, j);
+         MatElmt(*mOut, i, j) = MatElmt(mIn, i, j);
       }
    }
 
@@ -93,7 +93,7 @@ void readMatrix(Matrix *m, int nRow, int nCol)
       for(j = 0; j < nCol; j++)
       {
          scanf("%c ", &n);
-         ELMT(*m, i, j) = n;
+         MatElmt(*m, i, j) = n;
       }
    }
 }
@@ -113,7 +113,7 @@ void CreateMap(Matrix *m, FILE *file)
       String line = parse_line();
 
       for (int col = 0; col < cols; col++) {
-         ELMT(*m, row, col) = STR_VALUE(line)[col];
+         MatElmt(*m, row, col) = STR_VALUE(line)[col];
       }
    }
 }
@@ -138,13 +138,13 @@ void displayMap(Matrix m)
             printf("*");
             printf(" ");
          }
-         if (ELMT(m, i, j) == '#')
+         if (MatElmt(m, i, j) == '#')
          {
             printf(" ");
          }
          else
          {
-            printf("%c", ELMT(m, i, j));
+            printf("%c", MatElmt(m, i, j));
          }
          printf(" ");
          if(j == getLastIdxCol(m))
@@ -180,7 +180,7 @@ void displayMatrix(Matrix m)
    {
       for(j = 0; j < COL_EFF(m); j++)
       {
-         printf("%c", ELMT(m, i, j));
+         printf("%c", MatElmt(m, i, j));
          if(j != getLastIdxCol(m))
             printf(" ");
       }
@@ -212,7 +212,7 @@ boolean isSymmetric(Matrix m)
    {
       for(j = 0; j < COL_EFF(m); j++)
       {
-         if(ELMT(m, i, j) != ELMT(m, i, j))
+         if(MatElmt(m, i, j) != MatElmt(m, i, j))
          {
             return false;
          }
@@ -236,11 +236,11 @@ boolean isIdentity(Matrix m)
    {
       for(j = 0; j < COL_EFF(m); j++)
       {
-         if(i == j && ELMT(m, i, j) != 1)
+         if(i == j && MatElmt(m, i, j) != 1)
          {
             return false;
          }
-         if(i != j && ELMT(m, i, j) != 0)
+         if(i != j && MatElmt(m, i, j) != 0)
          {
             return false;
          }
@@ -263,7 +263,7 @@ boolean isSparse(Matrix m)
    {
       for(j = 0; j < COL_EFF(m); j++)
       {
-         if(ELMT(m, i, j) != 0)
+         if(MatElmt(m, i, j) != 0)
          {
             n++;
          }
@@ -286,11 +286,11 @@ float determinant(Matrix m)
     det = 0;
 
     if (COL_EFF(m) == 1) {
-        return ELMT(m, 0, 0);
+        return MatElmt(m, 0, 0);
     }
 
     for (i = 0; i < COL_EFF(m); i++) {
-        x = i % 2 == 0 ? ELMT(m, 0, i) : (-1) * ELMT(m, 0, i);
+        x = i % 2 == 0 ? MatElmt(m, 0, i) : (-1) * MatElmt(m, 0, i);
         createMatrix(ROW_EFF(m) - 1, COL_EFF(m) - 1, &tmp);
 
         for (j = 0; j < COL_EFF(m); j++) {
@@ -299,9 +299,9 @@ float determinant(Matrix m)
 
             for (k = 1; k < ROW_EFF(m); k++) {
                 if (j < i) {
-                    ELMT(tmp, k - 1, j) = ELMT(m, k, j);
+                    MatElmt(tmp, k - 1, j) = MatElmt(m, k, j);
                 } else {
-                    ELMT(tmp, k - 1, j - 1) = ELMT(m, k, j);
+                    MatElmt(tmp, k - 1, j - 1) = MatElmt(m, k, j);
                 }
             }
         }
@@ -325,7 +325,7 @@ Matrix transpose(Matrix m)
    {
       for(j = 0; j < COL_EFF(m); j++)
       {
-         ELMT(mT, i, j) = ELMT(m, j, i);
+         MatElmt(mT, i, j) = MatElmt(m, j, i);
       }
    }
 
@@ -344,7 +344,7 @@ void pTranspose(Matrix *m)
    {
       for(j = 0; j < COL_EFF(*m); j++)
       {
-         ELMT(*m, i, j) = ELMT(mT, i, j);
+         MatElmt(*m, i, j) = MatElmt(mT, i, j);
       }
    }
 }
