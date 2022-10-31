@@ -8,70 +8,74 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../boolean.h"
+
+#include "boolean.h"
 #include "foodlist.h"
 
 #define IDX_UNDEF -1
 #define VAL_UNDEF -999
 
 /* Deklarasi ElTypeQueue */
-typedef Food ElTypeQueue; 
+typedef struct {
+    Food food;
+    Time time;
+} PQInfo;
 
 /* Definisi PrioQueueTime (Dinamis) */
 typedef struct PrioQueue {
-	ElTypeQueue *bufferInventory;
-	int idxHead;
-	int idxTail;
-        int capacityInventory;
-} Inventory;
+    PQInfo *buffer;
+    int idxHead;
+    int idxTail;
+    int capacity;
+} PriorityQueue;
 
 /* ********* Selektor ********* */
 /* Jika pq adalah PrioQueue, maka akses elemen : */
-#define ELMTQUEUE(pq, i) (pq).bufferInventory[i]
-#define PQ_IDX_HEAD(pq) (pq).idxHead
-#define PQ_IDX_TAIL(pq) (pq).idxTail
-#define     PQ_HEAD(pq) (pq).bufferInventory[(pq).idxHead]
-#define     PQ_TAIL(pq) (pq).bufferInventory[(pq).idxTail]
-#define CAP_INVENTORY(pq) (pq).capacityInventory
-#define BUFFER_INVENTORY(pq) (pq).bufferInventory
+#define ELMTQUEUE(pq, i)     (pq).buffer[i]
+#define PQ_IDX_HEAD(pq)      (pq).idxHead
+#define PQ_IDX_TAIL(pq)      (pq).idxTail
+#define PQ_HEAD(pq)          (pq).buffer[(pq).idxHead]
+#define PQ_TAIL(pq)          (pq).buffer[(pq).idxTail]
+#define CAP_PRIOQUEUE(pq)    (pq).capacity
+#define BUFFER_INVENTORY(pq) (pq).buffer
 
 /* *** Konstruktor *** */
-void CreateInventory(Inventory *pq, int CAPACITY_INVENTORY);
+void CreatePrioQueue(PriorityQueue *pq, int capacity);
 /* I.S. pq sembarang, CAPACITY_INVENTORY > 0 */
 /* F.S. Terbentuk pq kosong dengan kapasitas CAPACITY_INVENTORY */
 /* - Index head bernilai IDX_UNDEF */
 /* - Index tail bernilai IDX_UNDEF */
 /* Proses : Melakukan alokasi, membuat sebuah pq kosong */
 
-void dealocateINVENTORY(Inventory *pq);
+void dealocatePrioQueue(PriorityQueue *pq);
 /* I.S. pq terdefinisi */
 /* F.S. pq dikembalikan ke system, idxHead = IDX_UNDEF, idxTail = IDX_UNDEF */
 
-boolean isEmptyINVENTORY(Inventory pq);
+boolean isEmptyPrioQueue(PriorityQueue pq);
 /* Mengirim true jika pq kosong: lihat definisi di atas */
 
-boolean isFullINVENTORY(Inventory pq);
+boolean isFullPrioQueue(PriorityQueue pq);
 /* Mengirim true jika tabel penampung elemen pq sudah penuh */
 /* yaitu jika index head bernilai 0 dan index tail bernilai PQ_CAPACITY-1 */
 
-int lengthINVENTORY(Inventory pq);
+int lengthPrioQueue(PriorityQueue pq);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika pq kosong. */
 
 /*** Primitif Add/Delete ***/
-void enqueueINVENTORY(Inventory *pq, ElTypeQueue val);
+void enqueuePrioQueue(PriorityQueue *pq, PQInfo val);
 /* Proses: Menambahkan val pada pq dengan aturan FIFO */
 /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
 /* F.S. val menjadi PQ_TAIL yang baru, PQ_IDX_TAIL "mundur".
         Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
         menjadi rata kiri untuk membuat ruang kosong bagi PQ_TAIL baru  */
 
-void dequeueINVENTORY(Inventory *pq, ElTypeQueue *val);
+void dequeuePrioQueue(PriorityQueue *pq, Food *val);
 /* Proses: Menghapus val pada pq dengan aturan FIFO */
 /* I.S. pq tidak mungkin kosong */
-/* F.S. val = nilai elemen PQ_HEAD. PQ_HEAD dan PQ_IDX_HEAD "mundur"; 
+/* F.S. val = nilai elemen PQ_HEAD. PQ_HEAD dan PQ_IDX_HEAD "mundur";
         pq mungkin kosong */
 
-void displayInventory(Inventory pq);
+void displayPrioqueue(PriorityQueue pq);
 /* Display inventory yang ada */
 
 #endif

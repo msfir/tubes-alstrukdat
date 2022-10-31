@@ -13,8 +13,8 @@
 /* *** Definisi TYPE Simulator *** */
 typedef struct {
    String username;
-   POINT location;
-   Inventory inventory;
+   Point location;
+   PriorityQueue inventory;
    Time time;
 } Simulator;
 
@@ -27,7 +27,7 @@ typedef struct {
 // clang-format on
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, POINT location, Inventory inventory, Time time);
+void CreateSimulator(Simulator *x, String username, Point location);
 /* I.S. x sembarang
    F.S. x terdefinisi*/
 
@@ -38,7 +38,7 @@ void CreateSimulator(Simulator *x, String username, POINT location, Inventory in
 boolean IsThereWall (Simulator x, int NCol, int NRow);
 /* Mengirim true jika ada dinding di sekitar Simulator */
 
-void SimulatorMove (Simulator *x, POINT P, float deltaX, float deltaY);
+void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY);
 /* I.S. Posisi Simulator terdefinisi
    F.S. Simulator berubah posisi*/
 

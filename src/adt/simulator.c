@@ -1,18 +1,19 @@
-#include "../boolean.h"
+#include "boolean.h"
 #include "point.h"
 #include "string.h"
 #include "simulator.h"
 #include "time.h"
+#include "prioqueuetime.h"
 // #include "simulator.h"
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, POINT loc, Inventory inventory, Time second){
+void CreateSimulator(Simulator *x, String username, Point loc){
 /* I.S. x sembarang
    F.S. x terdefinisi*/
-   copy_string(&Username(*x), username);
+   Username(*x) = username;
    Location(*x) = loc;
-   Inventory(*x) = inventory;
-   Time(*x) = second;
+   CreatePrioQueue(&Inventory(*x), 100);
+   CreateTime(&Time(*x), 0, 0, 0);
 }
 
 /* ***************************************************************** */
@@ -24,7 +25,7 @@ boolean IsThereWall (Simulator x, int NCol, int NRow){
    return (Absis(Location(x)) >= 0 &&  Absis(Location(x)) <= NCol) && (Ordinat(Location(x)) >= 0 && Ordinat(Location(x)) <= NRow);
 }
 
-void SimulatorMove (Simulator *x, POINT P, float deltaX, float deltaY){
+void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY){
 /* I.S. Posisi Simulator terdefinisi
    F.S. Simulator berubah posisi*/
    Location(*x) = PlusDelta(P, deltaX, deltaY);
