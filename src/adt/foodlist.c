@@ -198,7 +198,7 @@ void printCatalog(FoodList L) {
 /* I.S L terdefinisi */
 /* F.S Memunculkan ke layar nama makanan, waktu kadaluwarsa, aksi yang bisa dilakukan, dan waktu delivery */
 
-boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food)
+boolean getFoodWithIdxAction (FoodList L, enum Action action, int idx, Food *food)
 {
     int counter = 0, i;
     for (i = 0; i < listLength(L);i++){

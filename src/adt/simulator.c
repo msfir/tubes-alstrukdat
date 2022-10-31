@@ -1,18 +1,19 @@
-#include "../boolean.h"
+#include "boolean.h"
 #include "point.h"
 #include "string.h"
 #include "simulator.h"
 #include "time.h"
+#include "prioqueuetime.h"
 // #include "simulator.h"
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, Point loc, Inventory inventory, Time second){
+void CreateSimulator(Simulator *x, String username, Point loc){
 /* I.S. x sembarang
    F.S. x terdefinisi*/
-   copy_string(&Username(*x), username);
+   Username(*x) = username;
    Location(*x) = loc;
-   Inventory(*x) = inventory;
-   Time(*x) = second;
+   CreatePrioQueue(&Inventory(*x), 100);
+   CreateTime(&Time(*x), 0, 0, 0);
 }
 
 /* ***************************************************************** */

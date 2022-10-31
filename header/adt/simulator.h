@@ -14,7 +14,7 @@
 typedef struct {
    String username;
    Point location;
-   Inventory inventory;
+   PriorityQueue inventory;
    Time time;
 } Simulator;
 
@@ -27,7 +27,7 @@ typedef struct {
 // clang-format on
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, Point location, Inventory inventory, Time time);
+void CreateSimulator(Simulator *x, String username, Point location);
 /* I.S. x sembarang
    F.S. x terdefinisi*/
 
