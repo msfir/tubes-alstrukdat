@@ -6,26 +6,22 @@
 #include "simulator.h"
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, Point loc, Inventory inventory){
+void CreateSimulator(Simulator *x, String username, Point loc, Inventory inventory, Time second){
 /* I.S. x sembarang
    F.S. x terdefinisi*/
    copy_string(&Username(*x), username);
    Location(*x) = loc;
    Inventory(*x) = inventory;
+   Time(*x) = second;
 }
 
-void DisplaySimulator(Simulator x) {
-   printf("BNMO di posisi: "); TulisPOINT(Location(x));
-   printf("Waktu: "); /*TulisTIME(Time T)*/; printf("\n");
-   printf("Notifikasi: ");
-}
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
 /* ***************************************************************** */
 
-boolean IsThereWall (Simulator *x){
-/* Mengirim true jika ada dinding di sekitar Simulator */
-   return (PlusDelta(Location(*x), 1.0, 0.0) == '*') || (PlusDelta(Location(*x), -1.0, 0.0) == '*') || (PlusDelta(Location(*x), 0.0, 1.0) == '*') || (PlusDelta(Location(*x), 0.0, -1.0) == '*');
+boolean IsThereWall (Simulator x, int NCol, int NRow){
+/* Mengirim true jika tidak ada dinding di sekitar Simulator */
+   return (Absis(Location(x)) >= 0 &&  Absis(Location(x)) <= NCol) && (Ordinat(Location(x)) >= 0 && Ordinat(Location(x)) <= NRow);
 }
 
 void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY){
@@ -34,6 +30,3 @@ void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY){
    Location(*x) = PlusDelta(P, deltaX, deltaY);
 }
 
-// void SimulatorCommand (Simulator *x, string command);
-/* I.S. Simulator terdefinisi
-   F.S. Simulator melakukan command dengan tipe data string*/

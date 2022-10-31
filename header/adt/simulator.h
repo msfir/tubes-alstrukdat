@@ -15,6 +15,7 @@ typedef struct {
    String username;
    Point location;
    Inventory inventory;
+   Time time;
 } Simulator;
 
 /* *** Notasi Akses: selektor Simulator *** */
@@ -26,19 +27,15 @@ typedef struct {
 // clang-format on
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, Point loc, Inventory inventory);
+void CreateSimulator(Simulator *x, String username, Point location, Inventory inventory, Time time);
 /* I.S. x sembarang
    F.S. x terdefinisi*/
-
-void DisplaySimulator(Simulator x);
-/* I.S. keterangan simulator sembarang
-   F.S. Keterangan simulator muncul di layar*/
 
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
 /* ***************************************************************** */
 
-boolean IsThereWall (Simulator *x);
+boolean IsThereWall (Simulator x, int NCol, int NRow);
 /* Mengirim true jika ada dinding di sekitar Simulator */
 
 void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY);
