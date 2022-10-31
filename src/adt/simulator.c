@@ -6,7 +6,7 @@
 // #include "simulator.h"
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
-void CreateSimulator(Simulator *x, String username, POINT loc, Inventory inventory, Time second){
+void CreateSimulator(Simulator *x, String username, Point loc, Inventory inventory, Time second){
 /* I.S. x sembarang
    F.S. x terdefinisi*/
    copy_string(&Username(*x), username);
@@ -24,7 +24,7 @@ boolean IsThereWall (Simulator x, int NCol, int NRow){
    return (Absis(Location(x)) >= 0 &&  Absis(Location(x)) <= NCol) && (Ordinat(Location(x)) >= 0 && Ordinat(Location(x)) <= NRow);
 }
 
-void SimulatorMove (Simulator *x, POINT P, float deltaX, float deltaY){
+void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY){
 /* I.S. Posisi Simulator terdefinisi
    F.S. Simulator berubah posisi*/
    Location(*x) = PlusDelta(P, deltaX, deltaY);
