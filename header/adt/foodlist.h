@@ -25,7 +25,7 @@ typedef struct {
 } FoodList;
 
 /* SELEKTOR */
-#define ELMT(L, i) (L).buffer[(i)]
+#define ListElmt(L, i) (L).buffer[(i)]
 // #define NEFF(L) (L).NEFF
 
 /* **************KONSTRUKTOR************** */

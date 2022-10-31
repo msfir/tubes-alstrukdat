@@ -8,7 +8,7 @@
 void CreateFoodList(FoodList *L) {
     int i;
     for (i = 0; i < CAPACITY; i++) {
-        Id(ELMT(*L, i)) = MARK;
+        Id(ListElmt(*L, i)) = MARK;
     }
 };
 /* I.S L sembarang */
@@ -20,7 +20,7 @@ void CreateFoodList(FoodList *L) {
 
 int listLength(FoodList l){
     int i = IDX_MIN;
-    while (Id(ELMT(l, i)) != MARK && i < CAPACITY) {
+    while (Id(ListElmt(l, i)) != MARK && i < CAPACITY) {
         i++;
     }
     return i;
@@ -29,7 +29,7 @@ int listLength(FoodList l){
 /* Mengirimkan nol jika List kosong */
 
 int getFirstIdx(FoodList L) {
-    if (Id(ELMT(L, 0)) == MARK) {
+    if (Id(ListElmt(L, 0)) == MARK) {
         return IDX_UNDEF;
     }
     return IDX_MIN;
@@ -55,7 +55,7 @@ void addFood(FoodList *L, Food M) {
     if (isFullFood(*L)) {
         printf("List makanan penuh\n");
     } else {
-        ELMT(*L, listLength(*L)) = M;
+        ListElmt(*L, listLength(*L)) = M;
     }
 };
 /* I.S L terdefinisi dan tidak penuh. M terdefinisi */
@@ -72,9 +72,9 @@ void printBuyList(FoodList L) {
         int i, j = 0;
         printf("List Bahan Makanan yang Bisa Dibeli:\n");
         for (i = 0; i < listLength(L); i++) {
-            if (ActionLocation(ELMT(L, i)) == BUY) {
+            if (ActionLocation(ListElmt(L, i)) == BUY) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name(ELMT(L, i))));
+                printf("%d. %s\n", j, STR_VALUE(Name(ListElmt(L, i))));
             }
         }
         if (j == 0) {
@@ -95,9 +95,9 @@ void printFryList(FoodList L) {
         int i, j = 0;
         printf("List Bahan Makanan yang Bisa Digoreng:\n");
         for (i = 0; i < listLength(L); i++) {
-            if (ActionLocation(ELMT(L, i)) == FRY) {
+            if (ActionLocation(ListElmt(L, i)) == FRY) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name(ELMT(L, i))));
+                printf("%d. %s\n", j, STR_VALUE(Name(ListElmt(L, i))));
             }
         }
         if (j == 0) {
@@ -118,9 +118,9 @@ void printMixList(FoodList L) {
         printf("List Bahan Makanan yang Bisa DiMix:\n");
         int i, j = 0;
         for (i = 0; i < listLength(L); i++) {
-            if (ActionLocation(ELMT(L, i)) == MIX) {
+            if (ActionLocation(ListElmt(L, i)) == MIX) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name(ELMT(L, i))));
+                printf("%d. %s\n", j, STR_VALUE(Name(ListElmt(L, i))));
             }
         }
         if (j == 0) {
@@ -141,9 +141,9 @@ void printBoilList(FoodList L) {
         int i, j = 0;
         printf("List Bahan Makanan yang Bisa DiBoil:\n");
         for (i = 0; i < listLength(L); i++) {
-            if (ActionLocation(ELMT(L, i)) == BOIL) {
+            if (ActionLocation(ListElmt(L, i)) == BOIL) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name((ELMT(L, i)))));
+                printf("%d. %s\n", j, STR_VALUE(Name((ListElmt(L, i)))));
             }
         }
         if (j == 0) {
@@ -164,9 +164,9 @@ void printChopList(FoodList L) {
         printf("List Bahan Makanan yang Bisa Dipotong:\n");
         int i, j = 0;
         for (i = 0; i < listLength(L); i++) {
-            if (ActionLocation(ELMT(L, i)) == CHOP) {
+            if (ActionLocation(ListElmt(L, i)) == CHOP) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name((ELMT(L, i)))));
+                printf("%d. %s\n", j, STR_VALUE(Name((ListElmt(L, i)))));
             }
         }
         if (j == 0) {
@@ -186,7 +186,7 @@ void printCatalog(FoodList L) {
         int i, j = 0;
         for (i = 0; i < listLength(L); i++) {
             j++;
-            Food f = ELMT(L, i);
+            Food f = ListElmt(L, i);
             printf("%d. %s - ", j, STR_VALUE(Name(f)));
             TulisTIME(ExpirationTime(f));
             printf(" - %s - ", ActionName[ActionLocation(f)]);
@@ -202,10 +202,10 @@ boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food)
 {
     int counter = 0, i;
     for (i = 0; i < listLength(L);i++){
-        if (ActionLocation(ELMT(L,i)) == action){
+        if (ActionLocation(ListElmt(L,i)) == action){
             counter++;
             if (counter == idx){
-                *food = ELMT(L, i);
+                *food = ListElmt(L, i);
                 return true;
             }
         }
