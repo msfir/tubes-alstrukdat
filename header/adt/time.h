@@ -54,10 +54,15 @@ void BacaTIME(Time* T);
 
 void TulisTIME(Time T);
 /* I.S. : T sembarang */
-/* F.S. : Nilai T ditulis dg format HH:MM:SS */
+/* F.S. : Nilai T ditulis dg format HH:MM */
 /* Proses : menulis nilai setiap komponen T ke layar dalam format HH:MM:SS
    tanpa karakter apa pun di depan atau belakangnya, termasuk spasi, enter,
    dll.*/
+
+void TulisFoodTIME(Time T);
+/* I.S. : T sembarang */
+/* F.S. : Nilai T ditulis dg format DD hari HH jam MM menit */
+/* Proses : menulis nilai setiap komponen T ke layar dalam format */
 
 /* ***************************************************************** */
 /* KELOMPOK KONVERSI TERHADAP TYPE                                   */

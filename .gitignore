@@ -57,3 +57,5 @@ build
 build/*
 bin
 bin/*
+
+.DS_Store

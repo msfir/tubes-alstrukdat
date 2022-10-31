@@ -109,7 +109,7 @@ void displayInventory(Inventory pq){
       int i,j = 0;
       for (i = 0; i < lengthINVENTORY(pq); i++) {
          j++;
-         printf("%d. %c - %c", j, NAME(ELMT(L, i)), ExpirationTime((ELMT(L, i))));
+         printf("%d. %c - %c", j, NAME(ELMTQUEUE(pq, i)), ExpirationTime((ELMTQUEUE(pq, i))));
       }
    } 
 }

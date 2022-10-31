@@ -188,9 +188,9 @@ void printCatalog(FoodList L) {
             j++;
             Food f = ELMT(L, i);
             printf("%d. %s - ", j, STR_VALUE(Name(f)));
-            TulisTIME(ExpirationTime(f));
+            TulisFoodTIME(ExpirationTime(f));
             printf(" - %s - ", ActionName[ActionLocation(f)]);
-            TulisTIME(DeliveryTime(f));
+            TulisFoodTIME(DeliveryTime(f));
             printf("\n");
         }
     }
@@ -214,5 +214,49 @@ boolean getFoodWithIdxAction (FoodList L, char action, int idx, Food *food)
 }
 /* Mengembalikan elemen Makanan ke-idx pada List yang memiliki elemen lokasiAksi = lokasiAksi */
 
-boolean getFoodById(FoodList L, int id, Food *food);
+boolean getFoodById(FoodList L, int id, Food *food){
+    int counter = 0, i;
+    for (i = 0; i < listLength(L);i++){
+        if (ID(ELMT(L,i)) == id){
+            *food = ELMT(L, i);
+            return true;
+        }
+    }
+    return false;
+};
 /*Mengembalikan true jika menemukan id sesuai input, dan false jika tidak*/
+
+int getIdxById(FoodList L, int id){
+    boolean found;
+    int i;
+
+    i = 0;
+    found = false;
+    while (i<listLength(L) && !found){
+        if (ID(ELMT(L,i))==id){
+            found = true;
+            return i;
+        }
+        i++;
+    }
+    return IDX_UNDEF;
+};
+/*mengembalikan idx yg menyimpan id food, mengembalikan idx undef jika tidak ada*/
+
+Food getElmtById(FoodList L, int id){
+    boolean found;
+    int i;
+
+    i = 0;
+    found = false;
+    while (i<listLength(L) && !found){
+        if (ID(ELMT(L,i))==id){
+            found = true;
+            return ELMT(L,i);
+        }
+        i++;
+    }
+    return ELMT(L, i);
+};
+/*pre kondisi: id terdefinisi
+mengembalikan Element food makanan*/

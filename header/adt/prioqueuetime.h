@@ -27,6 +27,7 @@ typedef struct PrioQueue {
 
 /* ********* Selektor ********* */
 /* Jika pq adalah PrioQueue, maka akses elemen : */
+#define ELMTQUEUE(pq, i) (pq).bufferInventory[i]
 #define PQ_IDX_HEAD(pq) (pq).idxHead
 #define PQ_IDX_TAIL(pq) (pq).idxTail
 #define     PQ_HEAD(pq) (pq).bufferInventory[(pq).idxHead]
