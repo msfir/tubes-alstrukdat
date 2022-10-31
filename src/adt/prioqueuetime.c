@@ -72,7 +72,7 @@ void enqueueINVENTORY(Inventory *pq, ElTypeQueue val){
       found = false;
       for (int i = PQ_IDX_HEAD(*pq); i < PQ_IDX_TAIL(*pq); i++) {
          t = (*pq).bufferInventory[i];
-         if (val->ExpirationTime < t->ExpirationTime) {
+         if (TIMEToMenit(ExpirationTime(val)) < TIMEToMenit(ExpirationTime(t))) {
             for (int j = PQ_IDX_TAIL(*pq) - 1; j >= i; j--) {
                (*pq).bufferInventory[j+1] = (*pq).bufferInventory[j];
             }

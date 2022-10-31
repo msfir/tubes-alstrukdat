@@ -15,7 +15,7 @@
 #define VAL_UNDEF -999
 
 /* Deklarasi ElTypeQueue */
-typedef Food* ElTypeQueue; 
+typedef Food ElTypeQueue; 
 
 /* Definisi PrioQueueTime (Dinamis) */
 typedef struct PrioQueue {
