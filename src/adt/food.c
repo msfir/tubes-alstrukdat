@@ -3,12 +3,13 @@
 
 #include "cstring.h"
 
-void CreateFood(Food* F, int id, String name, Time expiration_time, enum Action action_loc, Time delivery_time){
+void CreateFood(Food* F, int id, String name, Time expiration_time, enum Action action_loc, Time delivery_time, Size size){
     Id(*F) = id;
     copy_string(&Name(*F), name);
     ExpirationTime(*F) = expiration_time;
     ActionLocation(*F) = action_loc;
     DeliveryTime(*F) = delivery_time;
+    Size(*F) = size;
 }
 
 void DisplayFood(Food F){ // i may change it to DescribeFood
