@@ -252,12 +252,26 @@ char *execute_mix() {
                 if(canMakeFromResep(resep, simulator)){
                     enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
                     printf("\n");
-                    printf("Berhasil mencampur makanan menjadi %s .", STR_VALUE(food.name));
+                    printf("Berhasil mencampur makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
                         removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
                         printf("Consumed: %s", STR_VALUE(food.name));
                         printf("\n");
+                    }
+
+                    add_program_time(1);
+                } else {
+                    printf("\n");
+                    printf("Gagal mencampur makanan menjadi %s.", STR_VALUE(food.name));
+                    printf("\n");
+
+                    for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
+                        if(getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))) == IDX_UNDEF){
+                            getFoodById(foodlist, INFO(NEXT(ROOT(resep), j)), &food);
+                            printf("Missing: %s", STR_VALUE(food.name));
+                            printf("\n");
+                        }
                     }
                 }
             }
@@ -284,12 +298,26 @@ char *execute_chop() {
                 if(canMakeFromResep(resep, simulator)){
                     enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
                     printf("\n");
-                    printf("Berhasil memotong makanan menjadi %s .", STR_VALUE(food.name));
+                    printf("Berhasil memotong makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
                         removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
                         printf("Consumed: %s", STR_VALUE(food.name));
                         printf("\n");
+                    }
+
+                    add_program_time(1);
+                } else {
+                    printf("\n");
+                    printf("Gagal memotong makanan menjadi %s.", STR_VALUE(food.name));
+                    printf("\n");
+
+                    for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
+                        if(getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))) == IDX_UNDEF){
+                            getFoodById(foodlist, INFO(NEXT(ROOT(resep), j)), &food);
+                            printf("Missing: %s", STR_VALUE(food.name));
+                            printf("\n");
+                        }
                     }
                 }
             }
