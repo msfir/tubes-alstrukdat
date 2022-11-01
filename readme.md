@@ -13,7 +13,7 @@
 
 <div align="center">
     <div>------------------------WIP------------------------</div><br/>
-    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
+    <img src="" alt="bnmo" style="max-width:20em;"></img>
     <h2>BNMO</h2>
     <p>oleh Kelompok K</p>
 </div>

@@ -14,12 +14,13 @@
 #include "simulator.h"
 #include "time.h"
 #include "tree.h"
+#include "resep.h"
 
 #define MAX_RESEP 100
 #define MAX_FOOD  100
 
 static Matrix map;
-static Tree resep[MAX_RESEP];
+static ResepList resepList;
 static FoodList foodlist;
 static Time program_time;
 static Simulator simulator;
@@ -75,6 +76,8 @@ void setup_program(Point *simulator_location) {
     }
 
     // setup resep
+    CreateResepList(&resepList);
+
     file = fopen("konfigurasi_resep.txt", "r");
     start_parser(file);
     int resep_num = parse_int();
@@ -89,7 +92,9 @@ void setup_program(Point *simulator_location) {
             MakeChildren(node, child);
         }
         CreateTree(&minor, node);
-        resep[i] = minor;
+        Resep resep; CreateResep(&resep, minor);
+        // resep[i] = minor; //sepertinya lom dipake
+        ResepListElmt(resepList, i) = resep;
     }
 
     CreatePrioQueue(&delivery_list, 100);

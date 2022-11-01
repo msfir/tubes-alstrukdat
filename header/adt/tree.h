@@ -5,6 +5,7 @@
 #define TREE_H
 
 #include "node.h"
+#include "foodlist.h"
 
 /* Definisi Tree */
 typedef Node* Tree;
@@ -20,11 +21,11 @@ void MakeChildren(Node *a, Node *b);
 /* F.S. Node b menjadi child Node a*/
 
 /* *** Debug: Mendaftar relasi antara node *** */
-void listParent(Tree a);
+void listParent(Tree a, FoodList fl);
 /* I.S. sembarang */
 /* F.S. tercetak parent dari masing masing tree */
 
-void listChildren(Tree a);
+void listChildren(Tree a, FoodList fl);
 /* I.S. sembarang */
 /* F.S. tercetak children dari masing masing tree */
 
