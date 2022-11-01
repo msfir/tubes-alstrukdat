@@ -2,30 +2,36 @@
 11
 Ayam Mentah
 1 0 0
-0 0 15
+0 0 1
+2 2
 Buy
 21
 Ayam Potong
 0 2 0
 0 0 0
+2 2
 Chop
 10
 Tepung
 0 1 0
-0 0 30
+0 0 1
+1 2
 Buy
 15
 Minyak Goreng
 0 1 30
 0 1 0
+1 1
 Buy
 31
 Ayam Tepung
 0 0 30
 0 0 0
+2 2
 Mix
 37
 Ayam Goreng
 0 0 15
 0 0 0
+2 2
 Fry
