@@ -453,7 +453,7 @@ int main() {
     printf("\e[?1049h\e[H");
 
     int cnt;
-    String anjai = StringFrom("kal1askjdak agkaas33dkl2 aasdkjlknkal3a");
+    String anjai = StringFrom("   s  maan imal aka as");
     String* arrajai = split(anjai, ' ', &cnt);
     printf("%d<jml\n", cnt);
     for(int x = 0; x<cnt; x++){
