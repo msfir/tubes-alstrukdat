@@ -117,3 +117,10 @@ void displayPrioqueue(PriorityQueue pq){
    } 
 }
 
+void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val) {
+   *val = pq->buffer[idx].food;
+   for (int i = idx; i < lengthPrioQueue(*pq) - 1; i++) {
+      pq->buffer[i] = pq->buffer[i + 1];
+   }
+   PQ_IDX_TAIL(*pq)--;
+}
