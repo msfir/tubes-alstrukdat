@@ -145,19 +145,24 @@ void add_program_time(int minute) {
     for (int i = 0; i < lengthPrioQueue(simulator.inventory); i++) {
         Food food = ELMTQUEUE(simulator.inventory, i).food;
         Time t = ELMTQUEUE(simulator.inventory, i).time;
-        ELMTQUEUE(simulator.inventory, i).time = PrevMenit(t);
-        if (TIMEToMenit(PrevMenit(t)) == 0) {
+        // ELMTQUEUE(simulator.inventory, i).time = PrevNMenit(t, minute);
+        int newTime = TIMEToMenit(t) - minute;
+        if (newTime <= 0) {
             String notifikasi = StringFrom("\e[92m");
             notifikasi = concat_string(notifikasi, food.name);
             notifikasi = concat_string(notifikasi, StringFrom(" telah kedaluwarsa.\e[0m"));
             enqueue(&notifications, notifikasi);
+
+            removeAtPrioqueue(&Inventory(simulator), i, &food);
+        } else {
+            ELMTQUEUE(Inventory(simulator), i).time = PrevNMenit(t, minute);
         }
     }
     for (int i = 0; i < lengthPrioQueue(delivery_list); i++) {
         Food food = ELMTQUEUE(delivery_list, i).food;
         Time t = ELMTQUEUE(delivery_list, i).time;
-        ELMTQUEUE(delivery_list, i).time = PrevMenit(t);
-        if (TIMEToMenit(PrevMenit(t)) == 0) {
+        int newTime = TIMEToMenit(t) - minute;
+        if (newTime <= 0) {
             String notifikasi = StringFrom("\e[92m");
             notifikasi = concat_string(notifikasi, food.name);
             notifikasi = concat_string(notifikasi, StringFrom(" yang dipesan telah sampai di inventory.\e[0m"));
@@ -165,6 +170,8 @@ void add_program_time(int minute) {
 
             dequeuePrioQueue(&delivery_list, &food);
             enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
+        } else {
+            ELMTQUEUE(delivery_list, i).time = PrevNMenit(t, minute);
         }
     }
 }
@@ -289,12 +296,26 @@ char *execute_mix() {
                 if(canMakeFromResep(resep, simulator)){
                     enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
                     printf("\n");
-                    printf("Berhasil mencampur makanan menjadi %s .", STR_VALUE(food.name));
+                    printf("Berhasil mencampur makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
                         removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
                         printf("Consumed: %s", STR_VALUE(food.name));
                         printf("\n");
+                    }
+
+                    add_program_time(1);
+                } else {
+                    printf("\n");
+                    printf("Gagal mencampur makanan menjadi %s.", STR_VALUE(food.name));
+                    printf("\n");
+
+                    for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
+                        if(getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))) == IDX_UNDEF){
+                            getFoodById(foodlist, INFO(NEXT(ROOT(resep), j)), &food);
+                            printf("Missing: %s", STR_VALUE(food.name));
+                            printf("\n");
+                        }
                     }
                 }
             }
@@ -321,12 +342,26 @@ char *execute_chop() {
                 if(canMakeFromResep(resep, simulator)){
                     enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
                     printf("\n");
-                    printf("Berhasil memotong makanan menjadi %s .", STR_VALUE(food.name));
+                    printf("Berhasil memotong makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
                         removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
                         printf("Consumed: %s", STR_VALUE(food.name));
                         printf("\n");
+                    }
+
+                    add_program_time(1);
+                } else {
+                    printf("\n");
+                    printf("Gagal memotong makanan menjadi %s.", STR_VALUE(food.name));
+                    printf("\n");
+
+                    for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
+                        if(getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))) == IDX_UNDEF){
+                            getFoodById(foodlist, INFO(NEXT(ROOT(resep), j)), &food);
+                            printf("Missing: %s", STR_VALUE(food.name));
+                            printf("\n");
+                        }
                     }
                 }
             }
@@ -416,6 +451,14 @@ void execute_wait(int jam, int menit){
 
 int main() {
     printf("\e[?1049h\e[H");
+
+    int cnt;
+    String anjai = StringFrom("kal1askjdak agkaas33dkl2 aasdkjlknkal3a");
+    String* arrajai = split(anjai, ' ', &cnt);
+    printf("%d<jml\n", cnt);
+    for(int x = 0; x<cnt; x++){
+        printf("<%s> dsini\n", STR_VALUE(arrajai[x]));
+    }
     printf(" .-.__.-.__.-.\n");
     printf("(             )        _______\n");
     printf(" )           (      .-' _____ '-.       /| \n");

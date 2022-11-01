@@ -1,6 +1,7 @@
 #include "cstring.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "boolean.h"
 
@@ -78,6 +79,45 @@ String substring(String str, int start, int end) {
     }
     STR_VALUE(str)[end - start] = 0;
     return str;
+}
+
+String* split(String str, char delimiter, int* wordCount){
+    int delimiterCount = 0;
+
+    for(int i = 0; i < length(str); i++){
+        if(STR_VALUE(str)[i] == delimiter) delimiterCount++;
+    }
+
+    *wordCount = delimiterCount+1;
+
+    String* res = (String*) malloc((*wordCount)*sizeof(String));
+
+    int i = 0, j = 0, last = 0, wordNum = 0;
+    while (i < length(str) && wordNum < *wordCount)
+    {
+        if(STR_VALUE(str)[i] == delimiter){
+            for(j = last; j<i; j++){
+                STR_VALUE(res[wordNum])[j-last] = STR_VALUE(str)[j];
+            } STR_VALUE(res[wordNum])[j-last] = '\0';
+
+            wordNum++;
+            last = i+1;
+        }
+
+        i++;
+    }
+
+    if(last < length(str)){
+        printf("%d-%d\n", last, length(str));
+        for(int j = last; j<length(str); j++){
+                STR_VALUE(res[wordNum])[j-last] = STR_VALUE(str)[j];
+            } STR_VALUE(res[wordNum])[j-last+1] = '\0';
+
+            wordNum++;
+            last = i+1;
+    }
+    
+    return res;
 }
 
 boolean is_string_equal(String a, String b) {
