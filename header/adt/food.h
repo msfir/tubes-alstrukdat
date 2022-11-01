@@ -36,10 +36,10 @@ typedef struct {
 #define Id(F)             (F).id
 //return String
 #define Name(F)           (F).name
-//return enum Action | int
-#define ActionLocation(F) (F).action_loc
 //return Time
 #define ExpirationTime(F) (F).expiration_time
+//return enum Action | int
+#define ActionLocation(F) (F).action_loc
 //return Time
 #define DeliveryTime(F)   (F).delivery_time
 

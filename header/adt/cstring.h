@@ -56,4 +56,9 @@ String substring(String str, int start, int end);
  */
 boolean is_string_equal(String a, String b);
 
+/*
+ * Mengecek apakah string diawali substring tertentu
+ */
+boolean is_string_startswith(String str, String substr);
+
 #endif

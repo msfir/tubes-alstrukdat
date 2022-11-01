@@ -10,7 +10,7 @@
 #include "parser.h"
 #include "point.h"
 #include "prioqueuetime.h"
-#include "queue.h"
+// #include "queue.h"
 #include "simulator.h"
 #include "time.h"
 #include "tree.h"
@@ -23,7 +23,7 @@ static Tree resep[MAX_RESEP];
 static FoodList foodlist;
 static Time program_time;
 static Simulator simulator;
-static Queue notifications;
+// static Queue notifications;
 static PriorityQueue delivery_list;
 
 Address getNodeById(Address *nodes, int id, int size) {
@@ -151,6 +151,22 @@ char *execute_buy() {
 }
 
 // contoh lagi
+char *execute_move(String arah) {
+    if (is_string_equal(arah, StringFrom("NORTH"))){
+        SimulatorMove(&simulator, Location(simulator), &map, -1, 0);
+    } else if (is_string_equal(arah, StringFrom("EAST"))) {
+        SimulatorMove(&simulator, Location(simulator), &map, 0, 1);
+    } else if (is_string_equal(arah, StringFrom("SOUTH"))) {
+        SimulatorMove(&simulator, Location(simulator), &map, 1, 0);
+    } else if (is_string_equal(arah, StringFrom("WEST"))) {
+        SimulatorMove(&simulator, Location(simulator), &map, 0, -1);
+    } 
+    
+    
+    return "";
+}
+
+// contoh lagi
 char *execute_fry() {
     printFryList(foodlist);
     start_parser(stdin);
@@ -196,7 +212,10 @@ int main() {
         printf("Enter command: ");
         start_parser(stdin);
         String command = parse_line();
-        if (is_string_equal(command, StringFrom("BUY"))) {
+        if (is_string_startswith(command, StringFrom("MOVE"))) {
+            notifikasi = execute_move(substring(command, 5, length(command)));
+            printf("\n");
+        } else if (is_string_equal(command, StringFrom("BUY"))) {
             notifikasi = execute_buy();
             printf("\n");
         } else if (is_string_equal(command, StringFrom("MIX"))) {

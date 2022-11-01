@@ -10,6 +10,8 @@
 #include "time.h"
 #include "cstring.h"
 
+#include "matrix.h"
+
 /* *** Definisi TYPE Simulator *** */
 typedef struct {
    String username;
@@ -38,8 +40,15 @@ void CreateSimulator(Simulator *x, String username, Point location);
 boolean IsThereWall (Simulator x, int NCol, int NRow);
 /* Mengirim true jika ada dinding di sekitar Simulator */
 
-void SimulatorMove (Simulator *x, Point P, float deltaX, float deltaY);
+void SimulatorMove (Simulator *x, Point P, Matrix* map, float deltaX, float deltaY);
 /* I.S. Posisi Simulator terdefinisi
    F.S. Simulator berubah posisi*/
+
+
+
+////////////////////// TOLONG PINDAHIN NTAR
+char getSymbol(Matrix map, Point P);
+
+boolean IsEmptySpace(Matrix map, Point P);
 
 #endif
