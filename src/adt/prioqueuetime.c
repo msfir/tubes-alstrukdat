@@ -118,9 +118,33 @@ void displayPrioqueue(PriorityQueue pq){
 }
 
 void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val) {
-   *val = pq->buffer[idx].food;
-   for (int i = idx; i < lengthPrioQueue(*pq) - 1; i++) {
-      pq->buffer[i] = pq->buffer[i + 1];
+   if(idx != IDX_UNDEF){
+      *val = pq->buffer[idx].food;
+      for (int i = idx; i < lengthPrioQueue(*pq) - 1; i++) {
+         pq->buffer[i] = pq->buffer[i + 1];
+      }
+      PQ_IDX_TAIL(*pq)--;
    }
-   PQ_IDX_TAIL(*pq)--;
+}
+
+//khusus food
+int getFirstFoundFoodPrioqueue(PriorityQueue pq, int foodid){
+   for (int i = 0; i < lengthPrioQueue(pq); i++) {
+      if(Id(pq.buffer[i].food) == foodid){
+         return i;
+      }
+   }
+
+   return IDX_UNDEF;
+}
+
+boolean isInPrioqueue(PriorityQueue pq, int foodId){
+   int i; boolean found = false;
+   for(i = 0; i<lengthPrioQueue(pq); i++){
+      if(Id(ELMTQUEUE(pq, i).food) == foodId){
+         found = true;
+      }
+   }
+
+   return found;
 }

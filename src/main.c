@@ -16,11 +16,12 @@
 #include "tree.h"
 #include "fridge.h"
 #include "queue.h"
+#include "resep.h"
 
 #define MAX_RESEP 100
 
 static Matrix map;
-static Tree resep[MAX_RESEP];
+static ResepList resepList;
 static FoodList foodlist;
 static Time program_time;
 static Simulator simulator;
@@ -81,6 +82,8 @@ void setup_program(Point *simulator_location) {
     }
 
     // setup resep
+    CreateResepList(&resepList);
+
     file = fopen("konfigurasi_resep.txt", "r");
     start_parser(file);
     int resep_num = parse_int();
@@ -95,7 +98,9 @@ void setup_program(Point *simulator_location) {
             MakeChildren(node, child);
         }
         CreateTree(&minor, node);
-        resep[i] = minor;
+        Resep resep; CreateResep(&resep, minor);
+        // resep[i] = minor; //sepertinya lom dipake
+        ResepListElmt(resepList, i) = resep;
     }
 
     CreatePrioQueue(&delivery_list, 100);
@@ -233,7 +238,65 @@ char *execute_fry() {
 // contoh lagi
 char *execute_mix() {
     printMixList(foodlist);
-    start_parser(stdin);
+    printf("\n");
+    printf("Kirim 0 untuk exit.\n");
+    int choice = 1;
+    while (choice != 0) {
+        printf("\n");
+        printf("Enter command: ");
+        start_parser(stdin);
+        choice = parse_int();
+        Food food; Resep resep;
+        if(getFoodWithIdxAction(foodlist, MIX, choice, &food)) {
+            if(getResepWithFood(&resep, resepList, food)){
+                if(canMakeFromResep(resep, simulator)){
+                    enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
+                    printf("\n");
+                    printf("Berhasil mencampur makanan menjadi %s .", STR_VALUE(food.name));
+                    printf("\n");
+                    for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
+                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
+                        printf("Consumed: %s", STR_VALUE(food.name));
+                        printf("\n");
+                    }
+                }
+            }
+        } else if (choice != 0) {
+            printf("Pilihan tidak valid.\n");
+        }
+    }
+    return "";
+}
+
+char *execute_chop() {
+    printChopList(foodlist);
+    printf("\n");
+    printf("Kirim 0 untuk exit.\n");
+    int choice = 1;
+    while (choice != 0) {
+        printf("\n");
+        printf("Enter command: ");
+        start_parser(stdin);
+        choice = parse_int();
+        Food food; Resep resep;
+        if(getFoodWithIdxAction(foodlist, CHOP, choice, &food)) {
+            if(getResepWithFood(&resep, resepList, food)){
+                if(canMakeFromResep(resep, simulator)){
+                    enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
+                    printf("\n");
+                    printf("Berhasil memotong makanan menjadi %s .", STR_VALUE(food.name));
+                    printf("\n");
+                    for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
+                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
+                        printf("Consumed: %s", STR_VALUE(food.name));
+                        printf("\n");
+                    }
+                }
+            }
+        } else if (choice != 0) {
+            printf("Pilihan tidak valid.\n");
+        }
+    }
     return "";
 }
 
@@ -310,6 +373,9 @@ int main() {
         } else if (is_string_equal(command, StringFrom("MIX"))) {
             notifikasi = execute_mix();
             printf("\n");
+        } else if (is_string_equal(command, StringFrom("CHOP"))) {
+            notifikasi = execute_chop();
+            printf("\n");
         } else if (is_string_equal(command, StringFrom("FRY"))) {
             notifikasi = execute_fry();
             printf("\n");
@@ -323,9 +389,9 @@ int main() {
             displayPrioqueue(delivery_list);
             start_parser(stdin);
             printf("\n");
-        } else if (is_string_equal(command, StringFrom("INVENTORY"))) {
-            printf("List Makanan di Perjalanan\n");
-            printf("(nama - waktu sisa kedaluwarsa)\n");
+        } else if (is_string_equal(command, StringFrom("INV"))) {
+            printf("List Makanan di Inventory\n");
+            printf("(nama - waktu sisa ekspirasi)\n");
             displayPrioqueue(Inventory(simulator));
             start_parser(stdin);
             printf("\n");

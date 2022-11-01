@@ -3,6 +3,7 @@
 
 #include "tree.h"
 #include "node.h"
+#include "foodlist.h"
 
 
 void CreateTree(Tree *a, Node *b){
@@ -25,24 +26,21 @@ void MakeChildren(Node *a, Node *b){
     }
 }
 
-void listParent(Tree a){
+void listParent(Tree a, FoodList fl){
     int i;
     for(i = 0; i<getChildCount(*a); i++){        
-        printf("%d -> %d\n", INFO(a), INFO(NEXT(a, i)));
-        if(NEXT(a, i) != NULL) listParent(NEXT(a, i));
+        printf("%d -> %d\n", INFO(a), INFO(NEXT(a, i))); //ganti dengan nama food melalui foodlist
+        if(NEXT(a, i) != NULL) listParent(NEXT(a, i), fl);
     }
 }
 
-void listChildren(Tree a){
+void listChildren(Tree a, FoodList fl){
     int i, j;
     for(i = 0; i<getChildCount(*a); i++){        
         //todo
     }
 }
 
-int getDegree(Tree a, Node b){
-    int i;
-    for(i = 0; i<getChildCount(*a); i++){        
-        //todo
-    }
+void getAllReachableNode(Tree a, Node* nodes[]){
+
 }
