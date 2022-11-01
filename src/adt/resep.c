@@ -1,6 +1,5 @@
 #include "resep.h"
 
-#include "tree.h"
 #include "boolean.h"
 
 Resep undefinedResep() {
@@ -34,8 +33,18 @@ void CreateResepList(ResepList* rl){
 }
 
 
-boolean canResepMade(Resep r, FoodList fl){
+boolean canMakeFromResep(Resep r, Simulator s){
+    boolean canMade = true;
 
+    // if(INFO(Resep) )
+    int i;
+    for(i = 0; i<CHILD_COUNT(ROOT(r)); i++){
+        if(!isInPrioqueue(Inventory(s), INFO(NEXT(ROOT(r), i)))){
+            canMade = false;
+        }
+    }
+
+    return canMade;
 }
 
 boolean hasResep(ResepList rl, Food f){
@@ -48,4 +57,21 @@ boolean hasResep(ResepList rl, Food f){
     }
     
     return found;
+}
+
+boolean getResepWithFood(Resep* resep, ResepList rl, Food f){
+    boolean found = false;
+    if(hasResep(rl, f)){
+        int i; 
+        while(!found && i < resepListLength(rl)){
+            if (INFO(ResepListElmt(rl, i)) == Id(f)){
+                *resep = ResepListElmt(rl, i);
+
+                found = true;
+            }
+            i++;
+        }
+    }
+
+    return found; 
 }

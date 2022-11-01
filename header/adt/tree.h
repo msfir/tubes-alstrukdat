@@ -10,6 +10,9 @@
 /* Definisi Tree */
 typedef Node* Tree;
 
+//return Address
+#define ROOT(t) (t)
+
 /* *** Konstruktor: Membentuk Tree dari Node *** */
 /* melakukan assign pada sebuah Node sebagai root sebuah tree */
 void CreateTree(Tree *a, Node *b);
