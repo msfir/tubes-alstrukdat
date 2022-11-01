@@ -78,4 +78,9 @@ void dequeuePrioQueue(PriorityQueue *pq, Food *val);
 void displayPrioqueue(PriorityQueue pq);
 /* Display inventory yang ada */
 
+/*
+ * Menghapus elemen dari buffer pada indeks idx
+ */
+void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val);
+
 #endif
