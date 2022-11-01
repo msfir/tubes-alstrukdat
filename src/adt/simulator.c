@@ -41,7 +41,7 @@ void SimulatorMove (Simulator *x, Point P, Matrix* map, float deltaX, float delt
    F.S. Simulator berubah posisi*/
    Point newLocation = PlusDelta(P, deltaX, deltaY);
 
-   if (!IsThereWall(*x, 10, 10) && IsEmptySpace(*map, newLocation)){ //10 is map size; GANTI 10 DENGAN MAP SIZE!
+   if (!IsThereWall(*x, ROW_EFF(*map), COL_EFF(*map)) && IsEmptySpace(*map, newLocation)){ //10 is map size; GANTI 10 DENGAN MAP SIZE!
       Location(*x) = newLocation;
       MatElmt(*map, Absis(P), Ordinat(P)) = '#';
       MatElmt(*map, Absis(newLocation), Ordinat(newLocation)) = 'S';
@@ -52,3 +52,77 @@ void SimulatorMove (Simulator *x, Point P, Matrix* map, float deltaX, float delt
    
 }
 
+boolean IsBuySpace(Matrix map, Point P){
+   Point Kanan = P;
+   Point Atas = P;
+   Point Kiri = P;
+   Point Bawah = P;
+   Absis(Kanan)++;
+   Ordinat(Atas)++;
+   Absis(Kiri)--;
+   Ordinat(Bawah)--;
+      // TulisPOINT(P);
+   // printf("\n");
+   // TulisPOINT(Kanan);
+   // printf("\n");
+   // TulisPOINT(Kiri);
+   // printf("\n");
+   // TulisPOINT(Atas);
+   // printf("\n");
+   // TulisPOINT(Bawah);
+   // printf("\n");
+   return (getSymbol(map, Kanan) == 'T' || getSymbol(map, Kiri) == 'T' || getSymbol(map, Bawah) == 'T' || getSymbol(map, Atas) == 'T');
+};
+/*Mengembalikan true jika di sekitar point P merupakan tempat Buy*/
+boolean IsMixSpace(Matrix map, Point P){
+    Point Kanan = P;
+   Point Atas = P;
+   Point Kiri = P;
+   Point Bawah = P;
+   Absis(Kanan)++;
+   Ordinat(Atas)++;
+   Absis(Kiri)--;
+   Ordinat(Bawah)--;
+
+   return (getSymbol(map, Kanan) == 'M' || getSymbol(map, Kiri) == 'M' || getSymbol(map, Bawah) == 'M' || getSymbol(map, Atas) == 'M');
+};
+/*Mengembalikan true jika di sekitar point P merupakan tempat Mix*/
+boolean IsBoilSpace(Matrix map, Point P){
+   Point Kanan = P;
+   Point Atas = P;
+   Point Kiri = P;
+   Point Bawah = P;
+   Absis(Kanan)++;
+   Ordinat(Atas)++;
+   Absis(Kiri)--;
+   Ordinat(Bawah)--;
+
+   return (getSymbol(map, Kanan) == 'B' || getSymbol(map, Kiri) == 'B' || getSymbol(map, Bawah) == 'B' || getSymbol(map, Atas) == 'B');
+};
+/*Mengembalikan true jika di sekitar point P merupakan tempat Boil*/
+boolean IsFrySpace(Matrix map, Point P){
+   Point Kanan = P;
+   Point Atas = P;
+   Point Kiri = P;
+   Point Bawah = P;
+   Absis(Kanan)++;
+   Ordinat(Atas)++;
+   Absis(Kiri)--;
+   Ordinat(Bawah)--;
+
+   return (getSymbol(map, Kanan) == 'F' || getSymbol(map, Kiri) == 'F' || getSymbol(map, Bawah) == 'F' || getSymbol(map, Atas) == 'F');
+};
+/*Mengembalikan true jika di sekitar point P merupakan tempat Fry*/
+boolean IsChopSpace(Matrix map, Point P){
+   Point Kanan = P;
+   Point Atas = P;
+   Point Kiri = P;
+   Point Bawah = P;
+   Absis(Kanan)++;
+   Ordinat(Atas)++;
+   Absis(Kiri)--;
+   Ordinat(Bawah)--;
+
+   return (getSymbol(map, Kanan) == 'C' || getSymbol(map, Kiri) == 'C' || getSymbol(map, Bawah) == 'C' || getSymbol(map, Atas) == 'C');
+};
+/*Mengembalikan true jika di sekitar point P merupakan tempat Chop*/
