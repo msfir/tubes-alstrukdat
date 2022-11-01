@@ -199,16 +199,31 @@ char *execute_buy() {
 
 // contoh lagi
 char *execute_move(String arah) {
+    printf("\n");
+    Point temp = Location(simulator);
     if (is_string_equal(arah, StringFrom("NORTH"))){
         SimulatorMove(&simulator, Location(simulator), &map, -1, 0);
+        if (!EQ(temp, Location(simulator)) ){
+            add_program_time(1);
+        }
     } else if (is_string_equal(arah, StringFrom("EAST"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 0, 1);
+        if (!EQ(temp, Location(simulator)) ){
+            add_program_time(1);
+        }
     } else if (is_string_equal(arah, StringFrom("SOUTH"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 1, 0);
+        if (!EQ(temp, Location(simulator)) ){
+            add_program_time(1);
+        }
     } else if (is_string_equal(arah, StringFrom("WEST"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 0, -1);
-    } 
-    
+        if (!EQ(temp, Location(simulator)) ){
+            add_program_time(1);
+        }
+    } else{
+        printf("\e[91mCommand tidak valid.\e[0m\n");
+    }
     
     return "";
 }
@@ -348,7 +363,12 @@ int main() {
             notifikasi = execute_move(substring(command, 5, length(command)));
             printf("\n");
         } else if (is_string_equal(command, StringFrom("BUY"))) {
-            notifikasi = execute_buy();
+            if (IsBuySpace(map, Location(simulator))){
+                notifikasi = execute_buy();
+                NextMenit(program_time);
+            }else{
+                printf("tidak ada lokasi buy");
+            }
             printf("\n");
         } else if (is_string_equal(command, StringFrom("MIX"))) {
             notifikasi = execute_mix();
@@ -380,11 +400,11 @@ int main() {
             printf("\n");
         } else if (is_string_equal(command, StringFrom("EXIT"))) {
             quit = true;
+            printf("Simulator dimatikan\n");
         } else {
             printf("\n");
             printf("\e[91mCommand tidak valid.\e[0m\n");
         }
-
         command = StringFrom("");
     }
     printf("\e[?1049l");
