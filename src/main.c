@@ -10,7 +10,7 @@
 #include "parser.h"
 #include "point.h"
 #include "prioqueuetime.h"
-// #include "queue.h"
+#include "queue.h"
 #include "simulator.h"
 #include "time.h"
 #include "tree.h"
@@ -24,7 +24,7 @@ static Tree resep[MAX_RESEP];
 static FoodList foodlist;
 static Time program_time;
 static Simulator simulator;
-// static Queue notifications;
+static Queue notifications;
 static PriorityQueue delivery_list;
 static Fridge fridge;
 
