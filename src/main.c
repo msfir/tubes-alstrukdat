@@ -451,14 +451,6 @@ void execute_wait(int jam, int menit){
 
 int main() {
     printf("\e[?1049h\e[H");
-
-    int cnt;
-    String anjai = StringFrom("   s  maan imal aka as");
-    String* arrajai = split(anjai, ' ', &cnt);
-    printf("%d<jml\n", cnt);
-    for(int x = 0; x<cnt; x++){
-        printf("<%s> dsini\n", STR_VALUE(arrajai[x]));
-    }
     printf(" .-.__.-.__.-.\n");
     printf("(             )        _______\n");
     printf(" )           (      .-' _____ '-.       /| \n");

@@ -1,7 +1,6 @@
 #include "cstring.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "boolean.h"
 
@@ -81,14 +80,40 @@ String substring(String str, int start, int end) {
     return str;
 }
 
-String* split(String str, char delimiter, int* wordCount){
-    int delimiterCount = 0;
+String* split(String str, char delimiter, int* wordCount){    
+    // variables
+    int delimiterCount = 0, i = 0, j = 0, last = 0, wordNum = 0;
+    int idxStart = 0, idxEnd = length(str) - 1;
 
-    for(int i = 0, last = 0; i < length(str); i++){
+    //remove delimiter(s) on start
+    i = 0;
+    while (STR_VALUE(str)[i] == delimiter && i < length(str))
+    {
+        i++;
+    } 
+    if(i < length(str)){
+        idxStart = i;
+    }
+    
+    // remove delimiter(s) on end
+    i = 0;
+    while (STR_VALUE(str)[length(str)-1-i] == delimiter && length(str)-1-i >= 0)
+    {
+        i++;
+    } 
+    if(length(str)-1-i >= 0){
+        idxEnd = length(str)-1-i;
+    }
+    
+
+    // finally strips the str from starting and ending delimiters
+    str = substring(str, idxStart, idxEnd+1);
+
+    // count for actual delimiters
+    for(i = 0, last = 0; i < length(str); i++){
         if(STR_VALUE(str)[i] == delimiter) 
         {
             if(last - i != 0 && i != length(str)-1){
-                printf("%d-%d(%d)<<", last, i, length(str));
                 delimiterCount++;
             }
 
@@ -97,14 +122,17 @@ String* split(String str, char delimiter, int* wordCount){
          
     }
 
+    // wordCount
     *wordCount = delimiterCount+1;
 
+    // initializing the resulting string array
     String* res = (String*) malloc((*wordCount)*sizeof(String));
-    for(int i = 0; i<*wordCount; i++){
+    for(i = 0; i<*wordCount; i++){
         res[i] = StringFrom("");
     }
 
-    int i = 0, j = 0, last = 0, wordNum = 0;
+    // split the string to array
+    i = 0, j = 0, last = 0, wordNum = 0;
     while (i < length(str) && wordNum < *wordCount)
     {
         if(STR_VALUE(str)[i] == delimiter){
@@ -118,10 +146,8 @@ String* split(String str, char delimiter, int* wordCount){
 
         i++;
     }
-
+    // split it one more time (might opt for do-while since it can loop for +1 more than while loop)
     if(last < length(str)){
-        printf("%d-%d\n", last, length(str));
-
         res[wordNum] = substring(str, last, length(str));
 
         wordNum++;
