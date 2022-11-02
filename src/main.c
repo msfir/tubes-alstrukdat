@@ -485,7 +485,19 @@ int main() {
             notifikasi = execute_move(substring(command, 5, length(command)));
             printf("\n");
         } else if (is_string_startswith(command, StringFrom("WAIT"))) {
-            execute_wait((int)STR_VALUE(substring(command, 5, 6))[0], (int)STR_VALUE(substring(command, 7, 8))[0]);
+            int wordCount, jam = 0, menit = 0;
+            String* cmdArray = split(command, ' ', &wordCount);
+
+            // if 'menit' provided
+            if (wordCount >= 3){
+                menit = toInt(cmdArray[2]);
+            }
+            // if 'jam' provided
+            if (wordCount >= 2){
+                jam = toInt(cmdArray[1]);
+            }
+
+            execute_wait(jam, menit);
             printf("\n");
         } else if (is_string_equal(command, StringFrom("BUY"))) {
             if (IsBuySpace(map, Location(simulator))){

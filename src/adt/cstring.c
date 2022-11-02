@@ -157,6 +157,16 @@ String* split(String str, char delimiter, int* wordCount){
     return res;
 }
 
+int toInt(String str){
+    int resAsArr[length(str)], res = 0; 
+    for(int i = 0; i<length(str); i++){
+        resAsArr[i] = STR_VALUE(str)[i] - '0';
+        res = res*10 + resAsArr[i];
+    }
+
+    return res;
+}
+
 boolean is_string_equal(String a, String b) {
     int len_a = length(a);
     int len_b = length(b);

@@ -57,6 +57,11 @@ String substring(String str, int start, int end);
 String* split(String str, char delimiter, int* wordCount);
 
 /*
+ * Mereturn integer hasil reinterpretasi string
+ */
+int toInt(String str);
+
+/*
  * Mengecek kesamaan dari dua buah string
  */
 boolean is_string_equal(String a, String b);
