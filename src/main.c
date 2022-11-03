@@ -156,8 +156,8 @@ void add_program_time(int minute) {
     // program_time = NextMenit(program_time);
     program_time = NextNMenit(program_time, minute);
     for (int i = 0; i < lengthPrioQueue(simulator.inventory); i++) {
-        Food food = ELMTQUEUE(simulator.inventory, i).food;
-        Time t = ELMTQUEUE(simulator.inventory, i).time;
+        Food food = getElmtAtIdxPrioqueue(simulator.inventory, i).food;
+        Time t = getElmtAtIdxPrioqueue(simulator.inventory, i).time;
         // ELMTQUEUE(simulator.inventory, i).time = PrevNMenit(t, minute);
         int newTime = TIMEToMenit(t) - minute;
         if (newTime <= 0) {
@@ -166,14 +166,14 @@ void add_program_time(int minute) {
             notifikasi = concat_string(notifikasi, StringFrom(" telah kedaluwarsa.\e[0m"));
             enqueue(&notifications, notifikasi);
 
-            removeAtPrioqueue(&Inventory(simulator), i, &food);
+            removeAtPrioqueue(&simulator.inventory, i, &food);
         } else {
-            ELMTQUEUE(Inventory(simulator), i).time = PrevNMenit(t, minute);
+            ELMTQUEUE(simulator.inventory, i + simulator.inventory.idxHead).time = PrevNMenit(t, minute);
         }
     }
     for (int i = 0; i < lengthPrioQueue(delivery_list); i++) {
-        Food food = ELMTQUEUE(delivery_list, i).food;
-        Time t = ELMTQUEUE(delivery_list, i).time;
+        Food food = getElmtAtIdxPrioqueue(delivery_list, i).food;
+        Time t = getElmtAtIdxPrioqueue(delivery_list, i).time;
         int newTime = TIMEToMenit(t) - minute;
         if (newTime <= 0) {
             String notifikasi = StringFrom("\e[92m");
@@ -182,9 +182,9 @@ void add_program_time(int minute) {
             enqueue(&notifications, notifikasi);
 
             dequeuePrioQueue(&delivery_list, &food);
-            enqueuePrioQueue(&Inventory(simulator), (PQInfo) {food, ExpirationTime(food)});
+            enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, food.expiration_time});
         } else {
-            ELMTQUEUE(delivery_list, i).time = PrevNMenit(t, minute);
+            ELMTQUEUE(delivery_list, i + delivery_list.idxHead).time = PrevNMenit(t, minute);
         }
     }
 }
@@ -482,7 +482,7 @@ void execute_fridge() {
                     printf("\e[92mBerhasil menyimpan %s ke dalam kulkas.\n\e[0m", STR_VALUE(food.name));
                     printf("\n");
                     valid = true;
-                    removeAtPrioqueue(&Inventory(simulator), choice - 1, &food);
+                    removeAtPrioqueue(&simulator.inventory, choice - 1, &food);
                 } else {
                     log_error("Tidak bisa menyimpan makanan pada lokasi tersebut\n");
                 }
@@ -582,60 +582,64 @@ int main() {
                 printf("\n");
                 refresh_idle();
             }else{
-                log_error("Tidak berada di lokasi buy");
+                log_error("Tidak berada di lokasi buy.\n");
             }
-            printf("\n");
         } else if (is_string_equal(command, StringFrom("MIX"))) {
             if (IsMixSpace(map, Location(simulator))){
                 execute_mix();
                 printf("\n");
                 refresh_idle();
             }else{
-                log_error("Tidak berada di lokasi mix");
+                log_error("Tidak berada di lokasi mix.\n");
             }
-            printf("\n\n");
         } else if (is_string_equal(command, StringFrom("CHOP"))) {
             if (IsChopSpace(map, Location(simulator))){
                 execute_chop();
                 printf("\n");
                 refresh_idle();
             }else{
-                log_error("Tidak berada di lokasi chop");
+                log_error("Tidak berada di lokasi chop.\n");
             }
-            printf("\n\n");
         } else if (is_string_equal(command, StringFrom("FRY"))) {
             if (IsFrySpace(map, Location(simulator))){
                 execute_fry();
+                printf("\n");
                 refresh_idle();
             }else{
-                log_error("Tidak berada di lokasi fry");
+                log_error("Tidak berada di lokasi fry.\n");
             }
-            printf("\n\n");
         } else if (is_string_equal(command, StringFrom("BOIL"))) {
             if (IsBoilSpace(map, Location(simulator))){
                 execute_boil();
+                printf("\n");
                 refresh_idle();
             }else{
-                log_error("Tidak berada di lokasi fry");
+                log_error("Tidak berada di lokasi boil.\n");
             }
-            printf("\n\n");
         } else if (is_string_equal(command, StringFrom("CATALOG"))) {
+            printf("\n");
             printCatalog(foodlist);
             printf("\n");
         } else if (is_string_equal(command, StringFrom("DELIVERY"))) {
+            printf("\n");
             printf("List Makanan di Perjalanan\n");
             printf("(nama - waktu sisa delivery)\n");
             displayPrioqueue(delivery_list);
             printf("\n");
         } else if (is_string_equal(command, StringFrom("INVENTORY"))) {
+            printf("\n");
             printf("List Makanan di Inventory\n");
             printf("(nama - waktu sisa ekspirasi)\n");
             displayPrioqueue(Inventory(simulator));
             printf("\n");
         } else if (is_string_equal(command, StringFrom("FRIDGE"))) {
-            execute_fridge();
-            refresh_idle();
-            printf("\n");
+            if (IsFridgeSpace(map, Location(simulator))){
+                execute_fridge();
+                printf("\n");
+                refresh_idle();
+            }else{
+                log_error("Tidak berada di lokasi refrigerator.\n");
+            }
         } else if (is_string_equal(command, StringFrom("EXIT"))) {
             quit = true;
             printf("Simulator dimatikan\n");

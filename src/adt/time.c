@@ -74,13 +74,13 @@ void TulisTIME(Time T){
    dll.*/
 void TulisFoodTIME(Time T){
     if (Day(T)!=0){
-        printf("%02d hari ", Day(T));
+        printf("%d hari ", Day(T));
     }
     if(Hour(T)!=0){
-        printf("%02d jam ", Hour(T));
+        printf("%d jam ", Hour(T));
     }
     if (Minute(T)!=0){
-        printf("%02d menit", Minute(T));
+        printf("%d menit", Minute(T));
     }
     if (Day(T)==0 && Minute(T)==0 && Hour(T)==0){
         printf("0");

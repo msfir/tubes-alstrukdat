@@ -83,6 +83,11 @@ void displayPrioqueue(PriorityQueue pq);
  */
 void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val);
 
+/* 
+ * Mendapatkan elemen queue pada indeks ke-idx relatif terhadap idxHead
+ */
+PQInfo getElmtAtIdxPrioqueue(PriorityQueue pq, int idx);
+
 /*
  * Menghapus elemen dari buffer pada indeks idx
  */

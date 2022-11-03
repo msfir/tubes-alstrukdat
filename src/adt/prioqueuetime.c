@@ -104,12 +104,12 @@ void dequeuePrioQueue(PriorityQueue *pq, Food *val){
 void displayPrioqueue(PriorityQueue pq){
 /* Display inventory yang ada */
    if (isEmptyPrioQueue(pq)) {
-      printf("Tidak ada makanan");
+      printf("Tidak ada makanan\n");
    } else {
       int i,j = 0;
       for (i = 0; i < lengthPrioQueue(pq); i++) {
          j++;
-         PQInfo info = ELMTQUEUE(pq, i);
+         PQInfo info = getElmtAtIdxPrioqueue(pq, i);
          printf("%d. %s - ", j, STR_VALUE(Name(info.food)));
          TulisFoodTIME(info.time);
          printf("\n");
@@ -123,8 +123,16 @@ void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val) {
       for (int i = idx; i < lengthPrioQueue(*pq) - 1; i++) {
          pq->buffer[i] = pq->buffer[i + 1];
       }
-      PQ_IDX_TAIL(*pq)--;
+      if (lengthPrioQueue(*pq) == 1) {
+         pq->idxHead = pq->idxTail = IDX_UNDEF;
+      } else {
+         PQ_IDX_TAIL(*pq)--;
+      }
    }
+}
+
+PQInfo getElmtAtIdxPrioqueue(PriorityQueue pq, int idx) {
+   return pq.buffer[pq.idxHead + idx];
 }
 
 //khusus food
