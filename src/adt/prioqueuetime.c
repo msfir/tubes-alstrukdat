@@ -138,7 +138,7 @@ PQInfo getElmtAtIdxPrioqueue(PriorityQueue pq, int idx) {
 //khusus food
 int getFirstFoundFoodPrioqueue(PriorityQueue pq, int foodid){
    for (int i = 0; i < lengthPrioQueue(pq); i++) {
-      if(Id(pq.buffer[i].food) == foodid){
+      if(Id(getElmtAtIdxPrioqueue(pq, i).food) == foodid){
          return i;
       }
    }
@@ -149,7 +149,7 @@ int getFirstFoundFoodPrioqueue(PriorityQueue pq, int foodid){
 boolean isInPrioqueue(PriorityQueue pq, int foodId){
    int i; boolean found = false;
    for(i = 0; i<lengthPrioQueue(pq); i++){
-      if(Id(ELMTQUEUE(pq, i).food) == foodId){
+      if(Id(getElmtAtIdxPrioqueue(pq, i).food) == foodId){
          found = true;
       }
    }
