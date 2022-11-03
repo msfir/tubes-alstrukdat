@@ -21,9 +21,14 @@ void CreateFridge(Fridge *fridge, int width, int height) {
  * Memeriksa apakah dapat menyimpan food
  */
 boolean can_place(Fridge fridge, int row, int col, Food food) {
-    boolean can = true;
-    for (int i = row; i < food.size.height && can; i++) {
-        for (int j = col; j < food.size.width && can; j++) {
+    if (row < 0 || row > fridge.height || col < 0 || col > fridge.width) {
+        return false;
+    }
+    int endrow = row + food.size.height;
+    int endcol = col + food.size.width;
+    boolean can = endrow <= fridge.height && endcol <= fridge.width;
+    for (int i = row; i < endrow && can; i++) {
+        for (int j = col; j < endcol && can; j++) {
             can = MatElmt(fridge.space, i, j) == '.';
         }
     }
@@ -50,8 +55,8 @@ void place_food(Fridge *fridge, int row, int col, Food food) {
 void take_food(Fridge *fridge, int idx, Food *food) {
     FoodLoc fl = fridge->foods[idx];
     *food = fl.food;
-    for (int i = fl.row; i < food->size.height; i++) {
-        for (int j = fl.col; j < food->size.width; j++) {
+    for (int i = fl.row; i < fl.row + food->size.height; i++) {
+        for (int j = fl.col; j < fl.col + food->size.width; j++) {
             MatElmt(fridge->space, i, j) = '.';
         }
     }
@@ -66,6 +71,7 @@ void take_food(Fridge *fridge, int idx, Food *food) {
  * Menampilkan fridge pada layar
  */
 void display_fridge(Fridge fridge) {
+    printf("Makanan dalam kulkas\n");
     int w = log10(fridge.height);
     printf("%*c ", w, ' ');
     int cols = fridge.width < 10 ? fridge.width : 10;
