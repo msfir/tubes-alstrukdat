@@ -126,3 +126,16 @@ boolean IsChopSpace(Matrix map, Point P){
    return (getSymbol(map, Kanan) == 'C' || getSymbol(map, Kiri) == 'C' || getSymbol(map, Bawah) == 'C' || getSymbol(map, Atas) == 'C');
 };
 /*Mengembalikan true jika di sekitar point P merupakan tempat Chop*/
+
+boolean IsFridgeSpace(Matrix map, Point P) {
+   Point Kanan = P;
+   Point Atas = P;
+   Point Kiri = P;
+   Point Bawah = P;
+   Absis(Kanan)++;
+   Ordinat(Atas)++;
+   Absis(Kiri)--;
+   Ordinat(Bawah)--;
+
+   return (getSymbol(map, Kanan) == 'R' || getSymbol(map, Kiri) == 'R' || getSymbol(map, Bawah) == 'R' || getSymbol(map, Atas) == 'R');
+}
