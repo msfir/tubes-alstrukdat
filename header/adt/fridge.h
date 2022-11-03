@@ -28,12 +28,12 @@ void CreateFridge(Fridge *fridge, int width, int height);
 /*
  * Memeriksa apakah dapat menyimpan food
  */
-boolean can_place(Fridge fridge, int row, int col, Food food);
+boolean can_put(Fridge fridge, int row, int col, Food food);
 
 /*
  * Menempatkan food ke dalam fridge pada posisi (row, col).
  */
-void place_food(Fridge *fridge, int row, int col, Food food);
+void put_food(Fridge *fridge, int row, int col, Food food);
 
 /*
  * Mengambil food dari dalam fridge yang ada di indeks idx dalam fridge.foods

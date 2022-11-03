@@ -474,8 +474,8 @@ void execute_fridge() {
                 start_parser(stdin);
                 int col = parse_int();
                 Food food = simulator.inventory.buffer[choice - 1].food;
-                if (can_place(fridge, row, col, food)) {
-                    place_food(&fridge, row, col, food);
+                if (can_put(fridge, row, col, food)) {
+                    put_food(&fridge, row, col, food);
                     printf("\n");
                     display_fridge(fridge);
                     printf("\n");

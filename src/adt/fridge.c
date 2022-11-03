@@ -20,7 +20,7 @@ void CreateFridge(Fridge *fridge, int width, int height) {
 /*
  * Memeriksa apakah dapat menyimpan food
  */
-boolean can_place(Fridge fridge, int row, int col, Food food) {
+boolean can_put(Fridge fridge, int row, int col, Food food) {
     if (row < 0 || row > fridge.height || col < 0 || col > fridge.width) {
         return false;
     }
@@ -38,7 +38,7 @@ boolean can_place(Fridge fridge, int row, int col, Food food) {
 /*
  * Menempatkan food ke dalam fridge pada posisi (row, col).
  */
-void place_food(Fridge *fridge, int row, int col, Food food) {
+void put_food(Fridge *fridge, int row, int col, Food food) {
     FoodLoc fl = { food, row, col };
     for (int i = row; i < row + food.size.height; i++) {
         for (int j = col; j < col + food.size.width; j++) {
