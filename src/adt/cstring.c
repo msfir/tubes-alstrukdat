@@ -182,7 +182,7 @@ boolean is_string_startswith(String str, String substr) {
     int len_substr = length(substr);
 
     boolean equal = true;
-    for (int i = 0; i < len_substr; i++) {
+    for (int i = 0; i < len_substr && equal; i++) {
         equal = STR_VALUE(str)[i] == STR_VALUE(substr)[i];
     }
     return equal;

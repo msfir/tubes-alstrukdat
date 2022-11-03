@@ -42,6 +42,20 @@ Address __getNodeById(Address *nodes, int id, int size) {
     return node;
 }
 
+// logger
+/* 
+ * Menampilkan pesan error pada terminal dengan teks berwarna merah (tanpa new line)
+ */
+void log_error(char* message) {
+    printf("\e[91m%s\e[0m", message);
+}
+/* 
+ * Menampilkan pesan info pada terminal dengan teks berwarna hijau (tanpa new line)
+ */
+void log_info(char* message) {
+    printf("\e[92m%s\e[0m", message);
+}
+
 void setup_program(Point *simulator_location) {
     // setup map
     FILE *file = fopen("konfigurasi_peta.txt", "r");
@@ -108,6 +122,22 @@ void setup_program(Point *simulator_location) {
     CreateQueue(&notifications);
 }
 
+void display_notifikasi() {
+    printf("\nNotifikasi: ");
+    if (isEmptyQueue(notifications)) {
+        printf("-\n");
+    } else {
+        printf("\n");
+        int counter = 1;
+        while(!isEmptyQueue(notifications)) {
+            String notikasi;
+            dequeue(&notifications, &notikasi);
+            printf("   %d. %s\n", counter, STR_VALUE(notikasi));
+            counter++;
+        }
+    }
+}
+
 // contoh
 void refresh_idle() {
     printf("-----------------------------------\n");
@@ -116,24 +146,7 @@ void refresh_idle() {
     printf("\n");
     printf("Waktu: ");
     TulisTIME(program_time);
-    printf("\nNotifikasi: ");
-    if (isEmptyQueue(notifications)) {
-        printf("-\n");
-    } else {
-        if (queueLength(notifications) == 1) {
-            String notikasi;
-            dequeue(&notifications, &notikasi);
-            printf("%s\n", STR_VALUE(notikasi));
-        } else {
-        printf("\n");
-            while(!isEmptyQueue(notifications)) {
-                String notikasi;
-                dequeue(&notifications, &notikasi);
-                printf("   - %s\n", STR_VALUE(notikasi));
-
-            }
-        }
-    }
+    display_notifikasi();
     printf("\n");
     displayMap(map);
     printf("\n");
@@ -176,7 +189,7 @@ void add_program_time(int minute) {
     }
 }
 
-char *execute_buy() {
+void execute_buy() {
     printBuyList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -201,10 +214,9 @@ char *execute_buy() {
             printf("Pilihan tidak valid.\n");
         }
     }
-    return "";
 }
 
-char *execute_move(String arah) {
+void execute_move(String arah) {
     printf("\n");
     Point temp = Location(simulator);
     if (is_string_equal(arah, StringFrom("NORTH"))){
@@ -228,13 +240,11 @@ char *execute_move(String arah) {
             add_program_time(1);
         }
     } else{
-        printf("\e[91mCommand tidak valid.\e[0m\n");
+        log_error("Command tidak valid.\n");
     }
-    
-    return "";
 }
 
-char *execute_fry() {
+void execute_fry() {
     printFryList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -277,10 +287,9 @@ char *execute_fry() {
             printf("Pilihan tidak valid.\n");
         }
     }
-    return "";
 }
 
-char *execute_mix() {
+void execute_mix() {
     printMixList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -323,10 +332,9 @@ char *execute_mix() {
             printf("Pilihan tidak valid.\n");
         }
     }
-    return "";
 }
 
-char *execute_chop() {
+void execute_chop() {
     printChopList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -369,10 +377,9 @@ char *execute_chop() {
             printf("Pilihan tidak valid.\n");
         }
     }
-    return "";
 }
 
-char *execute_boil() {
+void execute_boil() {
     printBoilList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -415,34 +422,103 @@ char *execute_boil() {
             printf("Pilihan tidak valid.\n");
         }
     }
-    return "";
 }
 
 void execute_fridge() {
     printf("\n");
-    printf("Makanan dalam kulkas\n");
     display_fridge(fridge);
     printf("\n");
-    printf("Enter command: ");
-    start_parser(stdin);
-    String command = parse_line();
-    if (is_string_equal(command, StringFrom("PLACE"))) {
-        // sementara
-        Food food = foodlist.buffer[0];
-        if (can_place(fridge, 0, 0, food)) {
-            place_food(&fridge, 0, 0, food);
+
+    boolean closed = false;
+    while (!closed) {
+        printf("Enter command: ");
+        start_parser(stdin);
+        String command = parse_line();
+
+        if (is_string_equal(command, StringFrom("PLACE"))) {
             printf("\n");
-            printf("Berhasil menyimpan %s ke dalam kulkas.\n", STR_VALUE(food.name));
+            printf("List makanan di inventory \n");
+            printf("(Nama - Waktu kedaluwarsa - Ukuran)\n");
+            for (int i = 0; i < lengthPrioQueue(Inventory(simulator)); i++) {
+                Food food = simulator.inventory.buffer[i].food;
+                printf("%d. %s - ", i+1, STR_VALUE(food.name));
+                TulisFoodTIME(food.expiration_time);
+                printf(" - %dx%d\n", food.size.width, food.size.height);
+            }
+            printf("\n");
+            
+            boolean valid = false;
+            boolean cancel = false;
+            int choice;
+            while (!valid) {
+                printf("Pilih makanan yang ingin disimpan (kirim 0 untuk batal): ");
+                start_parser(stdin);
+                choice = parse_int();
+                if (0 < choice && choice <= lengthPrioQueue(Inventory(simulator))) {
+                    valid = true;
+                } else if (choice == 0) {
+                    valid = true;
+                    cancel = true;
+                    printf("\n");
+                } else {
+                    log_error("Pilihan tidak valid.\n");
+                }
+            }
+
+            valid = false;
+            while (!valid && !cancel) {
+                printf("Lokasi penyimpanan (baris): ");
+                start_parser(stdin);
+                int row = parse_int();
+                printf("Lokasi penyimpanan (kolom): ");
+                start_parser(stdin);
+                int col = parse_int();
+                Food food = simulator.inventory.buffer[choice - 1].food;
+                if (can_place(fridge, row, col, food)) {
+                    place_food(&fridge, row, col, food);
+                    printf("\n");
+                    display_fridge(fridge);
+                    printf("\n");
+                    printf("\e[92mBerhasil menyimpan %s ke dalam kulkas.\n\e[0m", STR_VALUE(food.name));
+                    printf("\n");
+                    valid = true;
+                    removeAtPrioqueue(&Inventory(simulator), choice - 1, &food);
+                } else {
+                    log_error("Tidak bisa menyimpan makanan pada lokasi tersebut\n");
+                }
+            }
+
+        } else if (is_string_equal(command, StringFrom("TAKE"))) {
+            printf("\n");
+            boolean valid;
+            do {
+                printf("Pilih makanan yang ingin diambil (kirim 0 untuk batal): ");
+                start_parser(stdin);
+                int choice = parse_int();
+                if (0 < choice && choice <= fridge.food_count) {
+                    Food food;
+                    take_food(&fridge, choice - 1, &food);
+                    printf("\n");
+                    display_fridge(fridge);
+                    printf("\n");
+                    printf("\e[92mBerhasil mengambil %s dari kulkas.\n\e[0m", STR_VALUE(food.name));
+                    printf("\n");
+                    valid = true;
+                    enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, ExpirationTime(food)});
+                } else if (choice == 0) {
+                    valid = true;
+                    printf("\n");
+                } else {
+                    log_error("Pilihan tidak valid.\n");
+                    valid = false;
+                }
+            } while (!valid);
+        } else if (is_string_equal(command, StringFrom("CLOSE"))) {
+            closed = true;
         } else {
-            printf("\n");
-            printf("Tidak bisa menyimpan makanan pada lokasi tersebut\n");
+            log_error("Command tidak valid.\n");
         }
-    } else if (is_string_equal(command, StringFrom("TAKE"))) {
-        Food food;
-        take_food(&fridge, 0, &food);
-        printf("Berhasil mengambil %s dari kulkas.\n", STR_VALUE(food.name));
     }
-    start_parser(stdin);
 }
 
 void execute_wait(int jam, int menit){
@@ -475,15 +551,15 @@ int main() {
     CreateTime(&program_time, 0, 0, 0);
     CreateSimulator(&simulator, username, simulator_location);
     boolean quit;
-    char *notifikasi = "";
+    refresh_idle();
     while (!quit) {
-        refresh_idle();
         printf("Enter command: ");
         start_parser(stdin);
         String command = parse_line();
         if (is_string_startswith(command, StringFrom("MOVE"))) {
-            notifikasi = execute_move(substring(command, 5, length(command)));
+            execute_move(substring(command, 5, length(command)));
             printf("\n");
+            refresh_idle();
         } else if (is_string_startswith(command, StringFrom("WAIT"))) {
             int wordCount, jam = 0, menit = 0;
             String* cmdArray = split(command, ' ', &wordCount);
@@ -499,70 +575,71 @@ int main() {
 
             execute_wait(jam, menit);
             printf("\n");
+            refresh_idle();
         } else if (is_string_equal(command, StringFrom("BUY"))) {
             if (IsBuySpace(map, Location(simulator))){
-                notifikasi = execute_buy();
-                // NextMenit(program_time);
+                execute_buy();
+                printf("\n");
+                refresh_idle();
             }else{
-                printf("tidak ada lokasi buy");
+                log_error("Tidak berada di lokasi buy");
             }
             printf("\n");
         } else if (is_string_equal(command, StringFrom("MIX"))) {
             if (IsMixSpace(map, Location(simulator))){
-                notifikasi = execute_mix();
-                // NextMenit(program_time);
+                execute_mix();
+                printf("\n");
+                refresh_idle();
             }else{
-                printf("tidak ada lokasi mix");
+                log_error("Tidak berada di lokasi mix");
             }
             printf("\n\n");
         } else if (is_string_equal(command, StringFrom("CHOP"))) {
             if (IsChopSpace(map, Location(simulator))){
-                notifikasi = execute_chop();
-                NextMenit(program_time); //eh ini buat apa?
+                execute_chop();
+                printf("\n");
+                refresh_idle();
             }else{
-                printf("tidak ada lokasi chop");
+                log_error("Tidak berada di lokasi chop");
             }
             printf("\n\n");
         } else if (is_string_equal(command, StringFrom("FRY"))) {
             if (IsFrySpace(map, Location(simulator))){
-                notifikasi = execute_fry();
-                NextMenit(program_time);
+                execute_fry();
+                refresh_idle();
             }else{
-                printf("tidak ada lokasi fry");
+                log_error("Tidak berada di lokasi fry");
             }
             printf("\n\n");
         } else if (is_string_equal(command, StringFrom("BOIL"))) {
             if (IsBoilSpace(map, Location(simulator))){
-                notifikasi = execute_boil();
-                NextMenit(program_time);
+                execute_boil();
+                refresh_idle();
             }else{
-                printf("tidak ada lokasi fry");
+                log_error("Tidak berada di lokasi fry");
             }
             printf("\n\n");
         } else if (is_string_equal(command, StringFrom("CATALOG"))) {
             printCatalog(foodlist);
-            start_parser(stdin);
             printf("\n");
         } else if (is_string_equal(command, StringFrom("DELIVERY"))) {
             printf("List Makanan di Perjalanan\n");
             printf("(nama - waktu sisa delivery)\n");
             displayPrioqueue(delivery_list);
-            start_parser(stdin);
             printf("\n");
-        } else if (is_string_equal(command, StringFrom("INV"))) {
+        } else if (is_string_equal(command, StringFrom("INVENTORY"))) {
             printf("List Makanan di Inventory\n");
             printf("(nama - waktu sisa ekspirasi)\n");
             displayPrioqueue(Inventory(simulator));
-            start_parser(stdin);
             printf("\n");
         } else if (is_string_equal(command, StringFrom("FRIDGE"))) {
             execute_fridge();
+            refresh_idle();
             printf("\n");
         } else if (is_string_equal(command, StringFrom("EXIT"))) {
             quit = true;
             printf("Simulator dimatikan\n");
         } else {
-            printf("\n");
             printf("\e[91mCommand tidak valid.\e[0m\n");
         }
         command = StringFrom("");
