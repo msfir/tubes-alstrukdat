@@ -83,4 +83,15 @@ void displayPrioqueue(PriorityQueue pq);
  */
 void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val);
 
+/*
+ * Menghapus elemen dari buffer pada indeks idx
+ */
+int getFirstFoundFoodPrioqueue(PriorityQueue pq, int foodid);
+
+
+/*
+ * Apakah elemen yang mengandung foodid ada di prioqueue
+ */
+boolean isInPrioqueue(PriorityQueue pq, int foodId);
+
 #endif

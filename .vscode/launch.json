@@ -1,7 +1,37 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": []
-}
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C++ Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/main.exe",
+      "environment": [
+        {
+          "name": "config",
+          "value": "Debug"
+        }
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/Asus/OneDrive - Institut Teknologi Bandung/Documents/ITB/IF/Semester 3/IF2110 - Algoritma dan Struktur Data/Tubes/tubes-alstrukdat/header/adt",
+      "program": "c:/Users/Asus/OneDrive - Institut Teknologi Bandung/Documents/ITB/IF/Semester 3/IF2110 - Algoritma dan Struktur Data/Tubes/tubes-alstrukdat/header/adt/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+

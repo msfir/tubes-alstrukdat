@@ -50,5 +50,18 @@ void SimulatorMove (Simulator *x, Point P, Matrix* map, float deltaX, float delt
 char getSymbol(Matrix map, Point P);
 
 boolean IsEmptySpace(Matrix map, Point P);
+/*Mengembalikan true jika point P merupakan space kosong*/
+boolean IsBuySpace(Matrix map, Point P);
+/*Mengembalikan true jika di sekitar point P merupakan tempat Buy*/
+boolean IsMixSpace(Matrix map, Point P);
+/*Mengembalikan true jika di sekitar point P merupakan tempat Mix*/
+boolean IsBoilSpace(Matrix map, Point P);
+/*Mengembalikan true jika di sekitar point P merupakan tempat Boil*/
+boolean IsFrySpace(Matrix map, Point P);
+/*Mengembalikan true jika di sekitar point P merupakan tempat Fry*/
+boolean IsChopSpace(Matrix map, Point P);
+/*Mengembalikan true jika di sekitar point P merupakan tempat Chop*/
+
+
 
 #endif
