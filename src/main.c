@@ -166,7 +166,8 @@ void add_program_time(int minute) {
             notifikasi = concat_string(notifikasi, StringFrom(" telah kedaluwarsa.\e[0m"));
             enqueue(&notifications, notifikasi);
 
-            removeAtPrioqueue(&simulator.inventory, i, &food);
+            dequeuePrioQueue(&simulator.inventory, &food);
+            i--;
         } else {
             ELMTQUEUE(simulator.inventory, i + simulator.inventory.idxHead).time = PrevNMenit(t, minute);
         }
@@ -182,7 +183,8 @@ void add_program_time(int minute) {
             enqueue(&notifications, notifikasi);
 
             dequeuePrioQueue(&delivery_list, &food);
-            enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, food.expiration_time});
+            enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, MenitToTIME(TIMEToMenit(food.expiration_time) + newTime)});
+            i--;
         } else {
             ELMTQUEUE(delivery_list, i + delivery_list.idxHead).time = PrevNMenit(t, minute);
         }
