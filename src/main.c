@@ -183,6 +183,8 @@ void add_program_time(int minute) {
 
             dequeuePrioQueue(&delivery_list, &food);
             enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, food.expiration_time});
+            
+            i--;
         } else {
             ELMTQUEUE(delivery_list, i + delivery_list.idxHead).time = PrevNMenit(t, minute);
         }
