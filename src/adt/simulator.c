@@ -15,7 +15,6 @@ void CreateSimulator(Simulator *x, String username, Point loc){
    Username(*x) = username;
    Location(*x) = loc;
    CreatePrioQueue(&Inventory(*x), 100);
-   CreateTime(&Time(*x), 0, 0, 0);
 }
 
 /* ***************************************************************** */

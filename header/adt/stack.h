@@ -21,7 +21,8 @@
 typedef struct{
   Simulator s; //simulator
   String action; //action
-  PriorityQueue deliv;  //list delivery
+  PriorityQueue deliv;  // list delivery
+  Time time;
 } infotype;
 typedef int address;   /* indeks tabel */
 
@@ -47,6 +48,7 @@ typedef struct {
 #define ElmtSimulator(i) i.s
 #define ElmtAction(i) i.action
 #define ElmtDelivery(i) i.deliv
+#define ElmtTime(i) i.time
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */

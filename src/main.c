@@ -535,7 +535,19 @@ void execute_undo(infotype temp){
     float deltaY = Ordinat(simulator.location) - Ordinat(prev_loc);
     SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
     delivery_list = ElmtDelivery(temp);
+    program_time = ElmtTime(temp);
 }
+
+void execute_redo(infotype temp){
+    Point prev_loc = simulator.location;
+    simulator = ElmtSimulator(temp);
+    float deltaX = Absis(simulator.location) - Absis(prev_loc);
+    float deltaY = Ordinat(simulator.location) - Ordinat(prev_loc);
+    SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
+    delivery_list = ElmtDelivery(temp);
+    program_time = ElmtTime(temp);
+}
+
 int main() {
     printf("\e[?1049h\e[H");
     printf(" .-.__.-.__.-.\n");
@@ -578,9 +590,10 @@ int main() {
                 String command = parse_line();
                 if (is_string_startswith(command, StringFrom("MOVE"))) {
                     String arah = substring(command, 5, length(command));
+                    infotype state = { simulator, command, delivery_list, program_time };
                     if (is_string_equal(arah, StringFrom("NORTH")) || is_string_equal(arah, StringFrom("EAST")) || is_string_equal(arah, StringFrom("WEST"))|| is_string_equal(arah, StringFrom("SOUTH"))){
-                        infotype state = { simulator, command, delivery_list };
                         Push(&undoS, state);
+                        CreateEmptyStack(&redoS);
                     }
                     execute_move(arah);
                     printf("\n");
@@ -597,58 +610,59 @@ int main() {
                     if (wordCount >= 2){
                         jam = toInt(cmdArray[1]);
                     }
-
+                    infotype state = { simulator, command, delivery_list , program_time};
+                    Push(&undoS, state);
                     execute_wait(jam, menit);
                     printf("\n");
                     refresh_idle();
-                    infotype state = { simulator, command, delivery_list };
-                    Push(&undoS, state);
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
                     if (IsBuySpace(map, Location(simulator))){
+                        infotype state = { simulator, temp, delivery_list , program_time};
+                        Push(&undoS, state);
                         execute_buy();
                         printf("\n");
                         refresh_idle();
-                        infotype state = { simulator, temp, delivery_list };
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi buy.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("MIX"))) {
                     if (IsMixSpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time };
                         execute_mix();
                         printf("\n");
                         refresh_idle();
-                        infotype state = { simulator, command, delivery_list };
                         Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi mix.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("CHOP"))) {
                     if (IsChopSpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time };
                         execute_chop();
                         printf("\n");
                         refresh_idle();
-                        infotype state = { simulator, command, delivery_list };
                         Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi chop.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("FRY"))) {
                     if (IsFrySpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time };
                         execute_fry();
                         printf("\n");
                         refresh_idle();
-                        infotype state = { simulator, command, delivery_list };
+                        
                         Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi fry.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("BOIL"))) {
                     if (IsBoilSpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time};
                         execute_boil();
                         printf("\n");
                         refresh_idle();
-                        infotype state = { simulator, command, delivery_list };
+                        
                         Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi boil.\n");
@@ -683,7 +697,8 @@ int main() {
                     }else{
                         infotype temp;
                         Pop(&undoS, &temp);
-                        Push(&redoS, temp);
+                        infotype state ={ simulator, ElmtAction(temp), delivery_list, program_time};
+                        Push(&redoS, state);
                         execute_undo(temp);
                         String notifikasi = StringFrom("\e[92mCommand ");
                         notifikasi = concat_string(notifikasi, ElmtAction(temp));
@@ -692,7 +707,20 @@ int main() {
                         refresh_idle();
                     }
                 } else if (is_string_equal(command, StringFrom("REDO"))){
-                    printf("\e[91mCommand tidak valid.\e[0m\n");
+                    if (IsEmptyStack(redoS)){
+                        printf("Tidak ada langkah yang bisa di redo\n");
+                    }else{
+                        infotype temp;
+                        Pop(&redoS, &temp);
+                        infotype state ={ simulator, ElmtAction(temp), delivery_list, program_time};
+                        Push(&undoS, state);
+                        execute_redo(temp);
+                        String notifikasi = StringFrom("\e[92mCommand ");
+                        notifikasi = concat_string(notifikasi, ElmtAction(temp));
+                        notifikasi = concat_string(notifikasi, StringFrom(" dijalankan kembali.\e[0m"));
+                        enqueue(&notifications, notifikasi);
+                        refresh_idle();
+                    }
                 }else if (is_string_equal(command, StringFrom("EXIT"))) {
                     quit = true;
                     run = false;

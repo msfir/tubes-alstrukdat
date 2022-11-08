@@ -17,7 +17,6 @@ typedef struct {
    String username;
    Point location;
    PriorityQueue inventory;
-   Time time;
 } Simulator;
 
 /* *** Notasi Akses: selektor Simulator *** */
@@ -25,7 +24,7 @@ typedef struct {
 #define Username(I)  (I).username
 #define Location(I)  (I).location
 #define Inventory(I) (I).inventory
-#define Time(I) (I).time
+
 // clang-format on
 
 /* *** Konstruktor: Membentuk sebuah Simulator dari komponen-komponennya *** */
