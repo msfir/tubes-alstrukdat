@@ -8,19 +8,19 @@
 void CreateFoodList(FoodList *L) {
     int i;
     for (i = 0; i < CAPACITY; i++) {
-        Id(ListElmt(*L, i)) = MARK;
+        Id(ListElmt(*L, i)) = FoodMark;
     }
 };
 /* I.S L sembarang */
 /* F.S Terbentuk list L kosong dengan kapasitas CAPACITy
-   Proses: inisialisasi semua elemen List L dengan MARK */
+   Proses: inisialisasi semua elemen List L dengan mark */
 
 /* **************SELEKTOR TAMBAHAN************** */
 /* *** Banyaknya elemen *** */
 
 int listLength(FoodList l){
     int i = IDX_MIN;
-    while (Id(ListElmt(l, i)) != MARK && i < CAPACITY) {
+    while (Id(ListElmt(l, i)) != FoodMark && i < CAPACITY) {
         i++;
     }
     return i;
@@ -29,7 +29,7 @@ int listLength(FoodList l){
 /* Mengirimkan nol jika List kosong */
 
 int getFirstIdx(FoodList L) {
-    if (Id(ListElmt(L, 0)) == MARK) {
+    if (Id(ListElmt(L, 0)) == FoodMark) {
         return IDX_UNDEF;
     }
     return IDX_MIN;

@@ -6,7 +6,7 @@
 #include "stack.h"
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty(Stack *S){
+void CreateEmptyStack(Stack *S){
     Top(*S) = Nil;
 };
 /* I.S. sembarang; */
@@ -15,11 +15,11 @@ void CreateEmpty(Stack *S){
 /* Ciri stack kosong : TOP bernilai Nil */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty(Stack S){
+boolean IsEmptyStack(Stack S){
     return Top(S) == Nil;
 };
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFull(Stack S){
+boolean IsFullStack(Stack S){
     return Top(S) == MaxEl - 1;
 };
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
@@ -41,3 +41,18 @@ void Pop(Stack * S, infotype* X){
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+
+int lengthStack(Stack s){
+    if (IsEmptyStack(s)){
+        return 0;
+    }else{
+        int count = 0;
+        infotype temp;
+        while(!IsEmptyStack(s)){
+            Pop(&s, &temp);
+            count++;
+        }
+        return count;
+    }
+};
+// menghitung panjang stack

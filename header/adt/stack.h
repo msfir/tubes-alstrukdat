@@ -7,12 +7,23 @@
 
 #include "boolean.h"
 #include "simulator.h"
+#include "point.h"
+#include "time.h"
+#include "foodlist.h"
+#include "cstring.h"
+#include "wordmachine.h"
+#include "prioqueuetime.h"
 
 #define Nil -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
-typedef Simulator infotype;
+typedef struct{
+  Simulator s; //simulator
+  String action; //action
+  PriorityQueue deliv;  // list delivery
+  Time time;
+} infotype;
 typedef int address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
@@ -30,6 +41,14 @@ typedef struct {
 /* Definisi akses dengan Selektor : Set dan Get */
 #define Top(S) (S).TOP
 #define InfoTop(S) (S).T[(S).TOP]
+#define InfoSimul(S) (S).T[(S).TOP].s
+#define InfoDeliver(S) (S).T[(S).TOP].deliv
+#define InfoAction(S) (S).T[(S).TOP].action
+
+#define ElmtSimulator(i) i.s
+#define ElmtAction(i) i.action
+#define ElmtDelivery(i) i.deliv
+#define ElmtTime(i) i.time
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
@@ -56,5 +75,9 @@ void Pop(Stack * S, infotype* X);
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+int lengthStack(Stack s);
+// menghitung panjang stack
+void printState(infotype state);
+
 
 #endif

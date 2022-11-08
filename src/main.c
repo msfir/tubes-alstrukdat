@@ -17,6 +17,7 @@
 #include "fridge.h"
 #include "queue.h"
 #include "resep.h"
+#include "stack.h"
 
 #define MAX_RESEP 100
 
@@ -28,6 +29,7 @@ static Simulator simulator;
 static Queue notifications;
 static PriorityQueue delivery_list;
 static Fridge fridge;
+static Stack undoS, redoS;
 
 // Fungsi helper
 Address __getNodeById(Address *nodes, int id, int size) {
@@ -120,6 +122,8 @@ void setup_program(Point *simulator_location) {
     CreatePrioQueue(&delivery_list, 100);
     CreateFridge(&fridge, 10, 10);
     CreateQueue(&notifications);
+    CreateEmptyStack(&undoS);
+    CreateEmptyStack(&redoS);
 }
 
 void display_notifikasi() {
@@ -537,6 +541,25 @@ void execute_fridge() {
 void execute_wait(int jam, int menit){
     add_program_time(60*jam+menit);
 }
+void execute_undo(infotype temp){
+    Point prev_loc = simulator.location;
+    simulator = ElmtSimulator(temp);
+    float deltaX = Absis(simulator.location) - Absis(prev_loc);
+    float deltaY = Ordinat(simulator.location) - Ordinat(prev_loc);
+    SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
+    delivery_list = ElmtDelivery(temp);
+    program_time = ElmtTime(temp);
+}
+
+void execute_redo(infotype temp){
+    Point prev_loc = simulator.location;
+    simulator = ElmtSimulator(temp);
+    float deltaX = Absis(simulator.location) - Absis(prev_loc);
+    float deltaY = Ordinat(simulator.location) - Ordinat(prev_loc);
+    SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
+    delivery_list = ElmtDelivery(temp);
+    program_time = ElmtTime(temp);
+}
 
 int main() {
     printf("\e[?1049h\e[H");
@@ -556,107 +579,174 @@ int main() {
     printf("(   __   __   ) \n");
     printf(" '-'  '-'  '-'\n");
     Point simulator_location;
-    setup_program(&simulator_location);
+    setup_program(&simulator_location); //setup program
     printf("\n");
+
     printf("Masukkan username: ");
     start_parser(stdin);
     String username = parse_line();
     CreateTime(&program_time, 0, 0, 0);
-    CreateSimulator(&simulator, username, simulator_location);
-    boolean quit;
-    refresh_idle();
-    while (!quit) {
-        printf("Enter command: ");
+    CreateSimulator(&simulator, username, simulator_location); //setup simulator
+    boolean run = true;
+    String temp = StringFrom("");
+    
+    while (run){ 
+        printf("Enter command (START/EXIT): ");
         start_parser(stdin);
         String command = parse_line();
-        if (is_string_startswith(command, StringFrom("MOVE"))) {
-            execute_move(substring(command, 5, length(command)));
-            printf("\n");
+        if (is_string_equal(command, StringFrom("START"))){
+            boolean quit=false;
             refresh_idle();
-        } else if (is_string_startswith(command, StringFrom("WAIT"))) {
-            int wordCount, jam = 0, menit = 0;
-            String* cmdArray = split(command, ' ', &wordCount);
+            while (!quit) {
+                printf("Enter command: ");
+                start_parser(stdin);
+                String command = parse_line();
+                if (is_string_startswith(command, StringFrom("MOVE"))) {
+                    String arah = substring(command, 5, length(command));
+                    infotype state = { simulator, command, delivery_list, program_time };
+                    if (is_string_equal(arah, StringFrom("NORTH")) || is_string_equal(arah, StringFrom("EAST")) || is_string_equal(arah, StringFrom("WEST"))|| is_string_equal(arah, StringFrom("SOUTH"))){
+                        Push(&undoS, state);
+                        CreateEmptyStack(&redoS);
+                    }
+                    execute_move(arah);
+                    printf("\n");
+                    refresh_idle();
+                } else if (is_string_startswith(command, StringFrom("WAIT"))) {
+                    int wordCount, jam = 0, menit = 0;
+                    String* cmdArray = split(command, ' ', &wordCount);
 
-            // if 'menit' provided
-            if (wordCount >= 3){
-                menit = toInt(cmdArray[2]);
+                    // if 'menit' provided
+                    if (wordCount >= 3){
+                        menit = toInt(cmdArray[2]);
+                    }
+                    // if 'jam' provided
+                    if (wordCount >= 2){
+                        jam = toInt(cmdArray[1]);
+                    }
+                    infotype state = { simulator, command, delivery_list , program_time};
+                    Push(&undoS, state);
+                    execute_wait(jam, menit);
+                    printf("\n");
+                    refresh_idle();
+                } else if (is_string_equal(command, StringFrom("BUY"))) {
+                    if (IsBuySpace(map, Location(simulator))){
+                        infotype state = { simulator, temp, delivery_list , program_time};
+                        Push(&undoS, state);
+                        execute_buy();
+                        printf("\n");
+                        refresh_idle();
+                    }else{
+                        log_error("Tidak berada di lokasi buy.\n");
+                    }
+                } else if (is_string_equal(command, StringFrom("MIX"))) {
+                    if (IsMixSpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time };
+                        execute_mix();
+                        printf("\n");
+                        refresh_idle();
+                        Push(&undoS, state);
+                    }else{
+                        log_error("Tidak berada di lokasi mix.\n");
+                    }
+                } else if (is_string_equal(command, StringFrom("CHOP"))) {
+                    if (IsChopSpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time };
+                        execute_chop();
+                        printf("\n");
+                        refresh_idle();
+                        Push(&undoS, state);
+                    }else{
+                        log_error("Tidak berada di lokasi chop.\n");
+                    }
+                } else if (is_string_equal(command, StringFrom("FRY"))) {
+                    if (IsFrySpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time };
+                        execute_fry();
+                        printf("\n");
+                        refresh_idle();
+                        
+                        Push(&undoS, state);
+                    }else{
+                        log_error("Tidak berada di lokasi fry.\n");
+                    }
+                } else if (is_string_equal(command, StringFrom("BOIL"))) {
+                    if (IsBoilSpace(map, Location(simulator))){
+                        infotype state = { simulator, command, delivery_list, program_time};
+                        execute_boil();
+                        printf("\n");
+                        refresh_idle();
+                        
+                        Push(&undoS, state);
+                    }else{
+                        log_error("Tidak berada di lokasi boil.\n");
+                    }
+                } else if (is_string_equal(command, StringFrom("CATALOG"))) {
+                    printf("\n");
+                    printCatalog(foodlist);
+                    printf("\n");
+                } else if (is_string_equal(command, StringFrom("DELIVERY"))) {
+                    printf("\n");
+                    printf("List Makanan di Perjalanan\n");
+                    printf("(nama - waktu sisa delivery)\n");
+                    displayPrioqueue(delivery_list);
+                    printf("\n");
+                } else if (is_string_equal(command, StringFrom("INVENTORY"))) {
+                    printf("\n");
+                    printf("List Makanan di Inventory\n");
+                    printf("(nama - waktu sisa ekspirasi)\n");
+                    displayPrioqueue(Inventory(simulator));
+                    printf("\n");
+                } else if (is_string_equal(command, StringFrom("FRIDGE"))) {
+                    if (IsFridgeSpace(map, Location(simulator))){
+                        execute_fridge();
+                        printf("\n");
+                        refresh_idle();
+                    }else{
+                        log_error("Tidak berada di lokasi refrigerator.\n");
+                    }
+                } else if (is_string_equal(command, StringFrom("UNDO"))){
+                    if (lengthStack(undoS)<1){
+                        printf("BNMO masih di state awal\n"); // mungkin sesuatu kaya "Already at oldest change" lebih cocok?
+                    }else{
+                        infotype temp;
+                        Pop(&undoS, &temp);
+                        infotype state ={ simulator, ElmtAction(temp), delivery_list, program_time};
+                        Push(&redoS, state);
+                        execute_undo(temp);
+                        String notifikasi = StringFrom("\e[92mCommand ");
+                        notifikasi = concat_string(notifikasi, ElmtAction(temp));
+                        notifikasi = concat_string(notifikasi, StringFrom(" telah dibatalkan.\e[0m"));
+                        enqueue(&notifications, notifikasi);
+                        refresh_idle();
+                    }
+                } else if (is_string_equal(command, StringFrom("REDO"))){
+                    if (IsEmptyStack(redoS)){
+                        printf("Tidak ada langkah yang bisa di redo\n");
+                    }else{
+                        infotype temp;
+                        Pop(&redoS, &temp);
+                        infotype state ={ simulator, ElmtAction(temp), delivery_list, program_time};
+                        Push(&undoS, state);
+                        execute_redo(temp);
+                        String notifikasi = StringFrom("\e[92mCommand ");
+                        notifikasi = concat_string(notifikasi, ElmtAction(temp));
+                        notifikasi = concat_string(notifikasi, StringFrom(" dijalankan kembali.\e[0m"));
+                        enqueue(&notifications, notifikasi);
+                        refresh_idle();
+                    }
+                }else if (is_string_equal(command, StringFrom("EXIT"))) {
+                    quit = true;
+                    run = false;
+                    printf("Simulator dimatikan\n");
+                } else {
+                    printf("\e[91mCommand tidak valid.\e[0m\n");
+                }
+                command = StringFrom("");
             }
-            // if 'jam' provided
-            if (wordCount >= 2){
-                jam = toInt(cmdArray[1]);
-            }
-
-            execute_wait(jam, menit);
-            printf("\n");
-            refresh_idle();
-        } else if (is_string_equal(command, StringFrom("BUY"))) {
-            if (IsBuySpace(map, Location(simulator))){
-                execute_buy();
-                printf("\n");
-                refresh_idle();
-            }else{
-                log_error("Tidak berada di lokasi buy.\n");
-            }
-        } else if (is_string_equal(command, StringFrom("MIX"))) {
-            if (IsMixSpace(map, Location(simulator))){
-                execute_mix();
-                printf("\n");
-                refresh_idle();
-            }else{
-                log_error("Tidak berada di lokasi mix.\n");
-            }
-        } else if (is_string_equal(command, StringFrom("CHOP"))) {
-            if (IsChopSpace(map, Location(simulator))){
-                execute_chop();
-                printf("\n");
-                refresh_idle();
-            }else{
-                log_error("Tidak berada di lokasi chop.\n");
-            }
-        } else if (is_string_equal(command, StringFrom("FRY"))) {
-            if (IsFrySpace(map, Location(simulator))){
-                execute_fry();
-                printf("\n");
-                refresh_idle();
-            }else{
-                log_error("Tidak berada di lokasi fry.\n");
-            }
-        } else if (is_string_equal(command, StringFrom("BOIL"))) {
-            if (IsBoilSpace(map, Location(simulator))){
-                execute_boil();
-                printf("\n");
-                refresh_idle();
-            }else{
-                log_error("Tidak berada di lokasi boil.\n");
-            }
-        } else if (is_string_equal(command, StringFrom("CATALOG"))) {
-            printf("\n");
-            printCatalog(foodlist);
-            printf("\n");
-        } else if (is_string_equal(command, StringFrom("DELIVERY"))) {
-            printf("\n");
-            printf("List Makanan di Perjalanan\n");
-            printf("(nama - waktu sisa delivery)\n");
-            displayPrioqueue(delivery_list);
-            printf("\n");
-        } else if (is_string_equal(command, StringFrom("INVENTORY"))) {
-            printf("\n");
-            printf("List Makanan di Inventory\n");
-            printf("(nama - waktu sisa ekspirasi)\n");
-            displayPrioqueue(Inventory(simulator));
-            printf("\n");
-        } else if (is_string_equal(command, StringFrom("FRIDGE"))) {
-            if (IsFridgeSpace(map, Location(simulator))){
-                execute_fridge();
-                printf("\n");
-                refresh_idle();
-            }else{
-                log_error("Tidak berada di lokasi refrigerator.\n");
-            }
-        } else if (is_string_equal(command, StringFrom("EXIT"))) {
-            quit = true;
+        }else if (is_string_equal(command, StringFrom("EXIT"))) {
+            run = false;
             printf("Simulator dimatikan\n");
-        } else {
+        }else{
             printf("\e[91mCommand tidak valid.\e[0m\n");
         }
         command = StringFrom("");
