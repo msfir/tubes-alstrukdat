@@ -183,7 +183,18 @@ void add_program_time(int minute) {
             enqueue(&notifications, notifikasi);
 
             dequeuePrioQueue(&delivery_list, &food);
-            enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, MenitToTIME(TIMEToMenit(food.expiration_time) + newTime)});
+
+            int newTimeAfterDelivery = TIMEToMenit(food.expiration_time) + newTime; // catch for absurd amount of wait time
+            
+            if (newTimeAfterDelivery > 0){
+                enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, MenitToTIME(newTimeAfterDelivery)});  
+            }   else {
+                notifikasi = StringFrom("\e[92m");
+                notifikasi = concat_string(notifikasi, food.name);
+                notifikasi = concat_string(notifikasi, StringFrom(" telah kedaluwarsa.\e[0m"));
+                enqueue(&notifications, notifikasi);
+            }
+
             i--;
         } else {
             ELMTQUEUE(delivery_list, i + delivery_list.idxHead).time = PrevNMenit(t, minute);
