@@ -40,9 +40,9 @@ typedef struct {
 /* Definisi akses dengan Selektor : Set dan Get */
 #define Top(S) (S).TOP
 #define InfoTop(S) (S).T[(S).TOP]
-#define InfoSimul(S) (S).T[(S).TOP.s]
-#define InfoDeliver(S) (S).T[(S).TOP.deliv]
-#define InfoAction(S) (S).T[(S).TOP.action]
+#define InfoSimul(S) (S).T[(S).TOP].s
+#define InfoDeliver(S) (S).T[(S).TOP].deliv
+#define InfoAction(S) (S).T[(S).TOP].action
 
 #define ElmtSimulator(i) i.s
 #define ElmtAction(i) i.action

@@ -529,7 +529,11 @@ void execute_wait(int jam, int menit){
     add_program_time(60*jam+menit);
 }
 void execute_undo(infotype temp){
+    Point prev_loc = simulator.location;
     simulator = ElmtSimulator(temp);
+    float deltaX = Absis(simulator.location) - Absis(prev_loc);
+    float deltaY = Ordinat(simulator.location) - Ordinat(prev_loc);
+    SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
     delivery_list = ElmtDelivery(temp);
 }
 int main() {
@@ -568,21 +572,19 @@ int main() {
         if (is_string_equal(command, StringFrom("START"))){
             boolean quit=false;
             refresh_idle();
-            infotype first = {simulator, temp, delivery_list };
-            Push(&undoS, first);
             while (!quit) {
                 printf("Enter command: ");
                 start_parser(stdin);
                 String command = parse_line();
                 if (is_string_startswith(command, StringFrom("MOVE"))) {
                     String arah = substring(command, 5, length(command));
-                    execute_move(arah);
-                    printf("\n");
-                    refresh_idle();
                     if (is_string_equal(arah, StringFrom("NORTH")) || is_string_equal(arah, StringFrom("EAST")) || is_string_equal(arah, StringFrom("WEST"))|| is_string_equal(arah, StringFrom("SOUTH"))){
                         infotype state = { simulator, command, delivery_list };
                         Push(&undoS, state);
                     }
+                    execute_move(arah);
+                    printf("\n");
+                    refresh_idle();
                 } else if (is_string_startswith(command, StringFrom("WAIT"))) {
                     int wordCount, jam = 0, menit = 0;
                     String* cmdArray = split(command, ' ', &wordCount);
@@ -677,7 +679,7 @@ int main() {
                     }
                 } else if (is_string_equal(command, StringFrom("UNDO"))){
                     if (lengthStack(undoS)<1){
-                        printf("BNMO masih di state awal\n");
+                        printf("BNMO masih di state awal\n"); // mungkin sesuatu kaya "Already at oldest change" lebih cocok?
                     }else{
                         infotype temp;
                         Pop(&undoS, &temp);
