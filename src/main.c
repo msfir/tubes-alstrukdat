@@ -206,7 +206,7 @@ void add_program_time(int minute) {
     }
 }
 
-void execute_buy() {
+boolean execute_buy() {
     printBuyList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -227,46 +227,54 @@ void execute_buy() {
 
             add_program_time(1);
             enqueuePrioQueue(&delivery_list, (PQInfo) {food, delivery_time});
+
+            return true; // THIS CAUSES THE LOOP TO BREAK
         } else if (choice != 0) {
             printf("Pilihan tidak valid.\n");
         }
     }
 }
 
-void execute_move(String arah) {
+boolean execute_move(String arah) {
     printf("\n");
     Point temp = Location(simulator);
     if (is_string_equal(arah, StringFrom("NORTH"))){
         SimulatorMove(&simulator, Location(simulator), &map, -1, 0);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else if (is_string_equal(arah, StringFrom("EAST"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 0, 1);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else if (is_string_equal(arah, StringFrom("SOUTH"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 1, 0);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else if (is_string_equal(arah, StringFrom("WEST"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 0, -1);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else{
         log_error("Command tidak valid.\n");
     }
+
+    return false;
 }
 
-void execute_fry() {
+boolean execute_fry() { 
     printFryList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
     int choice = 1;
-    while (choice != 0) {
+    while (choice != 0) { // RETURN WILL CAUSE THIS LOOP TO BREAK
         printf("\n");
         printf("Enter command: ");
         start_parser(stdin);
@@ -286,6 +294,7 @@ void execute_fry() {
                     }
 
                     add_program_time(1);
+                    return true;
                 } else {
                     printf("\n");
                     printf("Gagal menggoreng makanan menjadi %s.", STR_VALUE(food.name));
@@ -306,12 +315,12 @@ void execute_fry() {
     }
 }
 
-void execute_mix() {
+boolean execute_mix() {
     printMixList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
     int choice = 1;
-    while (choice != 0) {
+    while (choice != 0) { // RETURN WILL CAUSE THIS LOOP TO BREAK
         printf("\n");
         printf("Enter command: ");
         start_parser(stdin);
@@ -331,6 +340,7 @@ void execute_mix() {
                     }
 
                     add_program_time(1);
+                    return true;
                 } else {
                     printf("\n");
                     printf("Gagal mencampur makanan menjadi %s.", STR_VALUE(food.name));
@@ -351,7 +361,7 @@ void execute_mix() {
     }
 }
 
-void execute_chop() {
+boolean execute_chop() {
     printChopList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -376,6 +386,7 @@ void execute_chop() {
                     }
 
                     add_program_time(1);
+                    return true;
                 } else {
                     printf("\n");
                     printf("Gagal memotong makanan menjadi %s.", STR_VALUE(food.name));
@@ -396,7 +407,7 @@ void execute_chop() {
     }
 }
 
-void execute_boil() {
+boolean execute_boil() {
     printBoilList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -421,6 +432,8 @@ void execute_boil() {
                     }
 
                     add_program_time(1);
+
+                    return true;
                 } else {
                     printf("\n");
                     printf("Gagal merebus makanan menjadi %s.", STR_VALUE(food.name));
@@ -538,9 +551,11 @@ void execute_fridge() {
     }
 }
 
-void execute_wait(int jam, int menit){
+boolean execute_wait(int jam, int menit){
     add_program_time(60*jam+menit);
+    return true;
 }
+
 void execute_undo(infotype temp){
     Point prev_loc = simulator.location;
     simulator = ElmtSimulator(temp);
@@ -604,11 +619,10 @@ int main() {
                 if (is_string_startswith(command, StringFrom("MOVE"))) {
                     String arah = substring(command, 5, length(command));
                     infotype state = { simulator, command, delivery_list, program_time };
-                    if (is_string_equal(arah, StringFrom("NORTH")) || is_string_equal(arah, StringFrom("EAST")) || is_string_equal(arah, StringFrom("WEST"))|| is_string_equal(arah, StringFrom("SOUTH"))){
+                    if (execute_move(arah)){
                         Push(&undoS, state);
                         CreateEmptyStack(&redoS);
                     }
-                    execute_move(arah);
                     printf("\n");
                     refresh_idle();
                 } else if (is_string_startswith(command, StringFrom("WAIT"))) {
@@ -624,8 +638,9 @@ int main() {
                         jam = toInt(cmdArray[1]);
                     }
                     infotype state = { simulator, command, delivery_list , program_time};
-                    Push(&undoS, state);
-                    execute_wait(jam, menit);
+                    if (execute_wait(jam, menit)){
+                        Push(&undoS, state);
+                    }
                     printf("\n");
                     refresh_idle();
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
