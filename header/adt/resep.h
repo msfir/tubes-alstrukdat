@@ -16,7 +16,6 @@
 /* Indeks minimum list */
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
-#define MARK -9999
 /* Nilai elemen tak terdefinisi*/
 
 
