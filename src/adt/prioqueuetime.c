@@ -119,9 +119,9 @@ void displayPrioqueue(PriorityQueue pq){
 
 void removeAtPrioqueue(PriorityQueue *pq, int idx, Food *val) {
    if(idx != IDX_UNDEF){
-      *val = pq->buffer[idx].food;
+      *val = getElmtAtIdxPrioqueue(*pq, idx).food;
       for (int i = idx; i < lengthPrioQueue(*pq) - 1; i++) {
-         pq->buffer[i] = pq->buffer[i + 1];
+         ELMTQUEUE(*pq, i + pq->idxHead) = ELMTQUEUE(*pq, i + 1 + pq->idxHead);
       }
       if (lengthPrioQueue(*pq) == 1) {
          pq->idxHead = pq->idxTail = IDX_UNDEF;
