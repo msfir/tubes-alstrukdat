@@ -99,4 +99,10 @@ int getFirstFoundFoodPrioqueue(PriorityQueue pq, int foodid);
  */
 boolean isInPrioqueue(PriorityQueue pq, int foodId);
 
+
+/*
+ * Apakah elemen yang mengandung foodid ada di prioqueue
+ */
+void deepcopyPrioQueue(PriorityQueue *dest, PriorityQueue src);
+
 #endif

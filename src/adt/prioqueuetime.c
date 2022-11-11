@@ -156,3 +156,14 @@ boolean isInPrioqueue(PriorityQueue pq, int foodId){
 
    return found;
 }
+
+void deepcopyPrioQueue(PriorityQueue *dest, PriorityQueue src){
+   CreatePrioQueue(dest, CAP_PRIOQUEUE(src));
+
+   if (BUFFER_INVENTORY(*dest) != NULL){
+      Food temp;
+      for (int i = 0; i < lengthPrioQueue(src); i++){
+         enqueuePrioQueue(dest, ELMTQUEUE(src, i));
+      }
+   }
+}
