@@ -206,7 +206,7 @@ void add_program_time(int minute) {
     }
 }
 
-boolean execute_buy() {
+void execute_buy() {
     printBuyList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -228,7 +228,7 @@ boolean execute_buy() {
             add_program_time(1);
             enqueuePrioQueue(&delivery_list, (PQInfo) {food, delivery_time});
 
-            return true; // THIS CAUSES THE LOOP TO BREAK
+            // return true; // THIS CAUSES THE LOOP TO BREAK
         } else if (choice != 0) {
             printf("Pilihan tidak valid.\n");
         }
@@ -269,7 +269,7 @@ boolean execute_move(String arah) {
     return false;
 }
 
-boolean execute_fry() { 
+void execute_fry() { 
     printFryList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -294,7 +294,7 @@ boolean execute_fry() {
                     }
 
                     add_program_time(1);
-                    return true;
+
                 } else {
                     printf("\n");
                     printf("Gagal menggoreng makanan menjadi %s.", STR_VALUE(food.name));
@@ -315,7 +315,7 @@ boolean execute_fry() {
     }
 }
 
-boolean execute_mix() {
+void execute_mix() {
     printMixList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -340,7 +340,7 @@ boolean execute_mix() {
                     }
 
                     add_program_time(1);
-                    return true;
+                    
                 } else {
                     printf("\n");
                     printf("Gagal mencampur makanan menjadi %s.", STR_VALUE(food.name));
@@ -361,7 +361,7 @@ boolean execute_mix() {
     }
 }
 
-boolean execute_chop() {
+void execute_chop() {
     printChopList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -386,7 +386,7 @@ boolean execute_chop() {
                     }
 
                     add_program_time(1);
-                    return true;
+                    
                 } else {
                     printf("\n");
                     printf("Gagal memotong makanan menjadi %s.", STR_VALUE(food.name));
@@ -407,7 +407,7 @@ boolean execute_chop() {
     }
 }
 
-boolean execute_boil() {
+void execute_boil() {
     printBoilList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -433,7 +433,7 @@ boolean execute_boil() {
 
                     add_program_time(1);
 
-                    return true;
+                    
                 } else {
                     printf("\n");
                     printf("Gagal merebus makanan menjadi %s.", STR_VALUE(food.name));
