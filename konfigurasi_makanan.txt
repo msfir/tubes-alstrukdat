@@ -1,4 +1,4 @@
-6
+9
 11
 Ayam Mentah
 1 0 0
@@ -35,3 +35,21 @@ Ayam Goreng
 0 0 0
 2 2
 Fry
+1091
+Cabe
+0 2 0
+0 0 5
+1 1
+Buy
+1092
+Sambal Goreng
+0 10 0
+0 0 0
+1 1
+Fry
+1093
+Ayam Geprek
+1 0 0
+0 0 0
+2 2
+Mix

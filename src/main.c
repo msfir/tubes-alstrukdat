@@ -656,42 +656,40 @@ int main() {
                 } else if (is_string_equal(command, StringFrom("MIX"))) {
                     if (IsMixSpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time };
+                        Push(&undoS, state);
                         execute_mix();
                         printf("\n");
                         refresh_idle();
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi mix.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("CHOP"))) {
                     if (IsChopSpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time };
+                        Push(&undoS, state);
                         execute_chop();
                         printf("\n");
                         refresh_idle();
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi chop.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("FRY"))) {
                     if (IsFrySpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time };
+                        Push(&undoS, state);
                         execute_fry();
                         printf("\n");
                         refresh_idle();
-                        
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi fry.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("BOIL"))) {
                     if (IsBoilSpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time};
+                        Push(&undoS, state);
                         execute_boil();
                         printf("\n");
                         refresh_idle();
-                        
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi boil.\n");
                     }

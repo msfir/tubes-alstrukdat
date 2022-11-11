@@ -38,6 +38,8 @@ void CreateResep(Resep* r, Tree t);
 
 void CreateResepList(ResepList* rl);
 
+void printCookbook(ResepList rl, FoodList fl);
+
 boolean canMakeFromResep(Resep r, Simulator s); //or inventory?
 // watch for children that still has resep
 // this will NOT recurse
@@ -51,6 +53,6 @@ boolean hasResep(ResepList rl, Food f);
 
 boolean getResepWithFood(Resep* resep, ResepList rl, Food f);
 
-void printCookbook(ResepList rl, FoodList fl);
+
 
 #endif
