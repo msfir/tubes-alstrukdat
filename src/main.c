@@ -645,7 +645,7 @@ int main() {
                     refresh_idle();
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
                     if (IsBuySpace(map, Location(simulator))){
-                        infotype state = { simulator, temp, delivery_list , program_time};
+                        infotype state = { simulator, command, delivery_list , program_time};
                         Push(&undoS, state);
                         execute_buy();
                         printf("\n");
