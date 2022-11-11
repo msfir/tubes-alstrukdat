@@ -34,12 +34,14 @@ void listParent(Tree a, FoodList fl){
     }
 }
 
-void listChildren(Tree a, FoodList fl){
-    int i, j;
-    for(i = 0; i<getChildCount(*a); i++){        
-        //todo
-    }
-}
+// void listChildren(Tree a){
+//     int i;
+//     printf("%s", getFoodById(INFO(ROOT(a))))
+//     for(i = 0; i<getChildCount(*a); i++){        
+        
+//     }
+// }
+// move this to resep altogether
 
 void getAllReachableNode(Tree a, Node* nodes[]){
 

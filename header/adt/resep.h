@@ -6,6 +6,7 @@
 
 #include "node.h"
 #include "tree.h"
+#include "foodlist.h"
 
 #include "simulator.h"
 
@@ -49,5 +50,7 @@ boolean canMakeFromResep(Resep r, Simulator s); //or inventory?
 boolean hasResep(ResepList rl, Food f); 
 
 boolean getResepWithFood(Resep* resep, ResepList rl, Food f);
+
+void printCookbook(ResepList rl, FoodList fl);
 
 #endif

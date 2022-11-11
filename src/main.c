@@ -699,6 +699,10 @@ int main() {
                     printf("\n");
                     printCatalog(foodlist);
                     printf("\n");
+                } else if (is_string_equal(command, StringFrom("COOKBOOK"))) {
+                    printf("\n");
+                    printCookbook(resepList, foodlist);
+                    printf("\n");
                 } else if (is_string_equal(command, StringFrom("DELIVERY"))) {
                     printf("\n");
                     printf("List Makanan di Perjalanan\n");
