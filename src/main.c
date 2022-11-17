@@ -228,46 +228,54 @@ void execute_buy() {
 
             add_program_time(1);
             enqueuePrioQueue(&delivery_list, (PQInfo) {food, delivery_time});
+
+            // return true; // THIS CAUSES THE LOOP TO BREAK
         } else if (choice != 0) {
             printf("Pilihan tidak valid.\n");
         }
     }
 }
 
-void execute_move(String arah) {
+boolean execute_move(String arah) {
     printf("\n");
     Point temp = Location(simulator);
     if (is_string_equal(arah, StringFrom("NORTH"))){
         SimulatorMove(&simulator, Location(simulator), &map, -1, 0);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else if (is_string_equal(arah, StringFrom("EAST"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 0, 1);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else if (is_string_equal(arah, StringFrom("SOUTH"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 1, 0);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else if (is_string_equal(arah, StringFrom("WEST"))) {
         SimulatorMove(&simulator, Location(simulator), &map, 0, -1);
         if (!EQ(temp, Location(simulator)) ){
             add_program_time(1);
+            return true;
         }
     } else{
         log_error("Command tidak valid.\n");
     }
+
+    return false;
 }
 
-void execute_fry() {
+void execute_fry() { 
     printFryList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
     int choice = 1;
-    while (choice != 0) {
+    while (choice != 0) { // RETURN WILL CAUSE THIS LOOP TO BREAK
         printf("\n");
         printf("Enter command: ");
         start_parser(stdin);
@@ -287,6 +295,7 @@ void execute_fry() {
                     }
 
                     add_program_time(1);
+
                 } else {
                     printf("\n");
                     printf("Gagal menggoreng makanan menjadi %s.", STR_VALUE(food.name));
@@ -312,7 +321,7 @@ void execute_mix() {
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
     int choice = 1;
-    while (choice != 0) {
+    while (choice != 0) { // RETURN WILL CAUSE THIS LOOP TO BREAK
         printf("\n");
         printf("Enter command: ");
         start_parser(stdin);
@@ -332,6 +341,7 @@ void execute_mix() {
                     }
 
                     add_program_time(1);
+                    
                 } else {
                     printf("\n");
                     printf("Gagal mencampur makanan menjadi %s.", STR_VALUE(food.name));
@@ -377,6 +387,7 @@ void execute_chop() {
                     }
 
                     add_program_time(1);
+                    
                 } else {
                     printf("\n");
                     printf("Gagal memotong makanan menjadi %s.", STR_VALUE(food.name));
@@ -422,6 +433,8 @@ void execute_boil() {
                     }
 
                     add_program_time(1);
+
+                    
                 } else {
                     printf("\n");
                     printf("Gagal merebus makanan menjadi %s.", STR_VALUE(food.name));
@@ -542,12 +555,18 @@ void execute_fridge() {
     }
 }
 
-void execute_wait(int jam, int menit){
+boolean execute_wait(int jam, int menit){
     add_program_time(60*jam+menit);
+    return true;
 }
+
 void execute_undo(infotype temp){
     Point prev_loc = simulator.location;
+
+    // dealocatePrioQueue(&Inventory(simulator));
+
     simulator = ElmtSimulator(temp);
+    
     float deltaX = Absis(simulator.location) - Absis(prev_loc);
     float deltaY = Ordinat(simulator.location) - Ordinat(prev_loc);
     SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
@@ -608,11 +627,10 @@ int main() {
                 if (is_string_startswith(command, StringFrom("MOVE"))) {
                     String arah = substring(command, 5, length(command));
                     infotype state = { simulator, command, delivery_list, program_time };
-                    if (is_string_equal(arah, StringFrom("NORTH")) || is_string_equal(arah, StringFrom("EAST")) || is_string_equal(arah, StringFrom("WEST"))|| is_string_equal(arah, StringFrom("SOUTH"))){
+                    if (execute_move(arah)){
                         Push(&undoS, state);
                         CreateEmptyStack(&redoS);
                     }
-                    execute_move(arah);
                     printf("\n");
                     refresh_idle();
                 } else if (is_string_startswith(command, StringFrom("WAIT"))) {
@@ -628,13 +646,14 @@ int main() {
                         jam = toInt(cmdArray[1]);
                     }
                     infotype state = { simulator, command, delivery_list , program_time};
-                    Push(&undoS, state);
-                    execute_wait(jam, menit);
+                    if (execute_wait(jam, menit)){
+                        Push(&undoS, state);
+                    }
                     printf("\n");
                     refresh_idle();
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
                     if (IsBuySpace(map, Location(simulator))){
-                        infotype state = { simulator, temp, delivery_list , program_time};
+                        infotype state = { simulator, command, delivery_list , program_time};
                         Push(&undoS, state);
                         execute_buy();
                         printf("\n");
@@ -645,48 +664,62 @@ int main() {
                 } else if (is_string_equal(command, StringFrom("MIX"))) {
                     if (IsMixSpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time };
+                        PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
+                        Inventory(ElmtSimulator(state)) = tempInventory;
+                        Push(&undoS, state);
+                        
                         execute_mix();
                         printf("\n");
                         refresh_idle();
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi mix.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("CHOP"))) {
                     if (IsChopSpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time };
+                        PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
+                        Inventory(ElmtSimulator(state)) = tempInventory;
+                        Push(&undoS, state);
+                        
                         execute_chop();
                         printf("\n");
                         refresh_idle();
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi chop.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("FRY"))) {
                     if (IsFrySpace(map, Location(simulator))){
                         infotype state = { simulator, command, delivery_list, program_time };
+                        PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
+                        Inventory(ElmtSimulator(state)) = tempInventory;
+                        Push(&undoS, state);
+
                         execute_fry();
                         printf("\n");
                         refresh_idle();
-                        
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi fry.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("BOIL"))) {
                     if (IsBoilSpace(map, Location(simulator))){
-                        infotype state = { simulator, command, delivery_list, program_time};
+                        infotype state = { simulator, command, delivery_list, program_time };
+                        PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
+                        Inventory(ElmtSimulator(state)) = tempInventory;
+                        Push(&undoS, state);
+
                         execute_boil();
                         printf("\n");
                         refresh_idle();
-                        
-                        Push(&undoS, state);
                     }else{
                         log_error("Tidak berada di lokasi boil.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("CATALOG"))) {
                     printf("\n");
                     printCatalog(foodlist);
+                    printf("\n");
+                } else if (is_string_equal(command, StringFrom("COOKBOOK"))) {
+                    printf("\n");
+                    printCookbook(resepList, foodlist);
                     printf("\n");
                 } else if (is_string_equal(command, StringFrom("DELIVERY"))) {
                     printf("\n");
@@ -714,7 +747,9 @@ int main() {
                     }else{
                         infotype temp;
                         Pop(&undoS, &temp);
-                        infotype state ={ simulator, ElmtAction(temp), delivery_list, program_time};
+                        infotype state = { simulator, ElmtAction(temp), delivery_list, program_time };
+                        PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
+                        Inventory(ElmtSimulator(state)) = tempInventory;
                         Push(&redoS, state);
                         execute_undo(temp);
                         String notifikasi = StringFrom("\e[92mCommand ");

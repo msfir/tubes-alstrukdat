@@ -32,6 +32,25 @@ void CreateResepList(ResepList* rl){
     }
 }
 
+void printCookbook(ResepList rl, FoodList fl){
+    Food foodToPrint; Resep resepToPrint; 
+    printf("List Resep\n");
+    printf(" (aksi yang diperlukan - bahan..)\n");
+
+    for(int i = 0; i < resepListLength(rl); i++){
+        resepToPrint = ResepListElmt(rl, i);
+        getFoodById(fl, INFO(ROOT(resepToPrint)), &foodToPrint);
+        printf("%d. %s\n", i+1, STR_VALUE(Name(foodToPrint)));
+        printf("%s", ActionName[ActionLocation(foodToPrint)]);
+
+        for(int j = 0; j < CHILD_COUNT(ROOT(resepToPrint)); j++){
+            getFoodById(fl, INFO(NEXT(ROOT(resepToPrint), j)), &foodToPrint);
+            printf(" - %s", STR_VALUE(Name(foodToPrint)));
+        }
+
+        printf("\n");
+    }
+}
 
 boolean canMakeFromResep(Resep r, Simulator s){
     boolean canMade = true;
@@ -61,8 +80,8 @@ boolean hasResep(ResepList rl, Food f){
 
 boolean getResepWithFood(Resep* resep, ResepList rl, Food f){
     boolean found = false;
+    int i = 0; 
     if(hasResep(rl, f)){
-        int i; 
         while(!found && i < resepListLength(rl)){
             if (INFO(ResepListElmt(rl, i)) == Id(f)){
                 *resep = ResepListElmt(rl, i);
@@ -72,6 +91,5 @@ boolean getResepWithFood(Resep* resep, ResepList rl, Food f){
             i++;
         }
     }
-
     return found; 
 }
