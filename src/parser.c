@@ -88,8 +88,8 @@ enum Action parse_action() {
         return CHOP;
     } else if (is_string_equal(action, StringFrom("Fry"))) {
         return FRY;
-    } else if (is_string_equal(action, StringFrom("Chop"))) {
-        return CHOP;
+    } else if (is_string_equal(action, StringFrom("Boil"))) {
+        return BOIL;
     }
     return -1;
 }
