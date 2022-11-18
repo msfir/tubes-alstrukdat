@@ -162,7 +162,7 @@ void deepcopyPrioQueue(PriorityQueue *dest, PriorityQueue src){
 
    if (BUFFER_INVENTORY(*dest) != NULL){
       Food temp;
-      for (int i = 0; i < lengthPrioQueue(src); i++){
+      for (int i = src.idxHead; i <= src.idxTail; i++){
          enqueuePrioQueue(dest, ELMTQUEUE(src, i));
       }
    }
