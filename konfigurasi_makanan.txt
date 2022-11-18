@@ -4,88 +4,103 @@ Ayam Mentah
 1 0 0
 0 0 15
 2 2
+0 0 1
 Buy
 21
 Ayam Potong
 0 2 0
 0 0 0
 2 2
+0 0 5
 Chop
 10
 Tepung
 0 1 0
 0 0 30
 1 2
+0 0 1
 Buy
 15
 Minyak Goreng
 0 1 30
 0 1 0
 1 1
+0 0 1
 Buy
 31
 Ayam Tepung
 0 0 30
 0 0 0
 2 2
+0 0 3
 Mix
 37
 Ayam Goreng
 0 0 15
 0 0 0
 2 2
+0 0 10
 Fry
 1091
 Cabe
 0 2 0
 0 0 5
 1 1
+0 0 1
 Buy
 1092
 Sambal Goreng
 0 10 0
 0 0 0
 1 1
+0 0 4
 Fry
 1093
 Ayam Geprek
 1 0 0
 0 0 0
 2 2
+0 0 6
 Mix
 2091
 Daging sapi
 2 0 0
 0 1 0
 3 3
+0 0 1
 Buy
 2092
 Daging sapi cincang
 1 0 0
 0 0 0
 2 2
+0 0 10
 Chop
 2093
 Bakso sapi
 5 0 0
 0 0 0
 1 1
+0 0 7
 Boil
 3094
 Mie kering
 10 0 0
 0 0 30
 1 1
+0 0 1
 Buy
 3095
 Mie kuah
 0 12 0
 0 0 0
 1 1
+0 0 4
 Boil
 2094
 Mie Bakso
 2 0 0
 0 0 0
 1 1
+0 0 6
 Mix
