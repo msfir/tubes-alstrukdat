@@ -13,6 +13,7 @@
 #include "cstring.h"
 #include "wordmachine.h"
 #include "prioqueuetime.h"
+#include "fridge.h"
 
 #define Nil -1
 #define MaxEl 100
@@ -23,6 +24,7 @@ typedef struct{
   String action; //action
   PriorityQueue deliv;  // list delivery
   Time time;
+  Fridge fridge;
 } infotype;
 typedef int address;   /* indeks tabel */
 
