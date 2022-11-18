@@ -91,9 +91,10 @@ void setup_program(Point *simulator_location) {
         int food_width = parse_int();
         int food_height = parse_int();
         Size food_size = {food_width, food_height};
+        Time processing_time = parse_time();
         enum Action action = parse_action();
         Food f;
-        CreateFood(&f, id, name, expire, action, delivery, food_size);
+        CreateFood(&f, id, name, expire, action, delivery, food_size, processing_time);
         addFood(&foodlist, f);
         nodes[i] = newNode(id);
     }
@@ -295,12 +296,13 @@ boolean execute_fry() {
                     printf("Berhasil menggoreng makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
-                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
-                        printf("Consumed: %s", STR_VALUE(food.name));
+                        Food consumed;
+                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &consumed);
+                        printf("Consumed: %s", STR_VALUE(consumed.name));
                         printf("\n");
                     }
 
-                    add_program_time(1);
+                    add_program_time(TIMEToMenit(food.processing_time));
                     success = true;
                 } else {
                     printf("\n");
@@ -345,12 +347,13 @@ boolean execute_mix() {
                     printf("Berhasil mencampur makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
-                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
-                        printf("Consumed: %s", STR_VALUE(food.name));
+                        Food consumed;
+                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &consumed);
+                        printf("Consumed: %s", STR_VALUE(consumed.name));
                         printf("\n");
                     }
 
-                    add_program_time(1);
+                    add_program_time(TIMEToMenit(food.processing_time));
                     success = true;
                     
                 } else {
@@ -396,12 +399,13 @@ boolean execute_chop() {
                     printf("Berhasil memotong makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
-                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
-                        printf("Consumed: %s", STR_VALUE(food.name));
+                        Food consumed;
+                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &consumed);
+                        printf("Consumed: %s", STR_VALUE(consumed.name));
                         printf("\n");
                     }
 
-                    add_program_time(1);
+                    add_program_time(TIMEToMenit(food.processing_time));
                     success = true;
                 } else {
                     printf("\n");
@@ -446,12 +450,13 @@ boolean execute_boil() {
                     printf("Berhasil merebus makanan menjadi %s.", STR_VALUE(food.name));
                     printf("\n");
                     for(int j = 0; j<CHILD_COUNT(ROOT(resep)); j++){
-                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &food);
-                        printf("Consumed: %s", STR_VALUE(food.name));
+                        Food consumed;
+                        removeAtPrioqueue(&Inventory(simulator), getFirstFoundFoodPrioqueue(Inventory(simulator), INFO(NEXT(ROOT(resep), j))), &consumed);
+                        printf("Consumed: %s", STR_VALUE(consumed.name));
                         printf("\n");
                     }
 
-                    add_program_time(1);
+                    add_program_time(TIMEToMenit(food.processing_time));
                     success = true;
                 } else {
                     printf("\n");

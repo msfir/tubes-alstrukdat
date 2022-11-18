@@ -97,7 +97,9 @@ void printFryList(FoodList L) {
         for (i = 0; i < listLength(L); i++) {
             if (ActionLocation(ListElmt(L, i)) == FRY) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name(ListElmt(L, i))));
+                printf("%d. %s - ", j, STR_VALUE(Name(ListElmt(L, i))));
+                TulisFoodTIME(ProcTime(ListElmt(L, i)));
+                printf("\n");
             }
         }
         if (j == 0) {
@@ -120,7 +122,9 @@ void printMixList(FoodList L) {
         for (i = 0; i < listLength(L); i++) {
             if (ActionLocation(ListElmt(L, i)) == MIX) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name(ListElmt(L, i))));
+                printf("%d. %s - ", j, STR_VALUE(Name(ListElmt(L, i))));
+                TulisFoodTIME(ProcTime(ListElmt(L, i)));
+                printf("\n");
             }
         }
         if (j == 0) {
@@ -143,7 +147,9 @@ void printBoilList(FoodList L) {
         for (i = 0; i < listLength(L); i++) {
             if (ActionLocation(ListElmt(L, i)) == BOIL) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name((ListElmt(L, i)))));
+                printf("%d. %s - ", j, STR_VALUE(Name(ListElmt(L, i))));
+                TulisFoodTIME(ProcTime(ListElmt(L, i)));
+                printf("\n");
             }
         }
         if (j == 0) {
@@ -166,7 +172,9 @@ void printChopList(FoodList L) {
         for (i = 0; i < listLength(L); i++) {
             if (ActionLocation(ListElmt(L, i)) == CHOP) {
                 j++;
-                printf("%d. %s\n", j, STR_VALUE(Name((ListElmt(L, i)))));
+                printf("%d. %s - ", j, STR_VALUE(Name(ListElmt(L, i))));
+                TulisFoodTIME(ProcTime(ListElmt(L, i)));
+                printf("\n");
             }
         }
         if (j == 0) {
