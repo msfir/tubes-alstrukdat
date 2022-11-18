@@ -7,8 +7,8 @@
 #include <stdio.h>
 
 /* Ukuran maksimum baris dan kolom */
-#define ROW_CAP 100
-#define COL_CAP 100
+#define ROW_CAP 50
+#define COL_CAP 50
 
 typedef int IdxType; /* Index baris, kolom */
 typedef char ElType;
