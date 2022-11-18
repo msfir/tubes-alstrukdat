@@ -207,7 +207,9 @@ void add_program_time(int minute) {
     }
 }
 
-void execute_buy() {
+boolean execute_buy() {
+    boolean success = false;
+
     printBuyList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -229,11 +231,13 @@ void execute_buy() {
             add_program_time(1);
             enqueuePrioQueue(&delivery_list, (PQInfo) {food, delivery_time});
 
-            // return true; // THIS CAUSES THE LOOP TO BREAK
+            success = true;
         } else if (choice != 0) {
             printf("Pilihan tidak valid.\n");
         }
     }
+
+    return success;
 }
 
 boolean execute_move(String arah) {
@@ -270,7 +274,9 @@ boolean execute_move(String arah) {
     return false;
 }
 
-void execute_fry() { 
+boolean execute_fry() { 
+    boolean success = false;
+
     printFryList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -295,7 +301,7 @@ void execute_fry() {
                     }
 
                     add_program_time(1);
-
+                    success = true;
                 } else {
                     printf("\n");
                     printf("Gagal menggoreng makanan menjadi %s.", STR_VALUE(food.name));
@@ -314,9 +320,13 @@ void execute_fry() {
             printf("Pilihan tidak valid.\n");
         }
     }
+
+    return success;
 }
 
-void execute_mix() {
+boolean execute_mix() {
+    boolean success = false;
+
     printMixList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -341,6 +351,7 @@ void execute_mix() {
                     }
 
                     add_program_time(1);
+                    success = true;
                     
                 } else {
                     printf("\n");
@@ -360,9 +371,13 @@ void execute_mix() {
             printf("Pilihan tidak valid.\n");
         }
     }
+
+    return success;
 }
 
-void execute_chop() {
+boolean execute_chop() {
+    boolean success = false;
+
     printChopList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -387,7 +402,7 @@ void execute_chop() {
                     }
 
                     add_program_time(1);
-                    
+                    success = true;
                 } else {
                     printf("\n");
                     printf("Gagal memotong makanan menjadi %s.", STR_VALUE(food.name));
@@ -406,9 +421,13 @@ void execute_chop() {
             printf("Pilihan tidak valid.\n");
         }
     }
+
+    return success;
 }
 
-void execute_boil() {
+boolean execute_boil() {
+    boolean success;
+
     printBoilList(foodlist);
     printf("\n");
     printf("Kirim 0 untuk exit.\n");
@@ -433,8 +452,7 @@ void execute_boil() {
                     }
 
                     add_program_time(1);
-
-                    
+                    success = true;
                 } else {
                     printf("\n");
                     printf("Gagal merebus makanan menjadi %s.", STR_VALUE(food.name));
@@ -453,6 +471,8 @@ void execute_boil() {
             printf("Pilihan tidak valid.\n");
         }
     }
+
+    return success;
 }
 
 boolean execute_fridge() {
@@ -560,8 +580,14 @@ boolean execute_fridge() {
 }
 
 boolean execute_wait(int jam, int menit){
-    add_program_time(60*jam+menit);
-    return true;
+    int deltaTime = 60*jam+menit;
+
+    if (deltaTime > 0 && jam >= 0 && menit >= 0){
+        add_program_time(deltaTime);
+        return true;
+    }
+    
+    return false;
 }
 
 void execute_undo(infotype temp){
@@ -678,7 +704,9 @@ int main() {
                     infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                     if (execute_wait(jam, menit)){
                         Push(&undoS, state);
+                        CreateEmptyStack(&redoS);
                     }
+                    
                     printf("\n");
                     refresh_idle();
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
@@ -686,6 +714,10 @@ int main() {
                         infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         Push(&undoS, state);
                         execute_buy();
+                        if(execute_buy()){
+                            Push(&undoS, state);
+                            CreateEmptyStack(&redoS);
+                        }
                         printf("\n");
                         refresh_idle();
                     }else{
@@ -696,9 +728,12 @@ int main() {
                         infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
-                        Push(&undoS, state);
                         
-                        execute_mix();
+                        if(execute_mix()){
+                            Push(&undoS, state);
+                            CreateEmptyStack(&redoS);
+                        }
+
                         printf("\n");
                         refresh_idle();
                     }else{
@@ -709,12 +744,15 @@ int main() {
                         infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
-                        Push(&undoS, state);
                         
-                        execute_chop();
+                        if(execute_chop()){
+                            Push(&undoS, state);
+                            CreateEmptyStack(&redoS);
+                        }
+
                         printf("\n");
                         refresh_idle();
-                    }else{
+                    } else {
                         log_error("Tidak berada di lokasi chop.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("FRY"))) {
@@ -722,9 +760,12 @@ int main() {
                         infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
-                        Push(&undoS, state);
+                    
+                        if(execute_fry()){
+                            Push(&undoS, state);
+                            CreateEmptyStack(&redoS);
+                        }
 
-                        execute_fry();
                         printf("\n");
                         refresh_idle();
                     }else{
@@ -735,9 +776,12 @@ int main() {
                         infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
-                        Push(&undoS, state);
-
-                        execute_boil();
+                        
+                        if(execute_boil()){
+                            Push(&undoS, state);
+                            CreateEmptyStack(&redoS);
+                        }
+                        
                         printf("\n");
                         refresh_idle();
                     }else{
