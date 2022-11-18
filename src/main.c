@@ -713,7 +713,7 @@ int main() {
                     if (IsBuySpace(map, Location(simulator))){
                         infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         Push(&undoS, state);
-                        execute_buy();
+                        
                         if(execute_buy()){
                             Push(&undoS, state);
                             CreateEmptyStack(&redoS);
@@ -820,7 +820,7 @@ int main() {
                         log_error("Tidak berada di lokasi refrigerator.\n");
                     }
                 } else if (is_string_equal(command, StringFrom("UNDO"))){
-                    if (lengthStack(undoS)<1){
+                    if (IsEmptyStack(undoS)){
                         printf("BNMO masih di state awal\n"); // mungkin sesuatu kaya "Already at oldest change" lebih cocok?
                     }else{
                         infotype temp;
