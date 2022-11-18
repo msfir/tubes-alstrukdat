@@ -1,3 +1,6 @@
+#ifndef FRIDGE_H
+#define FRIDGE_H
+
 #include <math.h>
 #include <stdio.h>
 
@@ -44,3 +47,5 @@ void take_food(Fridge *fridge, int idx, Food *food);
  * Menampilkan fridge pada layar
  */
 void display_fridge(Fridge fridge);
+
+#endif

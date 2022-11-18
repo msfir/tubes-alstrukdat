@@ -455,7 +455,8 @@ void execute_boil() {
     }
 }
 
-void execute_fridge() {
+boolean execute_fridge() {
+    boolean changed = false;
     printf("\n");
     display_fridge(fridge);
     printf("\n");
@@ -515,6 +516,7 @@ void execute_fridge() {
                     printf("\n");
                     printf("\e[92mBerhasil menyimpan %s ke dalam kulkas.\n\e[0m", STR_VALUE(food.name));
                     printf("\n");
+                    changed = true;
                     valid = true;
                     removeAtPrioqueue(&simulator.inventory, choice - 1, &food);
                 } else {
@@ -537,6 +539,7 @@ void execute_fridge() {
                     printf("\n");
                     printf("\e[92mBerhasil mengambil %s dari kulkas.\n\e[0m", STR_VALUE(food.name));
                     printf("\n");
+                    changed = true;
                     valid = true;
                     enqueuePrioQueue(&simulator.inventory, (PQInfo) {food, ExpirationTime(food)});
                 } else if (choice == 0) {
@@ -553,6 +556,7 @@ void execute_fridge() {
             log_error("Command tidak valid.\n");
         }
     }
+    return changed;
 }
 
 boolean execute_wait(int jam, int menit){
@@ -563,6 +567,9 @@ boolean execute_wait(int jam, int menit){
 void execute_undo(infotype temp){
     Point prev_loc = simulator.location;
 
+    PriorityQueue inv = simulator.inventory;
+    PriorityQueue deliv = delivery_list;
+
     // dealocatePrioQueue(&Inventory(simulator));
 
     simulator = ElmtSimulator(temp);
@@ -572,9 +579,15 @@ void execute_undo(infotype temp){
     SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
     delivery_list = ElmtDelivery(temp);
     program_time = ElmtTime(temp);
+    fridge = temp.fridge;
+
+    dealocatePrioQueue(&inv);
+    dealocatePrioQueue(&deliv);
 }
 
 void execute_redo(infotype temp){
+    PriorityQueue inv = simulator.inventory;
+    PriorityQueue deliv = delivery_list;
     Point prev_loc = simulator.location;
     simulator = ElmtSimulator(temp);
     float deltaX = Absis(simulator.location) - Absis(prev_loc);
@@ -582,6 +595,23 @@ void execute_redo(infotype temp){
     SimulatorMove(&simulator, prev_loc, &map, deltaX, deltaY);
     delivery_list = ElmtDelivery(temp);
     program_time = ElmtTime(temp);
+    fridge = temp.fridge;
+
+    dealocatePrioQueue(&inv);
+    dealocatePrioQueue(&deliv);
+}
+
+infotype copy_state(Simulator sim, String command, PriorityQueue deliv, Time time, Fridge fridge) {
+    infotype state = {0};
+    Simulator new_sim;
+    CreateSimulator(&new_sim, sim.username, sim.location);
+    deepcopyPrioQueue(&new_sim.inventory, sim.inventory);
+    state.s = new_sim;
+    deepcopyPrioQueue(&state.deliv, deliv);
+    state.time = time;
+    state.action = command;
+    state.fridge = fridge;
+    return state;
 }
 
 int main() {
@@ -626,7 +656,7 @@ int main() {
                 String command = parse_line();
                 if (is_string_startswith(command, StringFrom("MOVE"))) {
                     String arah = substring(command, 5, length(command));
-                    infotype state = { simulator, command, delivery_list, program_time };
+                    infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                     if (execute_move(arah)){
                         Push(&undoS, state);
                         CreateEmptyStack(&redoS);
@@ -645,7 +675,7 @@ int main() {
                     if (wordCount >= 2){
                         jam = toInt(cmdArray[1]);
                     }
-                    infotype state = { simulator, command, delivery_list , program_time};
+                    infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                     if (execute_wait(jam, menit)){
                         Push(&undoS, state);
                     }
@@ -653,7 +683,7 @@ int main() {
                     refresh_idle();
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
                     if (IsBuySpace(map, Location(simulator))){
-                        infotype state = { simulator, command, delivery_list , program_time};
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         Push(&undoS, state);
                         execute_buy();
                         printf("\n");
@@ -663,7 +693,7 @@ int main() {
                     }
                 } else if (is_string_equal(command, StringFrom("MIX"))) {
                     if (IsMixSpace(map, Location(simulator))){
-                        infotype state = { simulator, command, delivery_list, program_time };
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
                         Push(&undoS, state);
@@ -676,7 +706,7 @@ int main() {
                     }
                 } else if (is_string_equal(command, StringFrom("CHOP"))) {
                     if (IsChopSpace(map, Location(simulator))){
-                        infotype state = { simulator, command, delivery_list, program_time };
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
                         Push(&undoS, state);
@@ -689,7 +719,7 @@ int main() {
                     }
                 } else if (is_string_equal(command, StringFrom("FRY"))) {
                     if (IsFrySpace(map, Location(simulator))){
-                        infotype state = { simulator, command, delivery_list, program_time };
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
                         Push(&undoS, state);
@@ -702,7 +732,7 @@ int main() {
                     }
                 } else if (is_string_equal(command, StringFrom("BOIL"))) {
                     if (IsBoilSpace(map, Location(simulator))){
-                        infotype state = { simulator, command, delivery_list, program_time };
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
                         Push(&undoS, state);
@@ -735,7 +765,11 @@ int main() {
                     printf("\n");
                 } else if (is_string_equal(command, StringFrom("FRIDGE"))) {
                     if (IsFridgeSpace(map, Location(simulator))){
-                        execute_fridge();
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
+                        if(execute_fridge()) {
+                            Push(&undoS, state);
+                            CreateEmptyStack(&redoS);
+                        }
                         printf("\n");
                         refresh_idle();
                     }else{
@@ -747,7 +781,7 @@ int main() {
                     }else{
                         infotype temp;
                         Pop(&undoS, &temp);
-                        infotype state = { simulator, ElmtAction(temp), delivery_list, program_time };
+                        infotype state = copy_state(simulator, ElmtAction(temp), delivery_list, program_time, fridge);
                         PriorityQueue tempInventory; deepcopyPrioQueue(&tempInventory, Inventory(ElmtSimulator(state)));
                         Inventory(ElmtSimulator(state)) = tempInventory;
                         Push(&redoS, state);
@@ -764,7 +798,7 @@ int main() {
                     }else{
                         infotype temp;
                         Pop(&redoS, &temp);
-                        infotype state ={ simulator, ElmtAction(temp), delivery_list, program_time};
+                        infotype state = copy_state(simulator, command, delivery_list, program_time, fridge);
                         Push(&undoS, state);
                         execute_redo(temp);
                         String notifikasi = StringFrom("\e[92mCommand ");
