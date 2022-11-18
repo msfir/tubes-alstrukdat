@@ -21,6 +21,7 @@ void InitMachine(FILE *stream, char mark) {
               atau endWord = false, currentWord adalah kata yang sudah
        diakuisisi, currentChar karakter pertama sesudah karakter terakhir kata
      */
+    currentWord.TabWord[0] = 0;
     START(stream, mark);
 }
 

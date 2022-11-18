@@ -18,14 +18,15 @@
 #include "queue.h"
 #include "resep.h"
 #include "stack.h"
+#include "rekomendasi.h"
 
 #define MAX_RESEP 100
 
 static Matrix map;
-static ResepList resepList;
-static FoodList foodlist;
+ResepList resepList;
+FoodList foodlist;
 static Time program_time;
-static Simulator simulator;
+Simulator simulator;
 static Queue notifications;
 static PriorityQueue delivery_list;
 static Fridge fridge;
@@ -465,14 +466,15 @@ void execute_fridge() {
         start_parser(stdin);
         String command = parse_line();
 
-        if (is_string_equal(command, StringFrom("PLACE"))) {
+        if (is_string_equal(command, StringFrom("PUT"))) {
             printf("\n");
             printf("List makanan di inventory \n");
             printf("(Nama - Waktu kedaluwarsa - Ukuran)\n");
             for (int i = 0; i < lengthPrioQueue(Inventory(simulator)); i++) {
-                Food food = simulator.inventory.buffer[i].food;
+                PQInfo info = getElmtAtIdxPrioqueue(simulator.inventory, i);
+                Food food = info.food;
                 printf("%d. %s - ", i+1, STR_VALUE(food.name));
-                TulisFoodTIME(food.expiration_time);
+                TulisFoodTIME(info.time);
                 printf(" - %dx%d\n", food.size.width, food.size.height);
             }
             printf("\n");
@@ -503,8 +505,10 @@ void execute_fridge() {
                 printf("Lokasi penyimpanan (kolom): ");
                 start_parser(stdin);
                 int col = parse_int();
-                Food food = simulator.inventory.buffer[choice - 1].food;
+                PQInfo info = getElmtAtIdxPrioqueue(simulator.inventory, choice - 1);
+                Food food = info.food;
                 if (can_put(fridge, row, col, food)) {
+                    food.expiration_time = info.time;
                     put_food(&fridge, row, col, food);
                     printf("\n");
                     display_fridge(fridge);
@@ -769,7 +773,11 @@ int main() {
                         enqueue(&notifications, notifikasi);
                         refresh_idle();
                     }
-                }else if (is_string_equal(command, StringFrom("EXIT"))) {
+                } else if (is_string_equal(command, StringFrom("RECOMMEND"))) {
+                    printf("\n");
+                    execute_rekomendasi();
+                    printf("\n");
+                } else if (is_string_equal(command, StringFrom("EXIT"))) {
                     quit = true;
                     run = false;
                     printf("Simulator dimatikan\n");
