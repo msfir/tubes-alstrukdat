@@ -576,8 +576,14 @@ void execute_fridge() {
 }
 
 boolean execute_wait(int jam, int menit){
-    add_program_time(60*jam+menit);
-    return true;
+    int deltaTime = 60*jam+menit;
+
+    if (deltaTime > 0 && jam >= 0 && menit >= 0){
+        add_program_time(deltaTime);
+        return true;
+    }
+    
+    return false;
 }
 
 void execute_undo(infotype temp){
@@ -666,9 +672,11 @@ int main() {
                         jam = toInt(cmdArray[1]);
                     }
                     infotype state = { simulator, command, delivery_list , program_time};
+
                     if (execute_wait(jam, menit)){
                         Push(&undoS, state);
                     }
+                    
                     printf("\n");
                     refresh_idle();
                 } else if (is_string_equal(command, StringFrom("BUY"))) {
@@ -678,7 +686,7 @@ int main() {
                         if(execute_buy()){
                             Push(&undoS, state);
                         }
-                        
+
                         printf("\n");
                         refresh_idle();
                     }else{
