@@ -3,6 +3,9 @@
 #include <assert.h>
 
 int main() {
+    printf("--- Driver Test Set ---");
+    printf("\n")   ;
+    printf("\n")   ;
     Set a;
     CreateEmptySet(&a);
     set_add(&a, 3);
@@ -30,5 +33,10 @@ int main() {
     c = set_union(a, b);
     assert(set_length(c) == 9);
     printf("All tests passed.\n");
+    printf("\n")   ;
+    printf("\n")   ;
+    printf("--- Driver Test Set ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

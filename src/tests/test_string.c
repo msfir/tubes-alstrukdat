@@ -3,6 +3,9 @@
 #include "cstring.h"
 
 int main() {
+    printf("--- Driver Test String ---");
+    printf("\n")   ;
+    printf("\n")   ;
     char src[] = "halo";
     String dest = StringFrom(src);
     dest = concat_string(dest, StringFrom(" dunia"));
@@ -15,5 +18,10 @@ int main() {
     String dunia = substring(dest, 5, 10);
     printf("%s\n", STR_VALUE(dunia));
     printf("%d\n", length(dunia));
+    printf("\n")   ;
+    printf("\n")   ;
+    printf("--- Driver Test String ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

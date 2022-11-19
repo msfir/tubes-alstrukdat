@@ -6,6 +6,9 @@
 #include "time.h"
 
 int main() {
+    printf("--- Driver Test FoodList ---");
+    printf("\n")   ;
+    printf("\n")   ;
     FoodList list;
     CreateFoodList(&list);
 
@@ -45,5 +48,10 @@ int main() {
     printMixList(list);
     printCatalog(list);
 
+    printf("\n")   ;
+    printf("\n")   ;
+    printf("--- Driver Test FoodList ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

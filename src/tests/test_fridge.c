@@ -2,6 +2,9 @@
 #include <fridge.h>
 
 int main() {
+    printf("--- Driver Test Fridge ---");
+    printf("\n")   ;
+    printf("\n")   ;
     Fridge fridge;
     CreateFridge(&fridge, 20, 20);
     assert(fridge.space.colEff == 20);
@@ -22,6 +25,7 @@ int main() {
             assert(fridge.space.mem[i][j] == 'X');
         }
     }
+    display_fridge(fridge);
     assert(fridge.food_count == 1);
     assert(is_string_equal(fridge.foods[0].food.name, mie_ayam.name));
     take_food(&fridge, 0, &mie_ayam);
@@ -30,5 +34,12 @@ int main() {
             assert(fridge.space.mem[i][j] == '.');
         }
     }
+    printf("\n");
+    display_fridge(fridge);
     printf("All tests passed.\n");
+    printf("\n")   ;
+    printf("\n")   ;
+    printf("--- Driver Test Fridge ---");
+    printf("\n")   ;
+    printf("\n")   ;
 }
