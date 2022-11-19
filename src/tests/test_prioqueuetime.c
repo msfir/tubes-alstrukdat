@@ -23,7 +23,7 @@ int main() {
 
     int newTimeAfterDelivery;
     scanf("%c", &input);
-    if (input == "i") {
+    if (input == 'i') {
         enqueuePrioQueue(&val, (PQInfo) {food, MenitToTIME(newTimeAfterDelivery)});
     } else {
         dequeuePrioQueue(&val, &food);
