@@ -30,7 +30,7 @@ int main() {
     printf("\n");
     printf("All tests passed.\n");
     printf("\n");
-    printf("--- Driver Test PriorityQueue ---");
+    printf("---------------------------------");
     printf("\n");
     printf("\n");
     return 0;

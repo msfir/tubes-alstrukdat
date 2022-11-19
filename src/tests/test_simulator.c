@@ -46,7 +46,7 @@ int main() {
         }
     }
     printf("\n");
-    printf("--- Driver Test Simulator ---");
+    printf("-----------------------------");
     printf("\n");
     printf("\n");
 }

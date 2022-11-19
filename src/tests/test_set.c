@@ -35,7 +35,7 @@ int main() {
     assert(set_length(c) == 9);
     printf("All tests passed.\n");
     printf("\n");
-    printf("--- Driver Test Set ---");
+    printf("-----------------------");
     printf("\n");
     printf("\n");
     return 0;

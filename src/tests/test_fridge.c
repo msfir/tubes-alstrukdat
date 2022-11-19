@@ -39,7 +39,7 @@ int main() {
     display_fridge(fridge);
     printf("All tests passed.\n");
     printf("\n");
-    printf("--- Driver Test Fridge ---");
+    printf("--------------------------");
     printf("\n");
     printf("\n");
 }

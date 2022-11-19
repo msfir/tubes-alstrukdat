@@ -19,7 +19,7 @@ int main() {
     printf("%s\n", STR_VALUE(dunia));
     printf("%d\n", length(dunia));
     printf("\n");
-    printf("--- Driver Test String ---");
+    printf("--------------------------");
     printf("\n");
     printf("\n");
     return 0;

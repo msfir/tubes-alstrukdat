@@ -43,7 +43,7 @@ int main() {
         printf("%d\n", parent->childCount);
     }
     printf("\n");
-    printf("--- Driver Test Parser ---");
+    printf("--------------------------");
     printf("\n");
     printf("\n");
     return 0;

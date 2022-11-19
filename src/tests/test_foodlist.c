@@ -53,7 +53,7 @@ int main() {
     printCatalog(list);
 
     printf("\n");
-    printf("--- Driver Test FoodList ---");
+    printf("----------------------------");
     printf("\n");
     printf("\n");
     return 0;

@@ -25,7 +25,7 @@ int main() {
     Push(&s, temp);
     Pop(&s, &temp);
     printf("\n");
-    printf("--- Driver Test Stack ---");
+    printf("-------------------------");
     printf("\n");
     printf("\n");
 }

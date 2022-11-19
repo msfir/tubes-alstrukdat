@@ -23,7 +23,7 @@ int main() {
         ADVWORD();
     }
     printf("\n");
-    printf("--- Driver Test WordMachine ---");
+    printf("-------------------------------");
     printf("\n");
     printf("\n");
     return 0;

@@ -34,7 +34,7 @@ int main() {
     printf("\n");
 
     printf("\n");
-    printf("--- Driver Test Parser ---");
+    printf("--------------------------");
     printf("\n");
     printf("\n");
     return 0;

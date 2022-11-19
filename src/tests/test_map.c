@@ -14,7 +14,7 @@ int main() {
     displayMap(map);
 
     printf("\n");
-    printf("--- Driver Test Map ---");
+    printf("-----------------------");
     printf("\n");
     printf("\n");
     return 0;

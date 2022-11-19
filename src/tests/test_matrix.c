@@ -26,7 +26,7 @@ int main() {
 
     displayMatrix(map);
     printf("\n");
-    printf("--- Driver Test Matrix ---");
+    printf("--------------------------");
     printf("\n");
     printf("\n");
     return 0;

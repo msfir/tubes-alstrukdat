@@ -1,7 +1,7 @@
 #include "adt.h"
 
 int main() {
-    printf("--- Driver Test Food ---");
+    printf("--- Driver Test CharMachine ---");
     printf("\n");
     printf("\n");
 
@@ -13,7 +13,7 @@ int main() {
     }
 
     printf("\n");
-    printf("--- Driver Test Food ---");
+    printf("------------------------");
     printf("\n");
     printf("\n");
 }

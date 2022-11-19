@@ -13,7 +13,7 @@ int main() {
     TulisTIME(time);
     PrevMenit(time);
     printf("\n");
-    printf("--- Driver Test Time ---");
+    printf("------------------------");
     printf("\n");
     printf("\n");
 }
