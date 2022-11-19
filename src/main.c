@@ -404,7 +404,7 @@ int main() {
                     } else {
                         infoState temp;
                         Pop(&redoS, &temp);
-                        infoState state = copy_state(simulator, command, delivery_list, program_time, fridge);
+                        infoState state = copy_state(simulator, ElmtAction(temp), delivery_list, program_time, fridge);
                         Push(&undoS, state);
                         execute_redo(temp);
                         String notifikasi = StringFrom("\e[92mCommand ");
