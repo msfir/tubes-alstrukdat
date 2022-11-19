@@ -60,7 +60,7 @@ $ ./bin/test/test_(nama_adt)
 ```
 atau
 ```
-$ .bin\test\test_(nama_adt).exe
+$ .\bin\test\test_(nama_adt).exe
 ```
 
 ## Pembagian Tugas
