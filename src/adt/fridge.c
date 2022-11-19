@@ -13,6 +13,7 @@ void CreateFridge(Fridge *fridge, int width, int height) {
             MatElmt(fridge->space, i, j) = '.';
         }
     }
+    fridge->food_count = 0;
     fridge->width = width;
     fridge->height = height;
 }

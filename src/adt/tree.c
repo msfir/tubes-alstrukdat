@@ -27,22 +27,11 @@ void MakeChildren(Node *a, Node *b){
 }
 
 void listParent(Tree a, FoodList fl){
-    int i;
+    int i; Food tempParent, tempChild;
     for(i = 0; i<getChildCount(*a); i++){        
-        printf("%d -> %d\n", INFO(a), INFO(NEXT(a, i))); //ganti dengan nama food melalui foodlist
+        getFoodById(fl, (INFO(a)), &tempParent);
+        getFoodById(fl, INFO(NEXT(a, i)), &tempChild);
+        printf("%s -> %s\n", STR_VALUE(Name(tempParent)), STR_VALUE(Name(tempChild))); //ganti dengan nama food melalui foodlist
         if(NEXT(a, i) != NULL) listParent(NEXT(a, i), fl);
     }
-}
-
-// void listChildren(Tree a){
-//     int i;
-//     printf("%s", getFoodById(INFO(ROOT(a))))
-//     for(i = 0; i<getChildCount(*a); i++){        
-        
-//     }
-// }
-// move this to resep altogether
-
-void getAllReachableNode(Tree a, Node* nodes[]){
-
 }

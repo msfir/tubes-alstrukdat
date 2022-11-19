@@ -30,27 +30,42 @@ typedef struct
 //return Resep
 #define ResepListElmt(rl, i) (rl).buffer[(i)]
 
-Resep undefinedResep(); // MARK Resep
-
+/*
+* Mengembalikan panjang resepList
+*/
 int resepListLength(ResepList rl);
 
+/* ***  CONSTRUCTOR *** */
+
+/*
+* Melakukan Construct pada Resep
+*/
 void CreateResep(Resep* r, Tree t);
 
+/*
+* Melakukan Construct pada ResepList
+*/
 void CreateResepList(ResepList* rl);
 
+/* ***  FUNCTIONS *** */
+/*
+* Eksekusi COMMAND COOKBOOK pada program
+*/
 void printCookbook(ResepList rl, FoodList fl);
 
-boolean canMakeFromResep(Resep r, Simulator s); //or inventory?
-// watch for children that still has resep
-// this will NOT recurse
+/*
+* Melakukan cek apakah program bisa membuat makanan berdasarkan resep
+*/
+boolean canMakeFromResep(Resep r, Simulator s);
 
-// make another function that will recurse to its child!
-
-
-
-// is this particular food has a resep in reseplist or not
+/*
+* Melakukan cek apakah resep terdaftar pada list
+*/
 boolean hasResep(ResepList rl, Food f); 
 
+/*
+* Mencari resep yang tepat berdasarkan masukan contoh food
+*/
 boolean getResepWithFood(Resep* resep, ResepList rl, Food f);
 
 

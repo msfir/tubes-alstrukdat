@@ -12,15 +12,104 @@
 ## Tentang Aplikasi
 
 <div align="center">
-    <div>------------------------WIP------------------------</div><br/>
-    <img src="" alt="bnmo" style="max-width:20em;"></img>
     <h2>BNMO</h2>
     <p>oleh Kelompok K</p>
+    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
+    <br/>
+    <br/>
 </div>
 
 
 BNMO (dibaca: Binomo) adalah sebuah robot game milik Indra dan Doni. Akhir-akhir ini, Indra baru saja menjalin hubungan spesial dengan perempuan bernama Siska Kol. Dan dalam dekat waktu, Indra akan mengajak Siska Kol ke rumah untuk makan malam bersama Doni dan BNMO. Oleh karena itu, Indra meminta bantuan BNMO dan Doni untuk membantu mempersiapkan makan malam spesial tersebut. Saat itu juga, BNMO langsung tertarik untuk mengerjakan bagian masak karena ia sangat sering melihat video memasak di aplikasi toktok dan sangat terngiang-ngiang dengan “mari kita cobaaa”.
 
 Namun, ada masalah. BNMO tidak tahu cara memasak dan Doni tidak bisa membantu persiapan karena ada hal lain. BNMO tidak bisa belajar dari video youcub karena BNMO adalah sebuah komputer sehingga hal yang paling mudah untuk dilakukan adalah membuatkan program simulasi untuk ditiru BNMO. Oleh karena itu, Doni meminta bantuan kalian untuk membuatkan program simulasi tersebut.
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
+## Cara Kompilasi Program
+Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
+
+```shell
+$ make
+```
+
+**Note**: Gunakan Git Bash jika Anda menggukanan Sistem Operasi Windows
+
+
+### Test Driver Program
+
+```shell
+$ make test
+```
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
+## Cara Menjalankan Program
+Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* melalui terminal dengan menulis
+
+```shell
+$ ./bin/main
+```
+atau
+```shell
+$ .\bin\main.exe
+```
+jika Anda menggunakan sistem operasi Windows.
+
+sebelum memanggil program, pastikan  *Current Working Directory* terminal berada di **folder utama** program.
+
+ *Current Working Directory* terminal dapat dilihat dengan menulis
+
+ ```shell
+ $ cwd
+ ```
+ atau
+ ```shell
+ $ pwd
+ ```
+
+
+### Test Driver Program
+Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
+
+```shell
+$ ./bin/test/test_(nama_adt)
+```
+atau
+```shell
+$ .\bin\test\test_(nama_adt).exe
+```
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
+## Pembagian Tugas
+| NIM |Nama | Pembagian Kerja |
+|-----|-----|-----------------|
+|13521083|Moch. Sofyan Firdaus|ADT Mesin Kata & Karakter, String Parser, Main Program, Kulkas, Rekomendasi Makanan, Waktu Pengolahan Makanan, Debugging|
+|13521084|Austin Gabriel Pardosi|ADT Simulator, ADT Queue (Priority Queue), Laporan|
+|13521086|Ariel Jovananda|ADT Matrix, ADT Point, Laporan|
+|13521091|Fakih Anugerah Pratama|ADT Food, ADT Tree, Command Move, Debugging, ADT ResepList, ADT Node, Driver ADT|
+|13521100|Alexander Jason|ADT Time, ADT List Statik, ADT Stack, Splash Screen, To Do List, Laporan|
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
+## Daftar Fitur
+| No. | Nama Fitur | Status |
+|-----|------------|:------:|
+|1 |START|:heavy_check_mark:|
+|2 |MOVE|:heavy_check_mark:|
+|3 |BUY|:heavy_check_mark:|
+|4 |FRY|:heavy_check_mark:|
+|5 |MIX|:heavy_check_mark:|
+|6 |CHOP|:heavy_check_mark:|
+|7 |BOIL|:heavy_check_mark:|
+|8 |DELIVERY|:heavy_check_mark:|
+|9 |COOKBOOK|:heavy_check_mark:|
+|10|CATALOG|:heavy_check_mark:|
+|11|UNDO|:heavy_check_mark:|
+|12|REDO|:heavy_check_mark:|
+|13|FRIDGE|:heavy_check_mark:|
+|14|RECOMMEND|:heavy_check_mark:|
+|15|WAIT|:heavy_check_mark:|
+|16|EXIT|:heavy_check_mark:|
 
 <p align="right">(<a href="#atas">kembali</a>)</p>

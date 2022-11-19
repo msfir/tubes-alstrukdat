@@ -2,33 +2,23 @@
 
 #include "boolean.h"
 
-// Resep undefinedResep() {
-//     Address undefNode; undefNode = newNode(MARK);
-//     Tree undefTree; CreateTree(&undefTree, undefNode);
-//     Resep undefResep; CreateResep(&undefResep, undefTree);
-//
-//     return undefResep;
-// }
-
-
 
 int resepListLength(ResepList rl){
     int i = IDX_MIN;
-    while (ListElmt(rl, i) != NULL /* undefinedResep() */ && i < CAPACITY) {
+    while (ListElmt(rl, i) != NULL && i < CAPACITY) {
         i++;
     }
     return i;
 }
 
 void CreateResep(Resep* r, Tree t){
-    //createtree terlebih dulu dan assign sebagai resep
     *r = t;
 }
 
 void CreateResepList(ResepList* rl){
     int i;
     for (i = 0; i < CAPACITY; i++) {
-        ResepListElmt(*rl, i) = NULL /* undefinedResep() */; // MARK Resep
+        ResepListElmt(*rl, i) = NULL;
     }
 }
 
@@ -55,7 +45,6 @@ void printCookbook(ResepList rl, FoodList fl){
 boolean canMakeFromResep(Resep r, Simulator s){
     boolean canMade = true;
 
-    // if(INFO(Resep) )
     int i;
     for(i = 0; i<CHILD_COUNT(ROOT(r)); i++){
         if(!isInPrioqueue(Inventory(s), INFO(NEXT(ROOT(r), i)))){
