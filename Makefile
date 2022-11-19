@@ -25,7 +25,7 @@ build-test: $(TEST_BIN)
 
 $(TEST_BIN): $(TARGET)/tests/%: src/tests/%.c
 	@mkdir -p bin/tests
-	$(CC) $(CFLAGS) $(CINCLUDES) $< src/parser.c $(ADTS) $(CLIBS) -o $@
+	$(CC) $(CFLAGS) $(CINCLUDES) $< src/parser/parser.c $(ADTS) $(CLIBS) -o $@
 
 run-test:
 	$(foreach bin, $(TEST_BIN), $(bin);)
