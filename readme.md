@@ -12,8 +12,7 @@
 ## Tentang Aplikasi
 
 <div align="center">
-    <div>------------------------WIP------------------------</div><br/>
-    <img src="" alt="bnmo" style="max-width:20em;"></img>
+    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
     <h2>BNMO</h2>
     <p>oleh Kelompok K</p>
 </div>
@@ -24,3 +23,25 @@ BNMO (dibaca: Binomo) adalah sebuah robot game milik Indra dan Doni. Akhir-akhir
 Namun, ada masalah. BNMO tidak tahu cara memasak dan Doni tidak bisa membantu persiapan karena ada hal lain. BNMO tidak bisa belajar dari video youcub karena BNMO adalah sebuah komputer sehingga hal yang paling mudah untuk dilakukan adalah membuatkan program simulasi untuk ditiru BNMO. Oleh karena itu, Doni meminta bantuan kalian untuk membuatkan program simulasi tersebut.
 
 <p align="right">(<a href="#atas">kembali</a>)</p>
+
+
+## Cara Menjalankan Program
+Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* melalui terminal dengan menulis
+
+```
+$ .\bin\main.exe
+```
+
+sebelum memanggil program, pastikan  *Current Working Directory* terminal berada di **folder utama** program.
+ 
+ *Current Working Directory* terminal dapat dilihat dengan menulis
+
+ ```
+ $ cwd
+ ```
+
+### Test Driver Program
+Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
+```
+$ .bin/test/test_(nama_adt).exe
+```

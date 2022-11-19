@@ -10,26 +10,22 @@
 #define teschilcount 4  //pls be <23
 
 int main(){ 
-
     FoodList fdLi; CreateFoodList(&fdLi);
-    printf("1");
     Node childee[teschilcount];
-    Time dmytm; CreateTime(&dmytm, 23, 0, 0);
-    enum Action acloc;
+    Time contohTime; CreateTime(&contohTime, 23, 0, 0);
     Food ayam[teschilcount]; 
-    printf("1");
+    Size size; size.width = 1; size.height = 2;
     int i; String uniqname; char uniqid;
     for(i = 0; i<teschilcount; i++){
         uniqid = 65 + i;
         uniqname = StringFrom("");
         uniqname = concat_string(StringFrom("ayam rasa hati yang terluka tipe "), StringFrom(&uniqid));
-        CreateFood(&ayam[i], 101+uniqid, uniqname, dmytm, acloc, dmytm);
+        CreateFood(&ayam[i], 101+uniqid, uniqname, contohTime, BUY, contohTime, size, contohTime);
         addFood(&fdLi, ayam[i]);
     }
-    Food gigachadFood; CreateFood(&gigachadFood, 1000, StringFrom("parent ayam"), dmytm, acloc, dmytm);
+    Food gigachadFood; CreateFood(&gigachadFood, 1000, StringFrom("parent ayam"), contohTime, BOIL, contohTime, size, contohTime);
     addFood(&fdLi, gigachadFood);
 
-    printf("1");
 
     Node basse = *newNode(Id(gigachadFood)); // lets use this
     Tree trie; CreateTree(&trie, &basse);
@@ -37,16 +33,14 @@ int main(){
     
     for(i = 0; i<teschilcount; i++){
         childee[i] = *newNode(Id(ayam[i]));
-    } printf("  newnode ");
+    }
     
     MakeChildren(&basse, &childee[0]);
     MakeChildren(&basse, &childee[1]);
     MakeChildren(&childee[1], &childee[2]);
     MakeChildren(&childee[1], &childee[3]);
-    printf("  newnode ");
+
     listParent(trie, fdLi);
-    printf("lp");
-    listChildren(trie, fdLi);
     
 
     return 0;
