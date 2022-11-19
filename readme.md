@@ -12,16 +12,19 @@
 ## Tentang Aplikasi
 
 <div align="center">
-    <div>------------------------WIP------------------------</div><br/>
-    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
     <h2>BNMO</h2>
     <p>oleh Kelompok K</p>
+    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
+    <br/>
+    <br/>
 </div>
 
 
 BNMO (dibaca: Binomo) adalah sebuah robot game milik Indra dan Doni. Akhir-akhir ini, Indra baru saja menjalin hubungan spesial dengan perempuan bernama Siska Kol. Dan dalam dekat waktu, Indra akan mengajak Siska Kol ke rumah untuk makan malam bersama Doni dan BNMO. Oleh karena itu, Indra meminta bantuan BNMO dan Doni untuk membantu mempersiapkan makan malam spesial tersebut. Saat itu juga, BNMO langsung tertarik untuk mengerjakan bagian masak karena ia sangat sering melihat video memasak di aplikasi toktok dan sangat terngiang-ngiang dengan “mari kita cobaaa”.
 
 Namun, ada masalah. BNMO tidak tahu cara memasak dan Doni tidak bisa membantu persiapan karena ada hal lain. BNMO tidak bisa belajar dari video youcub karena BNMO adalah sebuah komputer sehingga hal yang paling mudah untuk dilakukan adalah membuatkan program simulasi untuk ditiru BNMO. Oleh karena itu, Doni meminta bantuan kalian untuk membuatkan program simulasi tersebut.
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
 
 ## Cara Kompilasi Program
 Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
@@ -32,14 +35,22 @@ $ make
 
 **Note**: Gunakan Git Bash jika Anda menggukanan Sistem Operasi Windows
 
+
+### Test Driver Program
+
+```shell
+$ make test
+```
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
 ## Cara Menjalankan Program
 Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* melalui terminal dengan menulis
 
-```
+```shell
 $ ./bin/main
 ```
 atau
-```
+```shell
 $ .\bin\main.exe
 ```
 jika Anda menggunakan sistem operasi Windows.
@@ -48,26 +59,27 @@ sebelum memanggil program, pastikan  *Current Working Directory* terminal berada
 
  *Current Working Directory* terminal dapat dilihat dengan menulis
 
- ```
+ ```shell
  $ cwd
  ```
+ atau
+ ```shell
+ $ pwd
+ ```
+
 
 ### Test Driver Program
-Kompilasi:
-
-```
-$ make test
-```
-
 Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
 
-```
+```shell
 $ ./bin/test/test_(nama_adt)
 ```
 atau
-```
+```shell
 $ .\bin\test\test_(nama_adt).exe
 ```
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
 
 ## Pembagian Tugas
 | NIM |Nama | Pembagian Kerja |
@@ -77,6 +89,8 @@ $ .\bin\test\test_(nama_adt).exe
 |13521086|Ariel Jovananda|ADT Matrix, ADT Point, Laporan|
 |13521091|Fakih Anugerah Pratama|ADT Food, ADT Tree, Command Move, Debugging, ADT ResepList, ADT Node, Driver ADT|
 |13521100|Alexander Jason|ADT Time, ADT List Statik, ADT Stack, Splash Screen, To Do List, Laporan|
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
 
 ## Daftar Fitur
 | No. | Nama Fitur | Status |

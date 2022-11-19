@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "simulator.h"
+#include "boolean.h"
 
 int main() {
     Simulator S;
@@ -11,17 +12,18 @@ int main() {
     
     CreateSimulator(&S, username, loc);
 
-    float deltaX;
-    float deltaY;
-    scanf("%f %f", &deltaX, &deltaY);
+    int deltaX = 10;
+    int deltaY = 0;
+    CreatePoint(&loc, 0, 0);
+
     SimulatorMove (&S, loc, &map, deltaX, deltaY);
     
-    if (IsThereWall (S, (int) deltaX, (int) deltaY)) {
+    if (IsThereWall (S, deltaX, deltaY)) {
         printf("Ada Dinding!");
     } 
 
-
-
+    deltaX = -1;
+    deltaY = 7;
     if (!IsEmptySpace(map, loc)) {
         if(IsBuySpace(map, loc)) {
             printf("Kamu bisa membeli disini!\n");

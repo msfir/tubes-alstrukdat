@@ -1,8 +1,4 @@
 /* File: matrix.c */
-/* Nama: Ariel Jovananda */
-/* NIM: 13521086 */
-/* Tanggal: 21 September 2022 */
-/* Topik praktikum: Pra Praktikum 4*/
 /* Deskripsi: Realisasi fungsi dan prosedur dari header matrix */
 
 
