@@ -27,7 +27,38 @@ Namun, ada masalah. BNMO tidak tahu cara memasak dan Doni tidak bisa membantu pe
 
 ## Cara Kompilasi Program
 Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
+
 ```shell
 $ make
 ```
+
 **Note**: Gunakan Git Bash jika Anda menggukanan Sistem Operasi Windows
+
+## Cara Menjalankan Program
+Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* melalui terminal dengan menulis
+
+```
+$ ./bin/main
+```
+atau
+```
+$ .\bin\main.exe
+```
+jika Anda menggunakan sistem operasi Windows.
+
+sebelum memanggil program, pastikan  *Current Working Directory* terminal berada di **folder utama** program.
+
+ *Current Working Directory* terminal dapat dilihat dengan menulis
+
+ ```
+ $ cwd
+ ```
+
+### Test Driver Program
+Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
+
+```
+$ ./bin/test/test_(nama_adt)
+```
+$ .bin\test\test_(nama_adt).exe
+```
