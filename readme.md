@@ -78,6 +78,10 @@ atau
 ```shell
 $ .\bin\test\test_(nama_adt).exe
 ```
+atau untuk menjalankan semua test driver sekaligus, gunakan command
+```shell
+$ make run-test
+```
 
 <p align="right">(<a href="#atas">kembali</a>)</p>
 
