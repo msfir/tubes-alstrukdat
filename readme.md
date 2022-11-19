@@ -13,7 +13,7 @@
 
 <div align="center">
     <div>------------------------WIP------------------------</div><br/>
-    <img src="" alt="bnmo" style="max-width:20em;"></img>
+    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
     <h2>BNMO</h2>
     <p>oleh Kelompok K</p>
 </div>
@@ -60,5 +60,36 @@ Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang 
 ```
 $ ./bin/test/test_(nama_adt)
 ```
+atau
+```
 $ .bin\test\test_(nama_adt).exe
 ```
+
+## Pembagian Tugas
+| NIM |Nama | Pembagian Kerja |
+|-----|-----|-----------------|
+|13521083|Moch. Sofyan Firdaus|ADT Mesin Kata & Karakter, String Parser, Main Program, Kulkas, Rekomendasi Makanan, Waktu Pengolahan Makanan, Debugging|
+|13521084|Austin Gabriel Pardosi|ADT Simulator, ADT Queue (Priority Queue), Laporan|
+|13521086|Ariel Jovananda|ADT Matrix, ADT Point, Laporan|
+|13521091|Fakih Anugerah Pratama|ADT Food, ADT Tree, Command Move, Debugging, ADT ResepList, ADT Node, Driver ADT|
+|13521100|Alexander Jason|ADT Time, ADT List Statik, ADT Stack, Splash Screen, To Do List, Laporan|
+
+## Daftar Fitur
+| No. | Nama Fitur | Status Pengerjaan |
+|-----|------------|:------:|
+|1 |START|:white_check_mark:|
+|2 |MOVE|:white_check_mark:|
+|3 |BUY|:white_check_mark:|
+|4 |FRY|:white_check_mark:|
+|5 |MIX|:white_check_mark:|
+|6 |CHOP|:white_check_mark:|
+|7 |OIL|:white_check_mark:|
+|8 |DELIVERY|:white_check_mark:|
+|9 |COOKBOOK|:white_check_mark:|
+|10|CATALOG|:white_check_mark:|
+|11|UNDO|:white_check_mark:|
+|12|REDO|:white_check_mark:|
+|13|FRIDGE|:white_check_mark:|
+|14|RECOMMEND|:white_check_mark:|
+|15|WAIT|:white_check_mark:|
+|16|EXIT|:white_check_mark:|
