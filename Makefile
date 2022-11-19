@@ -1,14 +1,13 @@
 CC := gcc
 CFLAGS := -std=c11 -g
-CINCLUDES := -Isrc
+CINCLUDES := -Isrc -Isrc/adt -Isrc/commands -Isrc/logger -Isrc/parser
 CLIBS := -lm
 
 DIRS := $(dir $(wildcard src/adt/*/))
 
-ADTS := $(foreach dir, $(DIRS), $(wildcard $(dir)*.c))
+ADTS := $(foreach dir,$(DIRS),$(wildcard $(dir)*.c))
 COMMANDS := $(wildcard src/commands/*.c)
-SOURCES := $(wildcard src/*.c) $(ADTS) $(COMMANDS)
-
+SOURCES := $(wildcard src/*.c) $(ADTS) $(COMMANDS) src/logger/logger.c src/parser/parser.c
 TARGET := bin
 
 TEST_SOURCES = $(wildcard src/tests/*.c)

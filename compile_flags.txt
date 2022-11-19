@@ -1,2 +1,6 @@
 -std=c11
 -Isrc
+-Isrc/adt
+-Isrc/commands
+-Isrc/logger
+-Isrc/parser
