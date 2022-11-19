@@ -1,9 +1,13 @@
 CC := gcc
 CFLAGS := -std=c11 -g
-CINCLUDES := -Iheader -Iheader/adt
+CINCLUDES := -Isrc -Isrc/adt -Isrc/commands -Isrc/logger -Isrc/parser
 CLIBS := -lm
 
-ADTS := src/adt/*.c
+DIRS := $(dir $(wildcard src/adt/*/))
+
+ADTS := $(foreach dir,$(DIRS),$(wildcard $(dir)*.c))
+COMMANDS := $(wildcard src/commands/*.c)
+SOURCES := $(wildcard src/*.c) $(ADTS) $(COMMANDS) src/logger/logger.c src/parser/parser.c
 TARGET := bin
 
 TEST_SOURCES = $(wildcard src/tests/*.c)
@@ -13,7 +17,7 @@ TEST_BIN = $(TEST_SOURCES:src/tests/%.c=bin/tests/%)
 
 build:
 	@mkdir -p bin
-	$(CC) $(CFLAGS) $(CINCLUDES) src/*.c $(ADTS) $(CLIBS) -o $(TARGET)/main
+	$(CC) $(CFLAGS) $(CINCLUDES) $(SOURCES) $(CLIBS) -o $(TARGET)/main
 
 test: build-test
 
@@ -21,7 +25,7 @@ build-test: $(TEST_BIN)
 
 $(TEST_BIN): $(TARGET)/tests/%: src/tests/%.c
 	@mkdir -p bin/tests
-	$(CC) $(CFLAGS) $(CINCLUDES) $< src/parser.c $(ADTS) $(CLIBS) -o $@
+	$(CC) $(CFLAGS) $(CINCLUDES) $< src/parser/parser.c $(ADTS) $(CLIBS) -o $@
 
 run-test:
 	$(foreach bin, $(TEST_BIN), $(bin);)

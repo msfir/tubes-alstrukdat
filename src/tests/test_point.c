@@ -1,18 +1,20 @@
 #include <stdio.h>
-#include "point.h"
+
+#include "adt.h"
 
 int main() {
     printf("--- Driver Test Point ---");
     printf("\n")   ;
     printf("\n")   ;
+    
     Point p1, p2;
-    CreatePoint(&p1, 1,2);
+    CreatePoint(&p1, 1, 2);
     TulisPOINT(p1);
 
     CreatePoint(&p2, 1, 2);
     printf("\n");
 
-    if (EQ(p1,p2)) {
+    if (EQ(p1, p2)) {
         printf("equal\n");
     }
 
@@ -21,7 +23,7 @@ int main() {
     TulisPOINT(p2);
     printf("\n");
 
-    if (NEQ(p1,p2)) {
+    if (NEQ(p1, p2)) {
         printf("not equal\n");
     }
     p1 = PlusDelta(p1, 3, 3);
@@ -32,9 +34,9 @@ int main() {
     TulisPOINT(p1);
     printf("\n");
 
-    printf("\n")   ;
-    printf("--- Driver Test Point ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("--------------------------");
+    printf("\n");
+    printf("\n");
     return 0;
 }
