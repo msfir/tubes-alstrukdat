@@ -81,7 +81,7 @@ $ .\bin\test\test_(nama_adt).exe
 |4 |FRY|:heavy_check_mark:|
 |5 |MIX|:heavy_check_mark:|
 |6 |CHOP|:heavy_check_mark:|
-|7 |OIL|:heavy_check_mark:|
+|7 |BOIL|:heavy_check_mark:|
 |8 |DELIVERY|:heavy_check_mark:|
 |9 |COOKBOOK|:heavy_check_mark:|
 |10|CATALOG|:heavy_check_mark:|
