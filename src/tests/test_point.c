@@ -2,7 +2,7 @@
 #include "point.h"
 
 int main() {
-    printf("--- Driver Test Parser ---");
+    printf("--- Driver Test Point ---");
     printf("\n")   ;
     printf("\n")   ;
     Point p1, p2;
@@ -33,7 +33,7 @@ int main() {
     printf("\n");
 
     printf("\n")   ;
-    printf("--- Driver Test Parser ---");
+    printf("--- Driver Test Point ---");
     printf("\n")   ;
     printf("\n")   ;
     return 0;

@@ -20,9 +20,8 @@ int main() {
     Fridge fridge;
 
     CreateEmptyStack(&s);
-    printf("%d %d %d", IsEmptyStack(s), IsFullStack(s), lengthStack(s));
 
-    CreatePrioQueue(&delivery_list, 100);
+    CreatePrioQueue(&delivery_list, 50);
     CreateFridge(&fridge, 10, 10);
     CreateTime(&program_time, 0, 0, 0);
     CreateSimulator(&simulator, username, simulator_location);
