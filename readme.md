@@ -23,8 +23,6 @@ BNMO (dibaca: Binomo) adalah sebuah robot game milik Indra dan Doni. Akhir-akhir
 
 Namun, ada masalah. BNMO tidak tahu cara memasak dan Doni tidak bisa membantu persiapan karena ada hal lain. BNMO tidak bisa belajar dari video youcub karena BNMO adalah sebuah komputer sehingga hal yang paling mudah untuk dilakukan adalah membuatkan program simulasi untuk ditiru BNMO. Oleh karena itu, Doni meminta bantuan kalian untuk membuatkan program simulasi tersebut.
 
-<p align="right">(<a href="#atas">kembali</a>)</p>
-
 ## Cara Kompilasi Program
 Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
 
@@ -75,21 +73,23 @@ $ .bin\test\test_(nama_adt).exe
 |13521100|Alexander Jason|ADT Time, ADT List Statik, ADT Stack, Splash Screen, To Do List, Laporan|
 
 ## Daftar Fitur
-| No. | Nama Fitur | Status Pengerjaan |
+| No. | Nama Fitur | Status |
 |-----|------------|:------:|
-|1 |START|:white_check_mark:|
-|2 |MOVE|:white_check_mark:|
-|3 |BUY|:white_check_mark:|
-|4 |FRY|:white_check_mark:|
-|5 |MIX|:white_check_mark:|
-|6 |CHOP|:white_check_mark:|
-|7 |OIL|:white_check_mark:|
-|8 |DELIVERY|:white_check_mark:|
-|9 |COOKBOOK|:white_check_mark:|
-|10|CATALOG|:white_check_mark:|
-|11|UNDO|:white_check_mark:|
-|12|REDO|:white_check_mark:|
-|13|FRIDGE|:white_check_mark:|
-|14|RECOMMEND|:white_check_mark:|
-|15|WAIT|:white_check_mark:|
-|16|EXIT|:white_check_mark:|
+|1 |START|:heavy_check_mark:|
+|2 |MOVE|:heavy_check_mark:|
+|3 |BUY|:heavy_check_mark:|
+|4 |FRY|:heavy_check_mark:|
+|5 |MIX|:heavy_check_mark:|
+|6 |CHOP|:heavy_check_mark:|
+|7 |OIL|:heavy_check_mark:|
+|8 |DELIVERY|:heavy_check_mark:|
+|9 |COOKBOOK|:heavy_check_mark:|
+|10|CATALOG|:heavy_check_mark:|
+|11|UNDO|:heavy_check_mark:|
+|12|REDO|:heavy_check_mark:|
+|13|FRIDGE|:heavy_check_mark:|
+|14|RECOMMEND|:heavy_check_mark:|
+|15|WAIT|:heavy_check_mark:|
+|16|EXIT|:heavy_check_mark:|
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
