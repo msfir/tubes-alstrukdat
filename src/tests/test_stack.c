@@ -8,6 +8,9 @@
 #include "prioqueuetime.h"
 
 int main() {
+    printf("--- Driver Test Stack ---");
+    printf("\n")   ;
+    printf("\n")   ;
     Stack s;
     Time program_time;
     Simulator simulator;
@@ -26,4 +29,8 @@ int main() {
     infoState temp={simulator, "HAI", delivery_list, program_time, fridge};
     Push(&s, temp);
     Pop(&s, &temp);
+    printf("\n")   ;
+    printf("--- Driver Test Stack ---");
+    printf("\n")   ;
+    printf("\n")   ;
 }

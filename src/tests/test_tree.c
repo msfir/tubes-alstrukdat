@@ -55,7 +55,6 @@ int main(){
     listParent(treeAyam, foodList);
 
     printf("\n")   ;
-    printf("\n")   ;
     printf("--- Driver Test Tree ---");
     printf("\n")   ;
     printf("\n")   ;

@@ -45,7 +45,6 @@ int main() {
     dealocatePrioQueue(&val);
 
     printf("\n");
-    printf("\n");
     printf("--- Driver Test PriorityQueue --\n");
     printf("\n");
     printf("\n");

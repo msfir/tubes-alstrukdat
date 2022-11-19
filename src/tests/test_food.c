@@ -17,7 +17,6 @@ int main(){
     DisplayFood(ayam);
 
     printf("\n")   ;
-    printf("\n")   ;
     printf("--- Driver Test Food ---");
     printf("\n")   ;
     printf("\n")   ;

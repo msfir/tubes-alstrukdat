@@ -38,7 +38,6 @@ int main(){
     printCookbook(resepList, foodList);
 
     printf("\n")   ;
-    printf("\n")   ;
     printf("--- Driver Test Resep ---");
     printf("\n")   ;
     printf("\n")   ;
