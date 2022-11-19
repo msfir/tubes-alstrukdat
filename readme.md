@@ -12,7 +12,8 @@
 ## Tentang Aplikasi
 
 <div align="center">
-    <img src="readme/bnmo.png" alt="bnmo" style="max-width:20em;"></img>
+    <div>------------------------WIP------------------------</div><br/>
+    <img src="" alt="bnmo" style="max-width:20em;"></img>
     <h2>BNMO</h2>
     <p>oleh Kelompok K</p>
 </div>
@@ -24,24 +25,9 @@ Namun, ada masalah. BNMO tidak tahu cara memasak dan Doni tidak bisa membantu pe
 
 <p align="right">(<a href="#atas">kembali</a>)</p>
 
-
-## Cara Menjalankan Program
-Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* melalui terminal dengan menulis
-
+## Cara Kompilasi Program
+Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
+```shell
+$ make
 ```
-$ .\bin\main.exe
-```
-
-sebelum memanggil program, pastikan  *Current Working Directory* terminal berada di **folder utama** program.
- 
- *Current Working Directory* terminal dapat dilihat dengan menulis
-
- ```
- $ cwd
- ```
-
-### Test Driver Program
-Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
-```
-$ .bin/test/test_(nama_adt).exe
-```
+**Note**: Gunakan Git Bash jika Anda menggukanan Sistem Operasi Windows
