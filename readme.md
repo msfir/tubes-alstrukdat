@@ -53,6 +53,12 @@ sebelum memanggil program, pastikan  *Current Working Directory* terminal berada
  ```
 
 ### Test Driver Program
+Kompilasi:
+
+```
+$ make test
+```
+
 Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
 
 ```
