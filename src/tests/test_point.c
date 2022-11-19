@@ -2,6 +2,9 @@
 #include "point.h"
 
 int main() {
+    printf("--- Driver Test Parser ---");
+    printf("\n")   ;
+    printf("\n")   ;
     Point p1, p2;
     CreatePoint(&p1, 1,2);
     TulisPOINT(p1);
@@ -29,5 +32,9 @@ int main() {
     TulisPOINT(p1);
     printf("\n");
 
+    printf("\n")   ;
+    printf("--- Driver Test Parser ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

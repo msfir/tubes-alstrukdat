@@ -6,7 +6,10 @@
 #include <unistd.h>
 
 int main() {
-    FILE *file = fopen("test.txt", "r");
+    printf("--- Driver Test WordMachine ---");
+    printf("\n")   ;
+    printf("\n")   ;
+    FILE *file = fopen("konfigurasi_peta.txt", "r");
     InitMachine(file, 0);
     ADVWORD();
     boolean firstWord = true;
@@ -18,5 +21,9 @@ int main() {
         firstWord = currentWord.TabWord[currentWord.Length - 1] == '\n';
         ADVWORD();
     }
+    printf("\n")   ;
+    printf("--- Driver Test WordMachine ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

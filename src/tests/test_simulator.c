@@ -3,6 +3,9 @@
 #include "boolean.h"
 
 int main() {
+    printf("--- Driver Test Simulator ---");
+    printf("\n")   ;
+    printf("\n")   ;
     Simulator S;
     String username;
     Point loc;
@@ -41,4 +44,8 @@ int main() {
             printf("Disini bukan lokasi apapun!\n");
         }
     }
+    printf("\n")   ;
+    printf("--- Driver Test Simulator ---");
+    printf("\n")   ;
+    printf("\n")   ;
 }

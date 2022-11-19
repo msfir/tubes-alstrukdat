@@ -7,7 +7,10 @@
 #include "tree.h"
 
 int main() {
-    FILE* stream = fopen("test.txt", "r");
+    printf("--- Driver Test Parser ---");
+    printf("\n")   ;
+    printf("\n")   ;
+    FILE* stream = fopen("konfigurasi_makanan.txt", "r");
     start_parser(stream);
     int n = parse_int();
     for (int i = 0; i < n; i++) {
@@ -26,7 +29,7 @@ int main() {
         printf("Makanan %d\n", i + 1);
         DisplayFood(f);
     }
-    FILE* konfigurasi_resep = fopen("test_resep.txt", "r");
+    FILE* konfigurasi_resep = fopen("konfigurasi_resep.txt", "r");
     start_parser(konfigurasi_resep);
     n = parse_int();
     for (int i = 0; i < n; i++) {
@@ -42,5 +45,9 @@ int main() {
         }
         printf("%d\n", parent->childCount);
     }
+    printf("\n")   ;
+    printf("--- Driver Test Parser ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

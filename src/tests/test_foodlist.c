@@ -6,6 +6,9 @@
 #include "time.h"
 
 int main() {
+    printf("--- Driver Test FoodList ---");
+    printf("\n")   ;
+    printf("\n")   ;
     FoodList list;
     CreateFoodList(&list);
 
@@ -21,8 +24,8 @@ int main() {
     Size size;
     size.width = 10, size.height = 10;
     CreateTime(&delivery, 0, 0, 10);
-    CreateFood(&food, 99, StringFrom("Indomie"), expire, BUY, delivery,size);
-    Size size; size.height = 1; size.width = 1;
+    CreateFood(&food, 99, StringFrom("Indomie"), expire, BUY, delivery,size, (Time) {1, 1, 1});
+    size.height = 1; size.width = 1;
     Time process;
     CreateTime(&process, 0, 0, 0);
     CreateFood(&food, 99, StringFrom("Indomie"), expire, BUY, delivery, size, process);
@@ -35,7 +38,7 @@ int main() {
 
     CreateTime(&expire, 0, 0, 30);
     CreateTime(&delivery, 0, 0, 45);
-    CreateFood(&food, 22, StringFrom("Mie sedap"), expire, BUY, delivery,size);
+    CreateFood(&food, 22, StringFrom("Mie sedap"), expire, BUY, delivery,size, process);
 
     CreateTime(&process, 0, 0, 13);
     CreateFood(&food, 22, StringFrom("Mie sedap"), expire, BUY, delivery, size, process);
@@ -50,5 +53,9 @@ int main() {
     printMixList(list);
     printCatalog(list);
 
+    printf("\n")   ;
+    printf("--- Driver Test FoodList ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

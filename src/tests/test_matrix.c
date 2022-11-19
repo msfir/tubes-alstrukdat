@@ -6,6 +6,9 @@
 #include "matrix.h"
 
 int main(){ 
+    printf("--- Driver Test Matrix ---");
+    printf("\n")   ;
+    printf("\n")   ;
     Matrix map;
     
     FILE *file = fopen("konfigurasi_peta.txt", "r");
@@ -23,5 +26,9 @@ int main(){
     }
 
     displayMatrix(map);
+    printf("\n")   ;
+    printf("--- Driver Test Matrix ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

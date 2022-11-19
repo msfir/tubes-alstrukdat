@@ -1,36 +1,51 @@
 #include <stdio.h>
+#include <assert.h>
 #include "boolean.h"
 #include "prioqueuetime.h"
 #include "food.h"
+#include "time.h"
 
 int main() {
-
+    printf("--- Driver Test PriorityQueue ---");
+    printf("\n");
+    printf("\n");
     int Capacity;
     PriorityQueue val;
     PQInfo x;
-    Food food;
+    Food food = {
+        .name = StringFrom("Baso nuklir"),
+        .id = 110,
+        .delivery_time = (Time) {5, 5, 5},
+        .expiration_time = (Time) {365, 0, 0},
+        .processing_time = (Time) {3650, 0, 0},
+        .action_loc = BUY,
+        .size = (Size) {20, 20}
+    };
     char input;
 
     CreatePrioQueue(&val, 100);
 
-    if (isEmptyPrioQueue(val)) {
-        printf("Inventory Kosong!\n");
-    } else if (isFullPrioQueue(val)) {
-        printf("Inventory Penuh!\n");
-    }
+    assert(isEmptyPrioQueue(val));
  
     Capacity = lengthPrioQueue(val);
 
-    int newTimeAfterDelivery;
-    scanf("%c", &input);
-    if (input == 'i') {
-        enqueuePrioQueue(&val, (PQInfo) {food, MenitToTIME(newTimeAfterDelivery)});
-    } else {
-        dequeuePrioQueue(&val, &food);
-    }
+    enqueuePrioQueue(&val, (PQInfo) {food, food.expiration_time});
+    assert(!isEmptyPrioQueue(val));
+    assert(lengthPrioQueue(val) == 1);
 
     displayPrioqueue(val);
-    printf("\n");
+
+    dequeuePrioQueue(&val, &food);
+    assert(isEmptyPrioQueue(val));
+    assert(lengthPrioQueue(val) == 0);
+
+    displayPrioqueue(val);
+
     
     dealocatePrioQueue(&val);
+
+    printf("\n");
+    printf("--- Driver Test PriorityQueue --\n");
+    printf("\n");
+    printf("\n");
 }
