@@ -7,41 +7,57 @@
 
 #include "foodlist.h"
 
-#define teschilcount 4  //pls be <23
+#define tesMaxChild 4
 
 int main(){ 
-    FoodList fdLi; CreateFoodList(&fdLi);
-    Node childee[teschilcount];
+    printf("--- Driver Test Tree ---");
+    printf("\n")   ;
+    printf("\n")   ;
+    FoodList foodList; CreateFoodList(&foodList);
     Time contohTime; CreateTime(&contohTime, 23, 0, 0);
-    Food ayam[teschilcount]; 
+
+    Node child[tesMaxChild];
+    
+    Food ayam[tesMaxChild]; 
     Size size; size.width = 1; size.height = 2;
+
     int i; String uniqname; char uniqid;
-    for(i = 0; i<teschilcount; i++){
+
+    for(i = 0; i<tesMaxChild; i++){
         uniqid = 65 + i;
         uniqname = StringFrom("");
         uniqname = concat_string(StringFrom("ayam rasa hati yang terluka tipe "), StringFrom(&uniqid));
         CreateFood(&ayam[i], 101+uniqid, uniqname, contohTime, BUY, contohTime, size, contohTime);
-        addFood(&fdLi, ayam[i]);
+        addFood(&foodList, ayam[i]);
     }
-    Food gigachadFood; CreateFood(&gigachadFood, 1000, StringFrom("parent ayam"), contohTime, BOIL, contohTime, size, contohTime);
-    addFood(&fdLi, gigachadFood);
 
+    Food gigachadAyam; CreateFood(&gigachadAyam, 1000, StringFrom("parent ayam"), contohTime, MIX, contohTime, size, contohTime);
+    addFood(&foodList, gigachadAyam);
 
-    Node basse = *newNode(Id(gigachadFood)); // lets use this
-    Tree trie; CreateTree(&trie, &basse);
+    // buat node parent
+    Node parent = *newNode(Id(gigachadAyam));
     
-    
-    for(i = 0; i<teschilcount; i++){
-        childee[i] = *newNode(Id(ayam[i]));
+    // buat tree
+    Tree treeAyam; CreateTree(&treeAyam, &parent);
+
+    // buat node children
+    for(i = 0; i<tesMaxChild; i++){
+        child[i] = *newNode(Id(ayam[i]));
     }
     
-    MakeChildren(&basse, &childee[0]);
-    MakeChildren(&basse, &childee[1]);
-    MakeChildren(&childee[1], &childee[2]);
-    MakeChildren(&childee[1], &childee[3]);
+    // sambungkan parent dengan child
+    MakeChildren(&parent, &child[0]);
+    MakeChildren(&parent, &child[1]);
+    MakeChildren(&child[1], &child[2]);
+    MakeChildren(&child[1], &child[3]);
 
-    listParent(trie, fdLi);
-    
+    // tampilkan
+    listParent(treeAyam, foodList);
 
+    printf("\n")   ;
+    printf("\n")   ;
+    printf("--- Driver Test Tree ---");
+    printf("\n")   ;
+    printf("\n")   ;
     return 0;
 }

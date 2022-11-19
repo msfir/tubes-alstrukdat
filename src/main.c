@@ -117,7 +117,6 @@ void setup_program(Point *simulator_location) {
         }
         CreateTree(&minor, node);
         Resep resep; CreateResep(&resep, minor);
-        // resep[i] = minor; //sepertinya lom dipake
         ResepListElmt(resepList, i) = resep;
     }
 
