@@ -25,7 +25,7 @@ boolean IsFullStack(Stack S){
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void Push(Stack * S, infotype X){
+void Push(Stack * S, infoState X){
     Top(*S)++;
     InfoTop(*S) = X;
 };
@@ -34,7 +34,7 @@ void Push(Stack * S, infotype X){
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void Pop(Stack * S, infotype* X){
+void Pop(Stack * S, infoState* X){
     *X = InfoTop(*S);
     Top(*S)--;
 };
@@ -47,7 +47,7 @@ int lengthStack(Stack s){
         return 0;
     }else{
         int count = 0;
-        infotype temp;
+        infoState temp;
         while(!IsEmptyStack(s)){
             Pop(&s, &temp);
             count++;
