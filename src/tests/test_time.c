@@ -1,10 +1,11 @@
 #include "time.h"
+#include <stdio.h>
 
 int main(){
     Time time;
     CreateTime(&time, 0, 0, 0);
     NextMenit(time);
-    printf("%d %d", TIMEToMenit(time), MenitToTIME(time));
-    TulisTime(time);
+    printf("%ld\n", TIMEToMenit(time));
+    TulisTIME(time);
     PrevMenit(time);
 }

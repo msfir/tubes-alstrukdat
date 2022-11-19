@@ -15,7 +15,7 @@ build:
 	@mkdir -p bin
 	$(CC) $(CFLAGS) $(CINCLUDES) src/*.c $(ADTS) $(CLIBS) -o $(TARGET)/main
 
-test: build-test run-test
+test: build-test
 
 build-test: $(TEST_BIN)
 
