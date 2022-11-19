@@ -19,7 +19,10 @@ int main() {
     CreateTime(&expire, 0, 1, 0);
     Time delivery;
     CreateTime(&delivery, 0, 0, 10);
-    CreateFood(&food, 99, StringFrom("Indomie"), expire, BUY, delivery);
+    Size size; size.height = 1; size.width = 1;
+    Time process;
+    CreateTime(&process, 0, 0, 0);
+    CreateFood(&food, 99, StringFrom("Indomie"), expire, BUY, delivery, size, process);
     addFood(&list, food);
 
     assert(listLength(list) == 1);
@@ -29,7 +32,8 @@ int main() {
 
     CreateTime(&expire, 0, 0, 30);
     CreateTime(&delivery, 0, 0, 45);
-    CreateFood(&food, 22, StringFrom("Mie sedap"), expire, BUY, delivery);
+    CreateTime(&process, 0, 0, 13);
+    CreateFood(&food, 22, StringFrom("Mie sedap"), expire, BUY, delivery, size, process);
     addFood(&list, food);
 
     assert(listLength(list) == 2);

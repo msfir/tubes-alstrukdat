@@ -33,16 +33,3 @@ void listParent(Tree a, FoodList fl){
         if(NEXT(a, i) != NULL) listParent(NEXT(a, i), fl);
     }
 }
-
-// void listChildren(Tree a){
-//     int i;
-//     printf("%s", getFoodById(INFO(ROOT(a))))
-//     for(i = 0; i<getChildCount(*a); i++){        
-        
-//     }
-// }
-// move this to resep altogether
-
-void getAllReachableNode(Tree a, Node* nodes[]){
-
-}

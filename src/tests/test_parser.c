@@ -15,9 +15,14 @@ int main() {
         String name = parse_line();
         Time expire = parse_time();
         Time delivery = parse_time();
+        int food_width = parse_int();
+        int food_height = parse_int();
+        Size food_size = {food_width, food_height};
+        Time processing_time = parse_time();
         enum Action action = parse_action();
         Food f;
-        CreateFood(&f, id, name, expire, action, delivery);
+        CreateFood(&f, id, name, expire, action, delivery, food_size, processing_time);
+        
         printf("Makanan %d\n", i + 1);
         DisplayFood(f);
     }

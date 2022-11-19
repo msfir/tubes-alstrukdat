@@ -28,9 +28,5 @@ void listParent(Tree a, FoodList fl);
 /* I.S. sembarang */
 /* F.S. tercetak parent dari masing masing tree */
 
-void listChildren(Tree a, FoodList fl);
-/* I.S. sembarang */
-/* F.S. tercetak children dari masing masing tree */
-
 
 #endif
