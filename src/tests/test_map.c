@@ -7,7 +7,7 @@ int main() {
     printf("\n");
     printf("\n");
     Matrix map;
-    CreateMap(&map, fopen("test_peta.txt", "r"));
+    CreateMap(&map, fopen("konfigurasi_peta.txt", "r"));
 
     displayMatrix(map);
     printf("\n");

@@ -3,9 +3,10 @@
 #include "adt.h"
 
 int main() {
-    printf("--- Driver Test Parser ---");
-    printf("\n");
-    printf("\n");
+    printf("--- Driver Test Point ---");
+    printf("\n")   ;
+    printf("\n")   ;
+    
     Point p1, p2;
     CreatePoint(&p1, 1, 2);
     TulisPOINT(p1);
