@@ -1,12 +1,11 @@
-#include "matrix.h"
-
 #include <stdio.h>
 
+#include "adt.h"
 
 int main() {
     printf("--- Driver Test Map ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("\n");
     Matrix map;
     CreateMap(&map, fopen("test_peta.txt", "r"));
 
@@ -14,9 +13,9 @@ int main() {
     printf("\n");
     displayMap(map);
 
-    printf("\n")   ;
+    printf("\n");
     printf("--- Driver Test Map ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("\n");
     return 0;
 }

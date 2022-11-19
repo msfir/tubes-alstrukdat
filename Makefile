@@ -1,9 +1,14 @@
 CC := gcc
 CFLAGS := -std=c11 -g
-CINCLUDES := -Iheader -Iheader/adt
+CINCLUDES := -Isrc
 CLIBS := -lm
 
-ADTS := src/adt/*.c
+DIRS := $(dir $(wildcard src/adt/*/))
+
+ADTS := $(foreach dir, $(DIRS), $(wildcard $(dir)*.c))
+COMMANDS := $(wildcard src/commands/*.c)
+SOURCES := $(wildcard src/*.c) $(ADTS) $(COMMANDS)
+
 TARGET := bin
 
 TEST_SOURCES = $(wildcard src/tests/*.c)
@@ -13,7 +18,7 @@ TEST_BIN = $(TEST_SOURCES:src/tests/%.c=bin/tests/%)
 
 build:
 	@mkdir -p bin
-	$(CC) $(CFLAGS) $(CINCLUDES) src/*.c $(ADTS) $(CLIBS) -o $(TARGET)/main
+	$(CC) $(CFLAGS) $(CINCLUDES) $(SOURCES) $(CLIBS) -o $(TARGET)/main
 
 test: build-test
 

@@ -1,16 +1,15 @@
 
 #include <stdio.h>
-#include "cstring.h"
+
+#include "adt.h"
 #include "parser.h"
 
-#include "matrix.h"
-
-int main(){ 
+int main() {
     printf("--- Driver Test Matrix ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("\n");
     Matrix map;
-    
+
     FILE *file = fopen("konfigurasi_peta.txt", "r");
     start_parser(file);
     int rows = parse_int();
@@ -26,9 +25,9 @@ int main(){
     }
 
     displayMatrix(map);
-    printf("\n")   ;
+    printf("\n");
     printf("--- Driver Test Matrix ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("\n");
     return 0;
 }

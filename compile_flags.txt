@@ -1,3 +1,2 @@
 -std=c11
--Iheader
--Iheader/adt
+-Isrc

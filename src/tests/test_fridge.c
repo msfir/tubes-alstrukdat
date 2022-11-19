@@ -1,10 +1,11 @@
 #include <assert.h>
-#include <fridge.h>
+
+#include "adt.h"
 
 int main() {
     printf("--- Driver Test Fridge ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("\n");
     Fridge fridge;
     CreateFridge(&fridge, 20, 20);
     assert(fridge.space.colEff == 20);
@@ -18,7 +19,7 @@ int main() {
     CreateTime(&deliv, 0, 30, 0);
     Time proc;
     CreateTime(&proc, 0, 0, 1);
-    CreateFood(&mie_ayam, 99, StringFrom("Mie Ayam"), exp, BUY, deliv, (Size) {2, 2}, proc);
+    CreateFood(&mie_ayam, 99, StringFrom("Mie Ayam"), exp, BUY, deliv, (Size){ 2, 2 }, proc);
     put_food(&fridge, 5, 5, mie_ayam);
     for (int i = 5; i < 5 + mie_ayam.size.width; i++) {
         for (int j = 5; j < 5 + mie_ayam.size.height; j++) {
@@ -37,8 +38,8 @@ int main() {
     printf("\n");
     display_fridge(fridge);
     printf("All tests passed.\n");
-    printf("\n")   ;
+    printf("\n");
     printf("--- Driver Test Fridge ---");
-    printf("\n")   ;
-    printf("\n")   ;
+    printf("\n");
+    printf("\n");
 }

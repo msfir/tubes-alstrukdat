@@ -3,10 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "cstring.h"
-#include "food.h"
-#include "time.h"
-#include "wordmachine.h"
+#include "adt.h"
 
 int str_to_int(String str) {
     int len = length(str);
@@ -54,7 +51,7 @@ Time parse_time() {
     ADVWORD();
     word = StringFromArr(currentWord.TabWord, currentWord.Length);
     int DD = str_to_int(trim_end(word));
-    
+
     ADVWORD();
     word = StringFromArr(currentWord.TabWord, currentWord.Length);
     int HH = str_to_int(trim_end(word));
